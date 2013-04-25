@@ -1,0 +1,535 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+AllocateIdxVBO	.\glmesh.cc	/^bool GLMesh::AllocateIdxVBO(size_t size, const void *data) {$/;"	f	class:ax::GLMesh	signature:(size_t size, const void *data)
+AllocateVertVBO	.\glmesh.cc	/^bool GLMesh::AllocateVertVBO(size_t size) {$/;"	f	class:ax::GLMesh	signature:(size_t size)
+ApplyTransform	.\glmesh.cc	/^void GLMesh::ApplyTransform(const ax::Matrix4x4 &m) {$/;"	f	class:ax::GLMesh	signature:(const ax::Matrix4x4 &m)
+ApplyTransform	.\group.cc	/^void Group::ApplyTransform(const ax::Matrix4x4 &m) {  $/;"	f	class:ax::Group	signature:(const ax::Matrix4x4 &m)
+AttachRenderBuffer	.\framebuffer_object.cc	/^void FramebufferObject::AttachRenderBuffer(GLuint buffer_id, $/;"	f	class:ax::FramebufferObject	signature:(GLuint buffer_id, GLenum attachment)
+AttachRenderBuffers	.\framebuffer_object.cc	/^void FramebufferObject::AttachRenderBuffers($/;"	f	class:ax::FramebufferObject	signature:( int buffer_count, GLuint buffer_id[], GLenum attachment[])
+AttachShader	.\program_glsl.cc	/^bool ProgramGLSL::AttachShader(const ShaderPtr shader) const {$/;"	f	class:ax::ProgramGLSL	signature:(const ShaderPtr shader) const
+AttachShader	.\program_glsl.cc	/^bool ProgramGLSL::AttachShader(int type, const char *file) {  $/;"	f	class:ax::ProgramGLSL	signature:(int type, const char *file)
+AttachTexture	.\framebuffer_object.cc	/^void FramebufferObject::AttachTexture(GLenum tex_target, GLuint tex_id, $/;"	f	class:ax::FramebufferObject	signature:(GLenum tex_target, GLuint tex_id, GLenum attachment, int mip_level, int zslice)
+AttachTextures	.\framebuffer_object.cc	/^void FramebufferObject::AttachTextures(int tex_count, GLenum tex_target[], $/;"	f	class:ax::FramebufferObject	signature:(int tex_count, GLenum tex_target[], GLuint tex_id[], GLenum attachment[], int mip_level[], int zslice[])
+BeginDraw	.\glmesh.cc	/^void GLMesh::BeginDraw(Options opts) const {$/;"	f	class:ax::GLMesh	signature:(Options opts) const
+Bind	.\framebuffer_object.cc	/^void FramebufferObject::Bind() const {$/;"	f	class:ax::FramebufferObject	signature:() const
+CheckBufferStatus	.\framebuffer_object.cc	/^bool FramebufferObject::CheckBufferStatus() {$/;"	f	class:ax::FramebufferObject	signature:()
+CheckCompileLog	.\shader_object.cc	/^bool ShaderObject::CheckCompileLog() {$/;"	f	class:ax::ShaderObject	signature:()
+CheckErrorsGL	.\gl_utils.cc	/^bool CheckErrorsGL(const char* location) {	$/;"	f	namespace:ax	signature:(const char* location)
+CheckGLInfo	.\gl_utils.cc	/^bool CheckGLInfo() {$/;"	f	namespace:ax	signature:()
+CheckLinkResult	.\program_glsl.cc	/^bool ProgramGLSL::CheckLinkResult() {$/;"	f	class:ax::ProgramGLSL	signature:()
+CheckRedundancy	.\framebuffer_object.cc	/^bool FramebufferObject::CheckRedundancy(GLenum attachment, GLuint tex_id,$/;"	f	class:ax::FramebufferObject	signature:(GLenum attachment, GLuint tex_id, int mip_level, int z_slice)
+ComputeBound	.\glmesh.cc	/^ax::AABB GLMesh::ComputeBound(const ax::Matrix4x4 &m) const {$/;"	f	class:ax::GLMesh	signature:(const ax::Matrix4x4 &m) const
+ComputeBound	.\group.cc	/^ax::AABB Group::ComputeBound(const ax::Matrix4x4 &m) const {$/;"	f	class:ax::Group	signature:(const ax::Matrix4x4 &m) const
+CountExpandedVerts	.\glmesh-loader.cc	/^size_t CountExpandedVerts(const VertAttribsVec &attribs) {$/;"	f	namespace:ax	signature:(const VertAttribsVec &attribs)
+CountExpandedVerts	.\glmesh-loader.cc	/^size_t CountExpandedVerts(const VertAttribsVec &attribs1, $/;"	f	namespace:ax	signature:(const VertAttribsVec &attribs1, const VertAttribsVec &attribs2)
+Create	.\program_glsl.cc	/^ProgramGLSLPtr ProgramGLSL::Create(const char *vertex_shader, $/;"	f	class:ax::ProgramGLSL	signature:(const char *vertex_shader, const char *fragment_shader, const std::string &name)
+Create	.\scene.cc	/^ScenePtr Scene::Create(const std::string &file, Options opts) {$/;"	f	class:ax::Scene	signature:(const std::string &file, Options opts)
+CreateGLMaterial	.\material-factory.cc	/^GLMaterialPtr MaterialFactory::CreateGLMaterial() {$/;"	f	class:ax::MaterialFactory	signature:()
+CreateGLMaterial	.\material-factory.cc	/^MaterialPtr MaterialFactory::CreateGLMaterial($/;"	f	class:ax::MaterialFactory	signature:( const char *name, FILE *fp)
+CreateGLSLMaterial	.\material-factory.cc	/^GLSLMaterialPtr MaterialFactory::CreateGLSLMaterial() {$/;"	f	class:ax::MaterialFactory	signature:()
+CreateGLSLMaterial	.\material-factory.cc	/^MaterialPtr MaterialFactory::CreateGLSLMaterial(const char *name, FILE *fp, $/;"	f	class:ax::MaterialFactory	signature:(const char *name, FILE *fp, Scene *s)
+CreateGroup	.\object-factory.cc	/^GroupPtr ObjectFactory::CreateGroup() { return GroupPtr(new Group()); }$/;"	f	class:ax::ObjectFactory	signature:()
+CreateGroup	.\object-factory.cc	/^ObjectPtr ObjectFactory::CreateGroup(FILE *fp, Scene *s) {  $/;"	f	class:ax::ObjectFactory	signature:(FILE *fp, Scene *s)
+CreateIndexArray	.\glmesh-loader.cc	/^uint32 *CreateIndexArray(const GLMmodel *model) {$/;"	f	namespace:ax	signature:(const GLMmodel *model)
+CreateNormalArray	.\glmesh-loader.cc	/^Normal *CreateNormalArray(const GLMmodel *model) {$/;"	f	namespace:ax	signature:(const GLMmodel *model)
+CreateTexCoordArray	.\glmesh-loader.cc	/^float *CreateTexCoordArray(const GLMmodel *model) {$/;"	f	namespace:ax	signature:(const GLMmodel *model)
+CreateVBO	.\model_gl.cc	/^void Quad2DGL::CreateVBO() {$/;"	f	class:ax::Quad2DGL	signature:()
+CreateVertexArray	.\glmesh-loader.cc	/^Point *CreateVertexArray(const GLMmodel *model) {$/;"	f	namespace:ax	signature:(const GLMmodel *model)
+DeleteShader	.\shader_object.cc	/^void ShaderObject::DeleteShader() {$/;"	f	class:ax::ShaderObject	signature:()
+DepthRange	.\scene.cc	/^void Scene::DepthRange(const Matrix4x4 &mat, $/;"	f	class:ax::Scene	signature:(const Matrix4x4 &mat, float *min_depth, float *max_depth) const
+Disable	.\framebuffer_object.cc	/^void FramebufferObject::Disable() {$/;"	f	class:ax::FramebufferObject	signature:()
+DisableColorBuffer	.\render_device_fbo.cc	/^void RenderDeviceFBO::DisableColorBuffer() {$/;"	f	class:ax::RenderDeviceFBO	signature:()
+DisableDepthBuffer	.\render_device_fbo.cc	/^void RenderDeviceFBO::DisableDepthBuffer() {$/;"	f	class:ax::RenderDeviceFBO	signature:()
+DisplayStatistics	.\gl_utils.cc	/^void DisplayStatistics(const char *name, float data, const char *unit, $/;"	f	namespace:ax	signature:(const char *name, float data, const char *unit, int x, int y)
+Draw	.\glmesh.cc	/^void GLGroup::Draw() const {$/;"	f	class:ax::GLGroup	signature:() const
+Draw	.\glmesh.cc	/^void GLGroup::Draw(ProgramGLSLPtr prog, Options opts) const {  $/;"	f	class:ax::GLGroup	signature:(ProgramGLSLPtr prog, Options opts) const
+Draw	.\glmesh.cc	/^void GLGroup::Draw(const Scene *s, Options opts) const {  $/;"	f	class:ax::GLGroup	signature:(const Scene *s, Options opts) const
+Draw	.\glmesh.cc	/^void GLMesh::Draw(ProgramGLSLPtr prog, Options opts) const {$/;"	f	class:ax::GLMesh	signature:(ProgramGLSLPtr prog, Options opts) const
+Draw	.\glmesh.cc	/^void GLMesh::Draw(const Scene *s, Options opts) const {$/;"	f	class:ax::GLMesh	signature:(const Scene *s, Options opts) const
+Draw	.\group.cc	/^void Group::Draw(ProgramGLSLPtr prog, Options opts) const {$/;"	f	class:ax::Group	signature:(ProgramGLSLPtr prog, Options opts) const
+Draw	.\group.cc	/^void Group::Draw(const Scene *s, Options opts) const {$/;"	f	class:ax::Group	signature:(const Scene *s, Options opts) const
+Draw	.\model_gl.cc	/^void Quad2DGL::Draw() {$/;"	f	class:ax::Quad2DGL	signature:()
+Draw	.\scene.cc	/^void Scene::Draw(Options opts) const {  $/;"	f	class:ax::Scene	signature:(Options opts) const
+Draw	.\scene.cc	/^void Scene::Draw(ProgramGLSLPtr prog, Options opts) const {$/;"	f	class:ax::Scene	signature:(ProgramGLSLPtr prog, Options opts) const
+DrawCube	.\gl_utils.cc	/^void DrawCube(float size);$/;"	p	namespace:ax	file:	signature:(float size)
+DrawCube	.\gl_utils.cc	/^void DrawCube(float x1, float y1, float z1, float x2, float y2, float z2) {$/;"	f	namespace:ax	signature:(float x1, float y1, float z1, float x2, float y2, float z2)
+DrawQuad	.\gl_utils.cc	/^void DrawQuad(float x1, float y1 ,float x2, float y2, float z) {$/;"	f	namespace:ax	signature:(float x1, float y1 ,float x2, float y2, float z)
+DrawQuad	.\gl_utils.cc	/^void DrawQuad(float x1, float y1, float x2, float y2) {$/;"	f	namespace:ax	signature:(float x1, float y1, float x2, float y2)
+DrawQuad	.\gl_utils.cc	/^void DrawQuad(float x1, float y1, float z1,  float x2, float y2, float z2) {$/;"	f	namespace:ax	signature:(float x1, float y1, float z1, float x2, float y2, float z2)
+EatToEndKeyword	.\parser.cc	/^void EatToEndKeyword(FILE *fp, LineToken &token) {$/;"	f	namespace:ax	signature:(FILE *fp, LineToken &token)
+Enable	.\glmaterial.cc	/^void GLMaterial::Enable(ProgramGLSLPtr prog) const {$/;"	f	class:ax::GLMaterial	signature:(ProgramGLSLPtr prog) const
+Enable	.\glmaterial.cc	/^void GLMaterial::Enable(const Scene *s) const{$/;"	f	class:ax::GLMaterial	signature:(const Scene *s) const
+Enable	.\glslmaterial.cc	/^void GLSLMaterial::Enable(ProgramGLSLPtr prog) const {  $/;"	f	class:ax::GLSLMaterial	signature:(ProgramGLSLPtr prog) const
+Enable	.\glslmaterial.cc	/^void GLSLMaterial::Enable(const Scene *s) const {$/;"	f	class:ax::GLSLMaterial	signature:(const Scene *s) const
+EndDraw	.\glmesh.cc	/^void GLMesh::EndDraw(Options opts) const {$/;"	f	class:ax::GLMesh	signature:(Options opts) const
+ExpandMesh	.\glmesh-loader.cc	/^size_t ExpandMesh(const GLMmodel *model, Point **vertices, Normal **normals, $/;"	f	namespace:ax	signature:(const GLMmodel *model, Point **vertices, Normal **normals, float **tcoords, uint32 **indices)
+ExpandNormalAttrib	.\glmesh-loader.cc	/^size_t ExpandNormalAttrib(const GLMmodel *model, Point **vertices, $/;"	f	namespace:ax	signature:(const GLMmodel *model, Point **vertices, Normal **normals, uint32 **indices)
+ExpandTexcoordAttrib	.\glmesh-loader.cc	/^size_t ExpandTexcoordAttrib(const GLMmodel *model, Point **vertices, $/;"	f	namespace:ax	signature:(const GLMmodel *model, Point **vertices, float **tcoords, uint32 **indices)
+ExtractMatrix	.\object-factory.cc	/^glm::mat4 ExtractMatrix(const char *str) {$/;"	f	namespace:ax	signature:(const char *str)
+Fly	.\camera.cc	/^void FirstPersonMotion::Fly(float units) {$/;"	f	class:ax::FirstPersonMotion	signature:(float units)
+Fly	.\camera.cc	/^void FlyMotion::Fly(float units) {$/;"	f	class:ax::FlyMotion	signature:(float units)
+FramebufferObject	.\framebuffer_object.cc	/^FramebufferObject::FramebufferObject()$/;"	f	class:ax::FramebufferObject	signature:()
+FramebufferTextureND	.\framebuffer_object.cc	/^void FramebufferObject::FramebufferTextureND(GLenum attachment, $/;"	f	class:ax::FramebufferObject	signature:(GLenum attachment, GLenum tex_target, GLuint tex_id, int mip_level, int zslice)
+GLM_2_SIDED	.\glm_avl.h	34;"	d
+GLM_AVL_H	.\glm_avl.h	2;"	d
+GLM_BLENDING	.\glm_avl.h	/^static int GLM_BLENDING;   \/\/AVL Blending flag $/;"	v
+GLM_COLOR	.\glm_avl.h	32;"	d
+GLM_FLAT	.\glm_avl.h	29;"	d
+GLM_MATERIAL	.\glm_avl.h	33;"	d
+GLM_NONE	.\glm_avl.h	28;"	d
+GLM_SMOOTH	.\glm_avl.h	30;"	d
+GLM_TEXTURE	.\glm_avl.h	31;"	d
+GLMaterial	.\glmaterial.cc	/^GLMaterial::GLMaterial(const Colorf &amb, const Colorf &dif, $/;"	f	class:ax::GLMaterial	signature:(const Colorf &amb, const Colorf &dif, const Colorf &spec, float shiny, const char *name)
+GLMaterial	.\glmaterial.cc	/^GLMaterial::GLMaterial(const char *name) : Material(name),$/;"	f	class:ax::GLMaterial	signature:(const char *name)
+GLMaterial	.\glmaterial.cc	/^GLMaterial::GLMaterial(float *amb, float *dif, float *spec, float shiny,$/;"	f	class:ax::GLMaterial	signature:(float *amb, float *dif, float *spec, float shiny, const char *name)
+GLMaterial	.\glmaterial.cc	/^GLMaterial::GLMaterial(int predefined) : Material("") {$/;"	f	class:ax::GLMaterial	signature:(int predefined)
+GLMgroup	.\glm_avl.h	/^} GLMgroup;$/;"	t	typeref:struct:_GLMgroup
+GLMmaterial	.\glm_avl.h	/^} GLMmaterial;$/;"	t	typeref:struct:_GLMmaterial
+GLMmodel	.\glm_avl.h	/^} GLMmodel;$/;"	t	typeref:struct:_GLMmodel
+GLMnode	.\glm_avl.cpp	/^} GLMnode;$/;"	t	typeref:struct:_GLMnode	file:
+GLMtriangle	.\glm_avl.h	/^} GLMtriangle;$/;"	t	typeref:struct:_GLMtriangle
+GenerateFboId	.\framebuffer_object.cc	/^GLuint FramebufferObject::GenerateFboId() {$/;"	f	class:ax::FramebufferObject	signature:()
+GeometryShaderSettings	.\program_glsl.cc	/^void ProgramGLSL::GeometryShaderSettings(GLenum input_type, $/;"	f	class:ax::ProgramGLSL	signature:(GLenum input_type, int max_emitted_verts, GLenum output_type)
+GetAttachedCubeFace	.\framebuffer_object.cc	/^GLint FramebufferObject::GetAttachedCubeFace(GLenum attachment) {$/;"	f	class:ax::FramebufferObject	signature:(GLenum attachment)
+GetAttachedId	.\framebuffer_object.cc	/^GLuint FramebufferObject::GetAttachedId(GLenum attachment) {$/;"	f	class:ax::FramebufferObject	signature:(GLenum attachment)
+GetAttachedMipLevel	.\framebuffer_object.cc	/^GLint FramebufferObject::GetAttachedMipLevel(GLenum attachment) {$/;"	f	class:ax::FramebufferObject	signature:(GLenum attachment)
+GetAttachedType	.\framebuffer_object.cc	/^GLenum FramebufferObject::GetAttachedType(GLenum attachment) {$/;"	f	class:ax::FramebufferObject	signature:(GLenum attachment)
+GetAttachedZSlice	.\framebuffer_object.cc	/^GLint FramebufferObject::GetAttachedZSlice(GLenum attachment) {$/;"	f	class:ax::FramebufferObject	signature:(GLenum attachment)
+GetMaxColorAttachments	.\framebuffer_object.cc	/^GLint FramebufferObject::GetMaxColorAttachments() {$/;"	f	class:ax::FramebufferObject	signature:()
+GetNormalIdx	.\glmesh-loader.cc	/^inline size_t GetNormalIdx(const GLMmodel *model, size_t tri, size_t vidx) {$/;"	f	namespace:ax	signature:(const GLMmodel *model, size_t tri, size_t vidx)
+GetTexcoordIdx	.\glmesh-loader.cc	/^inline size_t GetTexcoordIdx(const GLMmodel *model, size_t tri, size_t vidx) {$/;"	f	namespace:ax	signature:(const GLMmodel *model, size_t tri, size_t vidx)
+GetVertexIdx	.\glmesh-loader.cc	/^inline size_t GetVertexIdx(const GLMmodel *model, size_t tri, size_t vidx) {$/;"	f	namespace:ax	signature:(const GLMmodel *model, size_t tri, size_t vidx)
+GuardedBind	.\framebuffer_object.cc	/^void FramebufferObject::GuardedBind() {$/;"	f	class:ax::FramebufferObject	signature:()
+GuardedUnbind	.\framebuffer_object.cc	/^void FramebufferObject::GuardedUnbind() {$/;"	f	class:ax::FramebufferObject	signature:()
+HasTexture	.\glslmaterial.cc	/^bool GLSLMaterial::HasTexture() const {$/;"	f	class:ax::GLSLMaterial	signature:() const
+Idxs	.\glmesh-loader.cc	/^typedef List<size_t> Idxs;$/;"	t	namespace:ax	file:
+Initialize	.\texture_gl.cc	/^bool CubeTexture::Initialize(const CubeImage &image, int i_format) {$/;"	f	class:ax::CubeTexture	signature:(const CubeImage &image, int i_format)
+Initialize	.\texture_gl.cc	/^bool CubeTexture::Initialize(const Image *images[6], int i_format) {$/;"	f	class:ax::CubeTexture	signature:(const Image *images[6], int i_format)
+Initialize	.\texture_gl.cc	/^bool CubeTexture::Initialize(int w, int h, int i_format) {$/;"	f	class:ax::CubeTexture	signature:(int w, int h, int i_format)
+Initialize	.\texture_gl.cc	/^bool Texture2D::Initialize(const Image &image, int i_format) {$/;"	f	class:ax::Texture2D	signature:(const Image &image, int i_format)
+Initialize	.\texture_gl.cc	/^bool Texture2D::Initialize(int w, int h, int i_format) {$/;"	f	class:ax::Texture2D	signature:(int w, int h, int i_format)
+Initialize	.\texture_gl.cc	/^bool Texture2DArray::Initialize(int w, int h, int z, int i_format) {$/;"	f	class:ax::Texture2DArray	signature:(int w, int h, int z, int i_format)
+InitializeDepth	.\texture_gl.cc	/^bool Texture2D::InitializeDepth(int w, int h, int i_format) {$/;"	f	class:ax::Texture2D	signature:(int w, int h, int i_format)
+Load	.\cube_image.cc	/^bool CubeImage::Load(const char *filename) {$/;"	f	class:ax::CubeImage	signature:(const char *filename)
+Load	.\image.cc	/^bool Image::Load(const char *filename) {$/;"	f	class:ax::Image	signature:(const char *filename)
+Load	.\program_glsl.cc	/^bool ProgramGLSL::Load(const char *vertex_shader, const char *fragment_shader) {$/;"	f	class:ax::ProgramGLSL	signature:(const char *vertex_shader, const char *fragment_shader)
+Load	.\scene.cc	/^bool Scene::Load(const std::string &filename) {  $/;"	f	class:ax::Scene	signature:(const std::string &filename)
+Load	.\shader_object.cc	/^bool ShaderObject::Load(int type, const char *file) {$/;"	f	class:ax::ShaderObject	signature:(int type, const char *file)
+LoadGLMesh	.\glmesh-loader.cc	/^ObjectPtr LoadGLMesh(Scene *s, const std::string &filename, Options opts) {$/;"	f	namespace:ax	signature:(Scene *s, const std::string &filename, Options opts)
+LoadMaterial	.\object-factory.cc	/^MaterialPtr ObjectFactory::LoadMaterial(const char *ptr, Scene *s, FILE *fp) {$/;"	f	class:ax::ObjectFactory	signature:(const char *ptr, Scene *s, FILE *fp)
+LoadMaterial	.\scene.cc	/^MaterialPtr Scene::LoadMaterial(const char *buff, FILE *fp) {$/;"	f	class:ax::Scene	signature:(const char *buff, FILE *fp)
+LoadObject	.\scene.cc	/^ObjectPtr Scene::LoadObject(const char *buff, FILE *fp) {$/;"	f	class:ax::Scene	signature:(const char *buff, FILE *fp)
+LoadTexture	.\scene.cc	/^Texture2DPtr Scene::LoadTexture(const char *buff) {$/;"	f	class:ax::Scene	signature:(const char *buff)
+LoadWavefront	.\object-factory.cc	/^ObjectPtr ObjectFactory::LoadWavefront(FILE *fp, Scene *s, Options opts) {$/;"	f	class:ax::ObjectFactory	signature:(FILE *fp, Scene *s, Options opts)
+M_PI	.\glm_avl.h	25;"	d
+MakeFullScreenQuad	.\gl_utils.cc	/^GLuint MakeFullScreenQuad() {$/;"	f	namespace:ax	signature:()
+ParseNumber	.\parser.cc	/^float ParseNumber(const char *str) {$/;"	f	namespace:ax	signature:(const char *str)
+Pitch	.\camera.cc	/^void FirstPersonMotion::Pitch(float angle) {$/;"	f	class:ax::FirstPersonMotion	signature:(float angle)
+Pitch	.\camera.cc	/^void FlyMotion::Pitch(float angle) {$/;"	f	class:ax::FlyMotion	signature:(float angle)
+Pitch	.\camera.cc	/^void OrbitMotion::Pitch(float angle) {$/;"	f	class:ax::OrbitMotion	signature:(float angle)
+PreProcess	.\glmesh.cc	/^void GLMesh::PreProcess(Options opts) {$/;"	f	class:ax::GLMesh	signature:(Options opts)
+PreProcess	.\group.cc	/^void Group::PreProcess(Options opts) {$/;"	f	class:ax::Group	signature:(Options opts)
+PreProcess	.\scene.cc	/^void Scene::PreProcess(Options opts) {$/;"	f	class:ax::Scene	signature:(Options opts)
+PrintCompileLog	.\shader_object.cc	/^void ShaderObject::PrintCompileLog() {$/;"	f	class:ax::ShaderObject	signature:()
+PrintLinkLog	.\program_glsl.cc	/^void ProgramGLSL::PrintLinkLog() const {$/;"	f	class:ax::ProgramGLSL	signature:() const
+ReadSahderFile	.\shader_object.cc	/^int ShaderObject::ReadSahderFile(const char *file, char** code) {$/;"	f	class:ax::ShaderObject	signature:(const char *file, char** code)
+RenderBuffer	.\render_buffer.cc	/^RenderBuffer::RenderBuffer(int width, int height, GLint internal_format) $/;"	f	class:ax::RenderBuffer	signature:(int width, int height, GLint internal_format)
+RestoreMVP	.\render_device_fbo.cc	/^void RenderDeviceFBO::RestoreMVP() {$/;"	f	class:ax::RenderDeviceFBO	signature:()
+Roll	.\camera.cc	/^void FirstPersonMotion::Roll(float angle) {$/;"	f	class:ax::FirstPersonMotion	signature:(float angle)
+Roll	.\camera.cc	/^void FlyMotion::Roll(float angle) {  Motion::roll_(angle);  }$/;"	f	class:ax::FlyMotion	signature:(float angle)
+Roll	.\camera.cc	/^void OrbitMotion::Roll(float angle) {$/;"	f	class:ax::OrbitMotion	signature:(float angle)
+Save	.\texture_gl.cc	/^void Texture2D::Save(const char *filename, int level) const {  $/;"	f	class:ax::Texture2D	signature:(const char *filename, int level) const
+Save	.\texture_gl.cc	/^void Texture2D::Save(const char *filename, int level, int type, int format, $/;"	f	class:ax::Texture2D	signature:(const char *filename, int level, int type, int format, void *data) const
+Save	.\texture_gl.cc	/^void Texture2DArray::Save(const char *filename, int z, int level) const {$/;"	f	class:ax::Texture2DArray	signature:(const char *filename, int z, int level) const
+SaveFrameBuffer	.\gl_utils.cc	/^void SaveFrameBuffer(const char *filename) {$/;"	f	namespace:ax	signature:(const char *filename)
+SaveImage	.\image.cc	/^void SaveImage(const char *filename, const int w, const int h,$/;"	f	namespace:ax	signature:(const char *filename, const int w, const int h, uint32 depth, uint8 n_channels, uint32 format, uint32 type, void *data)
+SaveMVP	.\render_device_fbo.cc	/^void RenderDeviceFBO::SaveMVP() {$/;"	f	class:ax::RenderDeviceFBO	signature:()
+ScreenQuad	.\model_gl.cc	/^ScreenQuad::ScreenQuad() : Quad2DGL(0, 0, 1, 1) {$/;"	f	class:ax::ScreenQuad	signature:()
+SetDefaultParameters	.\texture_gl.cc	/^void TextureGL::SetDefaultParameters() {$/;"	f	class:ax::TextureGL	signature:()
+SetDepthBuffer	.\render_device_fbo.cc	/^void RenderDeviceFBO::SetDepthBuffer(const RenderBuffer *render_buffer) {$/;"	f	class:ax::RenderDeviceFBO	signature:(const RenderBuffer *render_buffer)
+SetDepthBuffer	.\render_device_fbo.cc	/^void RenderDeviceFBO::SetDepthBuffer(const Texture2DPtr texture) {$/;"	f	class:ax::RenderDeviceFBO	signature:(const Texture2DPtr texture)
+SetRenderTarget	.\render_device_fbo.cc	/^void RenderDeviceFBO::SetRenderTarget(const RenderBuffer *render_buffer) {$/;"	f	class:ax::RenderDeviceFBO	signature:(const RenderBuffer *render_buffer)
+SetRenderTarget	.\render_device_fbo.cc	/^void RenderDeviceFBO::SetRenderTarget(const Texture2DPtr texture) {$/;"	f	class:ax::RenderDeviceFBO	signature:(const Texture2DPtr texture)
+SetRenderTargets	.\render_device_fbo.cc	/^void RenderDeviceFBO::SetRenderTargets($/;"	f	class:ax::RenderDeviceFBO	signature:( int target_count, const RenderBuffer *const render_buffers[])
+SetRenderTargets	.\render_device_fbo.cc	/^void RenderDeviceFBO::SetRenderTargets(const std::vector<Texture2DPtr> &textures) {$/;"	f	class:ax::RenderDeviceFBO	signature:(const std::vector<Texture2DPtr> &textures)
+SetSubroutineVar	.\program_glsl.cc	/^void ProgramGLSL::SetSubroutineVar(const std::string &var_name, $/;"	f	class:ax::ProgramGLSL	signature:(const std::string &var_name, const std::string &routine_name, int shader_type)
+SetTextureVar	.\program_glsl.cc	/^void ProgramGLSL::SetTextureVar(const char *name, $/;"	f	class:ax::ProgramGLSL	signature:(const char *name, const Texture2DPtr &tex)
+SetTextureVar	.\program_glsl.cc	/^void ProgramGLSL::SetTextureVar(const char *name, const Texture2DPtr *texs,$/;"	f	class:ax::ProgramGLSL	signature:(const char *name, const Texture2DPtr *texs, size_t n)
+Strafe	.\camera.cc	/^void FirstPersonMotion::Strafe(float units) {$/;"	f	class:ax::FirstPersonMotion	signature:(float units)
+Strafe	.\camera.cc	/^void FlyMotion::Strafe(float units) {$/;"	f	class:ax::FlyMotion	signature:(float units)
+StripLeading	.\parser.cc	/^const char *StripLeading(const char *str) {  $/;"	f	namespace:ax	signature:(const char *str)
+StripToken	.\parser.cc	/^const char *StripToken(const char *ptr, char *token) {$/;"	f	namespace:ax	signature:(const char *ptr, char *token)
+T	.\glm_avl.cpp	24;"	d	file:
+ToLower	.\parser.cc	/^void ToLower(char *str) {$/;"	f	namespace:ax	signature:(char *str)
+TriVertAttribIdx	.\glmesh-loader.cc	/^typedef size_t TriVertAttribIdx(const GLMmodel *model, size_t tri, size_t vidx);$/;"	t	namespace:ax	file:
+Unattach	.\framebuffer_object.cc	/^void FramebufferObject::Unattach(GLenum attachment) {$/;"	f	class:ax::FramebufferObject	signature:(GLenum attachment)
+UnattachAll	.\framebuffer_object.cc	/^void FramebufferObject::UnattachAll() {$/;"	f	class:ax::FramebufferObject	signature:()
+UnattachAllColorAttachement	.\framebuffer_object.cc	/^void FramebufferObject::UnattachAllColorAttachement() {$/;"	f	class:ax::FramebufferObject	signature:()
+UpdataPosition	.\camera.cc	/^void OrbitMotion::UpdataPosition() {$/;"	f	class:ax::OrbitMotion	signature:()
+VOffset	.\glmesh-loader.cc	/^size_t VOffset(const Idxs &nidxs, size_t nidx) {$/;"	f	namespace:ax	signature:(const Idxs &nidxs, size_t nidx)
+VertAttribStastics	.\glmesh-loader.cc	/^void VertAttribStastics(const GLMmodel *model, VertAttribsVec *vert_attribs,$/;"	f	namespace:ax	signature:(const GLMmodel *model, VertAttribsVec *vert_attribs, TriVertAttribIdx attrib)
+VertAttribsVec	.\glmesh-loader.cc	/^typedef Array<Idxs> VertAttribsVec;$/;"	t	namespace:ax	file:
+VisualizeTexture	.\gl_utils.cc	/^void VisualizeTexture(const Texture2DPtr tex) {$/;"	f	namespace:ax	signature:(const Texture2DPtr tex)
+Walk	.\camera.cc	/^void FirstPersonMotion::Walk(float units) {$/;"	f	class:ax::FirstPersonMotion	signature:(float units)
+Walk	.\camera.cc	/^void FlyMotion::Walk(float units) {$/;"	f	class:ax::FlyMotion	signature:(float units)
+Walk	.\camera.cc	/^void OrbitMotion::Walk( float units ) {$/;"	f	class:ax::OrbitMotion	signature:( float units )
+Walk	.\camera.cc	/^void SpectatorMotion::Walk(float units) {$/;"	f	class:ax::SpectatorMotion	signature:(float units)
+Yaw	.\camera.cc	/^void FirstPersonMotion::Yaw(float angle) {$/;"	f	class:ax::FirstPersonMotion	signature:(float angle)
+Yaw	.\camera.cc	/^void FlyMotion::Yaw(float angle) {$/;"	f	class:ax::FlyMotion	signature:(float angle)
+Yaw	.\camera.cc	/^void OrbitMotion::Yaw(float angle) {$/;"	f	class:ax::OrbitMotion	signature:(float angle)
+_GLMgroup	.\glm_avl.h	/^typedef struct _GLMgroup {$/;"	s
+_GLMgroup::material	.\glm_avl.h	/^  GLuint            material;       \/* index to material for group *\/$/;"	m	struct:_GLMgroup	access:public
+_GLMgroup::name	.\glm_avl.h	/^  char*             name;           \/* name of this group *\/$/;"	m	struct:_GLMgroup	access:public
+_GLMgroup::next	.\glm_avl.h	/^  struct _GLMgroup* next;           \/* pointer to next group in model *\/$/;"	m	struct:_GLMgroup	typeref:struct:_GLMgroup::_GLMgroup	access:public
+_GLMgroup::numtriangles	.\glm_avl.h	/^  GLuint            numtriangles;   \/* number of triangles in this group *\/$/;"	m	struct:_GLMgroup	access:public
+_GLMgroup::triangles	.\glm_avl.h	/^  GLuint*           triangles;      \/* array of triangle indices *\/$/;"	m	struct:_GLMgroup	access:public
+_GLMmaterial	.\glm_avl.h	/^typedef struct _GLMmaterial$/;"	s
+_GLMmaterial::ambient	.\glm_avl.h	/^  GLfloat ambient[4];           \/* ambient component *\/$/;"	m	struct:_GLMmaterial	access:public
+_GLMmaterial::diffuse	.\glm_avl.h	/^  GLfloat diffuse[4];           \/* diffuse component *\/$/;"	m	struct:_GLMmaterial	access:public
+_GLMmaterial::emmissive	.\glm_avl.h	/^  GLfloat emmissive[4];         \/* emmissive component *\/$/;"	m	struct:_GLMmaterial	access:public
+_GLMmaterial::height	.\glm_avl.h	/^  int height,$/;"	m	struct:_GLMmaterial	access:public
+_GLMmaterial::image	.\glm_avl.h	/^  unsigned char* image;$/;"	m	struct:_GLMmaterial	access:public
+_GLMmaterial::name	.\glm_avl.h	/^  char* name;                   \/* name of material *\/$/;"	m	struct:_GLMmaterial	access:public
+_GLMmaterial::shininess	.\glm_avl.h	/^  GLfloat shininess;            \/* specular exponent *\/$/;"	m	struct:_GLMmaterial	access:public
+_GLMmaterial::specular	.\glm_avl.h	/^  GLfloat specular[4];          \/* specular component *\/$/;"	m	struct:_GLMmaterial	access:public
+_GLMmaterial::t_filename	.\glm_avl.h	/^  char *t_filename;$/;"	m	struct:_GLMmaterial	access:public
+_GLMmaterial::t_id	.\glm_avl.h	/^  GLuint t_id[1];$/;"	m	struct:_GLMmaterial	access:public
+_GLMmaterial::textured	.\glm_avl.h	/^  int textured;$/;"	m	struct:_GLMmaterial	access:public
+_GLMmaterial::width	.\glm_avl.h	/^      width;$/;"	m	struct:_GLMmaterial	access:public
+_GLMmodel	.\glm_avl.h	/^typedef struct _GLMmodel {$/;"	s
+_GLMmodel::facetnorms	.\glm_avl.h	/^  GLfloat* facetnorms;          \/* array of facetnorms *\/$/;"	m	struct:_GLMmodel	access:public
+_GLMmodel::groups	.\glm_avl.h	/^  GLMgroup*    groups;          \/* linked list of groups *\/$/;"	m	struct:_GLMmodel	access:public
+_GLMmodel::materials	.\glm_avl.h	/^  GLMmaterial* materials;       \/* array of materials *\/$/;"	m	struct:_GLMmodel	access:public
+_GLMmodel::mtllibname	.\glm_avl.h	/^  char*    mtllibname;          \/* name of the material library *\/$/;"	m	struct:_GLMmodel	access:public
+_GLMmodel::normals	.\glm_avl.h	/^  GLfloat* normals;             \/* array of normals *\/$/;"	m	struct:_GLMmodel	access:public
+_GLMmodel::numfacetnorms	.\glm_avl.h	/^  GLuint   numfacetnorms;       \/* number of facetnorms in model *\/$/;"	m	struct:_GLMmodel	access:public
+_GLMmodel::numgroups	.\glm_avl.h	/^  GLuint       numgroups;       \/* number of groups in model *\/$/;"	m	struct:_GLMmodel	access:public
+_GLMmodel::nummaterials	.\glm_avl.h	/^  GLuint       nummaterials;    \/* number of materials in model *\/$/;"	m	struct:_GLMmodel	access:public
+_GLMmodel::numnormals	.\glm_avl.h	/^  GLuint   numnormals;          \/* number of normals in model *\/$/;"	m	struct:_GLMmodel	access:public
+_GLMmodel::numtexcoords	.\glm_avl.h	/^  GLuint   numtexcoords;        \/* number of texcoords in model *\/$/;"	m	struct:_GLMmodel	access:public
+_GLMmodel::numtriangles	.\glm_avl.h	/^  GLuint       numtriangles;    \/* number of triangles in model *\/$/;"	m	struct:_GLMmodel	access:public
+_GLMmodel::numvertices	.\glm_avl.h	/^  GLuint   numvertices;         \/* number of vertices in model *\/$/;"	m	struct:_GLMmodel	access:public
+_GLMmodel::pathname	.\glm_avl.h	/^  char*    pathname;            \/* path to this model *\/$/;"	m	struct:_GLMmodel	access:public
+_GLMmodel::position	.\glm_avl.h	/^  GLfloat position[3];          \/* position of the model *\/$/;"	m	struct:_GLMmodel	access:public
+_GLMmodel::texcoords	.\glm_avl.h	/^  GLfloat* texcoords;           \/* array of texture coordinates *\/$/;"	m	struct:_GLMmodel	access:public
+_GLMmodel::triangles	.\glm_avl.h	/^  GLMtriangle* triangles;       \/* array of triangles *\/$/;"	m	struct:_GLMmodel	access:public
+_GLMmodel::vertices	.\glm_avl.h	/^  GLfloat* vertices;            \/* array of vertices  *\/$/;"	m	struct:_GLMmodel	access:public
+_GLMnode	.\glm_avl.cpp	/^typedef struct _GLMnode {$/;"	s	file:
+_GLMnode::averaged	.\glm_avl.cpp	/^    GLboolean      averaged;$/;"	m	struct:_GLMnode	file:	access:public
+_GLMnode::index	.\glm_avl.cpp	/^    GLuint         index;$/;"	m	struct:_GLMnode	file:	access:public
+_GLMnode::next	.\glm_avl.cpp	/^    struct _GLMnode* next;$/;"	m	struct:_GLMnode	typeref:struct:_GLMnode::_GLMnode	file:	access:public
+_GLMtriangle	.\glm_avl.h	/^typedef struct _GLMtriangle {$/;"	s
+_GLMtriangle::findex	.\glm_avl.h	/^  GLuint findex;                \/* index of triangle facet normal *\/$/;"	m	struct:_GLMtriangle	access:public
+_GLMtriangle::nindices	.\glm_avl.h	/^  GLuint nindices[3];           \/* array of triangle normal indices *\/$/;"	m	struct:_GLMtriangle	access:public
+_GLMtriangle::tindices	.\glm_avl.h	/^  GLuint tindices[3];           \/* array of triangle texcoord indices*\/$/;"	m	struct:_GLMtriangle	access:public
+_GLMtriangle::vindices	.\glm_avl.h	/^  GLuint vindices[3];           \/* array of triangle vertex indices *\/$/;"	m	struct:_GLMtriangle	access:public
+ambient	.\glm_avl.h	/^  GLfloat ambient[4];           \/* ambient component *\/$/;"	m	struct:_GLMmaterial	access:public
+averaged	.\glm_avl.cpp	/^    GLboolean      averaged;$/;"	m	struct:_GLMnode	file:	access:public
+ax	.\camera.cc	/^namespace ax {$/;"	n	file:
+ax	.\cube_image.cc	/^namespace ax {$/;"	n	file:
+ax	.\framebuffer_object.cc	/^namespace ax {$/;"	n	file:
+ax	.\gl_utils.cc	/^namespace ax {$/;"	n	file:
+ax	.\glmaterial.cc	/^namespace ax {$/;"	n	file:
+ax	.\glmesh-loader.cc	/^namespace ax {$/;"	n	file:
+ax	.\glmesh.cc	/^namespace ax {$/;"	n	file:
+ax	.\glslmaterial.cc	/^namespace ax {$/;"	n	file:
+ax	.\group.cc	/^namespace ax {$/;"	n	file:
+ax	.\image.cc	/^namespace ax {$/;"	n	file:
+ax	.\material-factory.cc	/^namespace ax {$/;"	n	file:
+ax	.\material.cc	/^namespace ax {$/;"	n	file:
+ax	.\model_gl.cc	/^namespace ax {$/;"	n	file:
+ax	.\object-factory.cc	/^namespace ax {$/;"	n	file:
+ax	.\parser.cc	/^namespace ax {$/;"	n	file:
+ax	.\program_glsl.cc	/^namespace ax {$/;"	n	file:
+ax	.\render_buffer.cc	/^namespace ax {$/;"	n	file:
+ax	.\render_device_fbo.cc	/^namespace ax {$/;"	n	file:
+ax	.\scene.cc	/^namespace ax {$/;"	n	file:
+ax	.\shader_object.cc	/^namespace ax {$/;"	n	file:
+ax	.\texture_gl.cc	/^namespace ax {$/;"	n	file:
+ax::CheckErrorsGL	.\gl_utils.cc	/^bool CheckErrorsGL(const char* location) {	$/;"	f	namespace:ax	signature:(const char* location)
+ax::CheckGLInfo	.\gl_utils.cc	/^bool CheckGLInfo() {$/;"	f	namespace:ax	signature:()
+ax::CountExpandedVerts	.\glmesh-loader.cc	/^size_t CountExpandedVerts(const VertAttribsVec &attribs) {$/;"	f	namespace:ax	signature:(const VertAttribsVec &attribs)
+ax::CountExpandedVerts	.\glmesh-loader.cc	/^size_t CountExpandedVerts(const VertAttribsVec &attribs1, $/;"	f	namespace:ax	signature:(const VertAttribsVec &attribs1, const VertAttribsVec &attribs2)
+ax::CreateIndexArray	.\glmesh-loader.cc	/^uint32 *CreateIndexArray(const GLMmodel *model) {$/;"	f	namespace:ax	signature:(const GLMmodel *model)
+ax::CreateNormalArray	.\glmesh-loader.cc	/^Normal *CreateNormalArray(const GLMmodel *model) {$/;"	f	namespace:ax	signature:(const GLMmodel *model)
+ax::CreateTexCoordArray	.\glmesh-loader.cc	/^float *CreateTexCoordArray(const GLMmodel *model) {$/;"	f	namespace:ax	signature:(const GLMmodel *model)
+ax::CreateVertexArray	.\glmesh-loader.cc	/^Point *CreateVertexArray(const GLMmodel *model) {$/;"	f	namespace:ax	signature:(const GLMmodel *model)
+ax::CubeImage::Load	.\cube_image.cc	/^bool CubeImage::Load(const char *filename) {$/;"	f	class:ax::CubeImage	signature:(const char *filename)
+ax::CubeTexture::Initialize	.\texture_gl.cc	/^bool CubeTexture::Initialize(const CubeImage &image, int i_format) {$/;"	f	class:ax::CubeTexture	signature:(const CubeImage &image, int i_format)
+ax::CubeTexture::Initialize	.\texture_gl.cc	/^bool CubeTexture::Initialize(const Image *images[6], int i_format) {$/;"	f	class:ax::CubeTexture	signature:(const Image *images[6], int i_format)
+ax::CubeTexture::Initialize	.\texture_gl.cc	/^bool CubeTexture::Initialize(int w, int h, int i_format) {$/;"	f	class:ax::CubeTexture	signature:(int w, int h, int i_format)
+ax::DisplayStatistics	.\gl_utils.cc	/^void DisplayStatistics(const char *name, float data, const char *unit, $/;"	f	namespace:ax	signature:(const char *name, float data, const char *unit, int x, int y)
+ax::DrawCube	.\gl_utils.cc	/^void DrawCube(float size);$/;"	p	namespace:ax	file:	signature:(float size)
+ax::DrawCube	.\gl_utils.cc	/^void DrawCube(float x1, float y1, float z1, float x2, float y2, float z2) {$/;"	f	namespace:ax	signature:(float x1, float y1, float z1, float x2, float y2, float z2)
+ax::DrawQuad	.\gl_utils.cc	/^void DrawQuad(float x1, float y1 ,float x2, float y2, float z) {$/;"	f	namespace:ax	signature:(float x1, float y1 ,float x2, float y2, float z)
+ax::DrawQuad	.\gl_utils.cc	/^void DrawQuad(float x1, float y1, float x2, float y2) {$/;"	f	namespace:ax	signature:(float x1, float y1, float x2, float y2)
+ax::DrawQuad	.\gl_utils.cc	/^void DrawQuad(float x1, float y1, float z1,  float x2, float y2, float z2) {$/;"	f	namespace:ax	signature:(float x1, float y1, float z1, float x2, float y2, float z2)
+ax::EatToEndKeyword	.\parser.cc	/^void EatToEndKeyword(FILE *fp, LineToken &token) {$/;"	f	namespace:ax	signature:(FILE *fp, LineToken &token)
+ax::ExpandMesh	.\glmesh-loader.cc	/^size_t ExpandMesh(const GLMmodel *model, Point **vertices, Normal **normals, $/;"	f	namespace:ax	signature:(const GLMmodel *model, Point **vertices, Normal **normals, float **tcoords, uint32 **indices)
+ax::ExpandNormalAttrib	.\glmesh-loader.cc	/^size_t ExpandNormalAttrib(const GLMmodel *model, Point **vertices, $/;"	f	namespace:ax	signature:(const GLMmodel *model, Point **vertices, Normal **normals, uint32 **indices)
+ax::ExpandTexcoordAttrib	.\glmesh-loader.cc	/^size_t ExpandTexcoordAttrib(const GLMmodel *model, Point **vertices, $/;"	f	namespace:ax	signature:(const GLMmodel *model, Point **vertices, float **tcoords, uint32 **indices)
+ax::ExtractMatrix	.\object-factory.cc	/^glm::mat4 ExtractMatrix(const char *str) {$/;"	f	namespace:ax	signature:(const char *str)
+ax::FirstPersonMotion::Fly	.\camera.cc	/^void FirstPersonMotion::Fly(float units) {$/;"	f	class:ax::FirstPersonMotion	signature:(float units)
+ax::FirstPersonMotion::Pitch	.\camera.cc	/^void FirstPersonMotion::Pitch(float angle) {$/;"	f	class:ax::FirstPersonMotion	signature:(float angle)
+ax::FirstPersonMotion::Roll	.\camera.cc	/^void FirstPersonMotion::Roll(float angle) {$/;"	f	class:ax::FirstPersonMotion	signature:(float angle)
+ax::FirstPersonMotion::Strafe	.\camera.cc	/^void FirstPersonMotion::Strafe(float units) {$/;"	f	class:ax::FirstPersonMotion	signature:(float units)
+ax::FirstPersonMotion::Walk	.\camera.cc	/^void FirstPersonMotion::Walk(float units) {$/;"	f	class:ax::FirstPersonMotion	signature:(float units)
+ax::FirstPersonMotion::Yaw	.\camera.cc	/^void FirstPersonMotion::Yaw(float angle) {$/;"	f	class:ax::FirstPersonMotion	signature:(float angle)
+ax::FlyMotion::Fly	.\camera.cc	/^void FlyMotion::Fly(float units) {$/;"	f	class:ax::FlyMotion	signature:(float units)
+ax::FlyMotion::Pitch	.\camera.cc	/^void FlyMotion::Pitch(float angle) {$/;"	f	class:ax::FlyMotion	signature:(float angle)
+ax::FlyMotion::Roll	.\camera.cc	/^void FlyMotion::Roll(float angle) {  Motion::roll_(angle);  }$/;"	f	class:ax::FlyMotion	signature:(float angle)
+ax::FlyMotion::Strafe	.\camera.cc	/^void FlyMotion::Strafe(float units) {$/;"	f	class:ax::FlyMotion	signature:(float units)
+ax::FlyMotion::Walk	.\camera.cc	/^void FlyMotion::Walk(float units) {$/;"	f	class:ax::FlyMotion	signature:(float units)
+ax::FlyMotion::Yaw	.\camera.cc	/^void FlyMotion::Yaw(float angle) {$/;"	f	class:ax::FlyMotion	signature:(float angle)
+ax::FlyMotion::update_	.\camera.cc	/^void FlyMotion::update_() {$/;"	f	class:ax::FlyMotion	signature:()
+ax::FramebufferObject::AttachRenderBuffer	.\framebuffer_object.cc	/^void FramebufferObject::AttachRenderBuffer(GLuint buffer_id, $/;"	f	class:ax::FramebufferObject	signature:(GLuint buffer_id, GLenum attachment)
+ax::FramebufferObject::AttachRenderBuffers	.\framebuffer_object.cc	/^void FramebufferObject::AttachRenderBuffers($/;"	f	class:ax::FramebufferObject	signature:( int buffer_count, GLuint buffer_id[], GLenum attachment[])
+ax::FramebufferObject::AttachTexture	.\framebuffer_object.cc	/^void FramebufferObject::AttachTexture(GLenum tex_target, GLuint tex_id, $/;"	f	class:ax::FramebufferObject	signature:(GLenum tex_target, GLuint tex_id, GLenum attachment, int mip_level, int zslice)
+ax::FramebufferObject::AttachTextures	.\framebuffer_object.cc	/^void FramebufferObject::AttachTextures(int tex_count, GLenum tex_target[], $/;"	f	class:ax::FramebufferObject	signature:(int tex_count, GLenum tex_target[], GLuint tex_id[], GLenum attachment[], int mip_level[], int zslice[])
+ax::FramebufferObject::Bind	.\framebuffer_object.cc	/^void FramebufferObject::Bind() const {$/;"	f	class:ax::FramebufferObject	signature:() const
+ax::FramebufferObject::CheckBufferStatus	.\framebuffer_object.cc	/^bool FramebufferObject::CheckBufferStatus() {$/;"	f	class:ax::FramebufferObject	signature:()
+ax::FramebufferObject::CheckRedundancy	.\framebuffer_object.cc	/^bool FramebufferObject::CheckRedundancy(GLenum attachment, GLuint tex_id,$/;"	f	class:ax::FramebufferObject	signature:(GLenum attachment, GLuint tex_id, int mip_level, int z_slice)
+ax::FramebufferObject::Disable	.\framebuffer_object.cc	/^void FramebufferObject::Disable() {$/;"	f	class:ax::FramebufferObject	signature:()
+ax::FramebufferObject::FramebufferObject	.\framebuffer_object.cc	/^FramebufferObject::FramebufferObject()$/;"	f	class:ax::FramebufferObject	signature:()
+ax::FramebufferObject::FramebufferTextureND	.\framebuffer_object.cc	/^void FramebufferObject::FramebufferTextureND(GLenum attachment, $/;"	f	class:ax::FramebufferObject	signature:(GLenum attachment, GLenum tex_target, GLuint tex_id, int mip_level, int zslice)
+ax::FramebufferObject::GenerateFboId	.\framebuffer_object.cc	/^GLuint FramebufferObject::GenerateFboId() {$/;"	f	class:ax::FramebufferObject	signature:()
+ax::FramebufferObject::GetAttachedCubeFace	.\framebuffer_object.cc	/^GLint FramebufferObject::GetAttachedCubeFace(GLenum attachment) {$/;"	f	class:ax::FramebufferObject	signature:(GLenum attachment)
+ax::FramebufferObject::GetAttachedId	.\framebuffer_object.cc	/^GLuint FramebufferObject::GetAttachedId(GLenum attachment) {$/;"	f	class:ax::FramebufferObject	signature:(GLenum attachment)
+ax::FramebufferObject::GetAttachedMipLevel	.\framebuffer_object.cc	/^GLint FramebufferObject::GetAttachedMipLevel(GLenum attachment) {$/;"	f	class:ax::FramebufferObject	signature:(GLenum attachment)
+ax::FramebufferObject::GetAttachedType	.\framebuffer_object.cc	/^GLenum FramebufferObject::GetAttachedType(GLenum attachment) {$/;"	f	class:ax::FramebufferObject	signature:(GLenum attachment)
+ax::FramebufferObject::GetAttachedZSlice	.\framebuffer_object.cc	/^GLint FramebufferObject::GetAttachedZSlice(GLenum attachment) {$/;"	f	class:ax::FramebufferObject	signature:(GLenum attachment)
+ax::FramebufferObject::GetMaxColorAttachments	.\framebuffer_object.cc	/^GLint FramebufferObject::GetMaxColorAttachments() {$/;"	f	class:ax::FramebufferObject	signature:()
+ax::FramebufferObject::GuardedBind	.\framebuffer_object.cc	/^void FramebufferObject::GuardedBind() {$/;"	f	class:ax::FramebufferObject	signature:()
+ax::FramebufferObject::GuardedUnbind	.\framebuffer_object.cc	/^void FramebufferObject::GuardedUnbind() {$/;"	f	class:ax::FramebufferObject	signature:()
+ax::FramebufferObject::Unattach	.\framebuffer_object.cc	/^void FramebufferObject::Unattach(GLenum attachment) {$/;"	f	class:ax::FramebufferObject	signature:(GLenum attachment)
+ax::FramebufferObject::UnattachAll	.\framebuffer_object.cc	/^void FramebufferObject::UnattachAll() {$/;"	f	class:ax::FramebufferObject	signature:()
+ax::FramebufferObject::UnattachAllColorAttachement	.\framebuffer_object.cc	/^void FramebufferObject::UnattachAllColorAttachement() {$/;"	f	class:ax::FramebufferObject	signature:()
+ax::FramebufferObject::~FramebufferObject	.\framebuffer_object.cc	/^FramebufferObject::~FramebufferObject() {$/;"	f	class:ax::FramebufferObject	signature:()
+ax::GLGroup::Draw	.\glmesh.cc	/^void GLGroup::Draw() const {$/;"	f	class:ax::GLGroup	signature:() const
+ax::GLGroup::Draw	.\glmesh.cc	/^void GLGroup::Draw(ProgramGLSLPtr prog, Options opts) const {  $/;"	f	class:ax::GLGroup	signature:(ProgramGLSLPtr prog, Options opts) const
+ax::GLGroup::Draw	.\glmesh.cc	/^void GLGroup::Draw(const Scene *s, Options opts) const {  $/;"	f	class:ax::GLGroup	signature:(const Scene *s, Options opts) const
+ax::GLMaterial::Enable	.\glmaterial.cc	/^void GLMaterial::Enable(ProgramGLSLPtr prog) const {$/;"	f	class:ax::GLMaterial	signature:(ProgramGLSLPtr prog) const
+ax::GLMaterial::Enable	.\glmaterial.cc	/^void GLMaterial::Enable(const Scene *s) const{$/;"	f	class:ax::GLMaterial	signature:(const Scene *s) const
+ax::GLMaterial::GLMaterial	.\glmaterial.cc	/^GLMaterial::GLMaterial(const Colorf &amb, const Colorf &dif, $/;"	f	class:ax::GLMaterial	signature:(const Colorf &amb, const Colorf &dif, const Colorf &spec, float shiny, const char *name)
+ax::GLMaterial::GLMaterial	.\glmaterial.cc	/^GLMaterial::GLMaterial(const char *name) : Material(name),$/;"	f	class:ax::GLMaterial	signature:(const char *name)
+ax::GLMaterial::GLMaterial	.\glmaterial.cc	/^GLMaterial::GLMaterial(float *amb, float *dif, float *spec, float shiny,$/;"	f	class:ax::GLMaterial	signature:(float *amb, float *dif, float *spec, float shiny, const char *name)
+ax::GLMaterial::GLMaterial	.\glmaterial.cc	/^GLMaterial::GLMaterial(int predefined) : Material("") {$/;"	f	class:ax::GLMaterial	signature:(int predefined)
+ax::GLMesh::AllocateIdxVBO	.\glmesh.cc	/^bool GLMesh::AllocateIdxVBO(size_t size, const void *data) {$/;"	f	class:ax::GLMesh	signature:(size_t size, const void *data)
+ax::GLMesh::AllocateVertVBO	.\glmesh.cc	/^bool GLMesh::AllocateVertVBO(size_t size) {$/;"	f	class:ax::GLMesh	signature:(size_t size)
+ax::GLMesh::ApplyTransform	.\glmesh.cc	/^void GLMesh::ApplyTransform(const ax::Matrix4x4 &m) {$/;"	f	class:ax::GLMesh	signature:(const ax::Matrix4x4 &m)
+ax::GLMesh::BeginDraw	.\glmesh.cc	/^void GLMesh::BeginDraw(Options opts) const {$/;"	f	class:ax::GLMesh	signature:(Options opts) const
+ax::GLMesh::ComputeBound	.\glmesh.cc	/^ax::AABB GLMesh::ComputeBound(const ax::Matrix4x4 &m) const {$/;"	f	class:ax::GLMesh	signature:(const ax::Matrix4x4 &m) const
+ax::GLMesh::Draw	.\glmesh.cc	/^void GLMesh::Draw(ProgramGLSLPtr prog, Options opts) const {$/;"	f	class:ax::GLMesh	signature:(ProgramGLSLPtr prog, Options opts) const
+ax::GLMesh::Draw	.\glmesh.cc	/^void GLMesh::Draw(const Scene *s, Options opts) const {$/;"	f	class:ax::GLMesh	signature:(const Scene *s, Options opts) const
+ax::GLMesh::EndDraw	.\glmesh.cc	/^void GLMesh::EndDraw(Options opts) const {$/;"	f	class:ax::GLMesh	signature:(Options opts) const
+ax::GLMesh::PreProcess	.\glmesh.cc	/^void GLMesh::PreProcess(Options opts) {$/;"	f	class:ax::GLMesh	signature:(Options opts)
+ax::GLMesh::~GLMesh	.\glmesh.cc	/^GLMesh::~GLMesh() { }$/;"	f	class:ax::GLMesh	signature:()
+ax::GLSLMaterial::Enable	.\glslmaterial.cc	/^void GLSLMaterial::Enable(ProgramGLSLPtr prog) const {  $/;"	f	class:ax::GLSLMaterial	signature:(ProgramGLSLPtr prog) const
+ax::GLSLMaterial::Enable	.\glslmaterial.cc	/^void GLSLMaterial::Enable(const Scene *s) const {$/;"	f	class:ax::GLSLMaterial	signature:(const Scene *s) const
+ax::GLSLMaterial::HasTexture	.\glslmaterial.cc	/^bool GLSLMaterial::HasTexture() const {$/;"	f	class:ax::GLSLMaterial	signature:() const
+ax::GetNormalIdx	.\glmesh-loader.cc	/^inline size_t GetNormalIdx(const GLMmodel *model, size_t tri, size_t vidx) {$/;"	f	namespace:ax	signature:(const GLMmodel *model, size_t tri, size_t vidx)
+ax::GetTexcoordIdx	.\glmesh-loader.cc	/^inline size_t GetTexcoordIdx(const GLMmodel *model, size_t tri, size_t vidx) {$/;"	f	namespace:ax	signature:(const GLMmodel *model, size_t tri, size_t vidx)
+ax::GetVertexIdx	.\glmesh-loader.cc	/^inline size_t GetVertexIdx(const GLMmodel *model, size_t tri, size_t vidx) {$/;"	f	namespace:ax	signature:(const GLMmodel *model, size_t tri, size_t vidx)
+ax::Group::ApplyTransform	.\group.cc	/^void Group::ApplyTransform(const ax::Matrix4x4 &m) {  $/;"	f	class:ax::Group	signature:(const ax::Matrix4x4 &m)
+ax::Group::ComputeBound	.\group.cc	/^ax::AABB Group::ComputeBound(const ax::Matrix4x4 &m) const {$/;"	f	class:ax::Group	signature:(const ax::Matrix4x4 &m) const
+ax::Group::Draw	.\group.cc	/^void Group::Draw(ProgramGLSLPtr prog, Options opts) const {$/;"	f	class:ax::Group	signature:(ProgramGLSLPtr prog, Options opts) const
+ax::Group::Draw	.\group.cc	/^void Group::Draw(const Scene *s, Options opts) const {$/;"	f	class:ax::Group	signature:(const Scene *s, Options opts) const
+ax::Group::PreProcess	.\group.cc	/^void Group::PreProcess(Options opts) {$/;"	f	class:ax::Group	signature:(Options opts)
+ax::Idxs	.\glmesh-loader.cc	/^typedef List<size_t> Idxs;$/;"	t	namespace:ax	file:
+ax::Image::Load	.\image.cc	/^bool Image::Load(const char *filename) {$/;"	f	class:ax::Image	signature:(const char *filename)
+ax::LoadGLMesh	.\glmesh-loader.cc	/^ObjectPtr LoadGLMesh(Scene *s, const std::string &filename, Options opts) {$/;"	f	namespace:ax	signature:(Scene *s, const std::string &filename, Options opts)
+ax::MakeFullScreenQuad	.\gl_utils.cc	/^GLuint MakeFullScreenQuad() {$/;"	f	namespace:ax	signature:()
+ax::Material::kNullMatl	.\material.cc	/^const MaterialPtr Material::kNullMatl = $/;"	m	class:ax::Material	file:
+ax::Material::s_unnamed	.\material.cc	/^const char *Material::s_unnamed = "<Unnamed Material>";$/;"	m	class:ax::Material	file:
+ax::MaterialFactory::CreateGLMaterial	.\material-factory.cc	/^GLMaterialPtr MaterialFactory::CreateGLMaterial() {$/;"	f	class:ax::MaterialFactory	signature:()
+ax::MaterialFactory::CreateGLMaterial	.\material-factory.cc	/^MaterialPtr MaterialFactory::CreateGLMaterial($/;"	f	class:ax::MaterialFactory	signature:( const char *name, FILE *fp)
+ax::MaterialFactory::CreateGLSLMaterial	.\material-factory.cc	/^GLSLMaterialPtr MaterialFactory::CreateGLSLMaterial() {$/;"	f	class:ax::MaterialFactory	signature:()
+ax::MaterialFactory::CreateGLSLMaterial	.\material-factory.cc	/^MaterialPtr MaterialFactory::CreateGLSLMaterial(const char *name, FILE *fp, $/;"	f	class:ax::MaterialFactory	signature:(const char *name, FILE *fp, Scene *s)
+ax::Motion::fly_	.\camera.cc	/^void Motion::fly_(float units) {$/;"	f	class:ax::Motion	signature:(float units)
+ax::Motion::pitch_	.\camera.cc	/^void Motion::pitch_(float angle) {$/;"	f	class:ax::Motion	signature:(float angle)
+ax::Motion::roll_	.\camera.cc	/^void Motion::roll_(float angle) {$/;"	f	class:ax::Motion	signature:(float angle)
+ax::Motion::strafe_	.\camera.cc	/^void Motion::strafe_(float units) {$/;"	f	class:ax::Motion	signature:(float units)
+ax::Motion::walk_	.\camera.cc	/^void Motion::walk_(float units) {$/;"	f	class:ax::Motion	signature:(float units)
+ax::Motion::yaw_	.\camera.cc	/^void Motion::yaw_(float angle) {$/;"	f	class:ax::Motion	signature:(float angle)
+ax::Motion::~Motion	.\camera.cc	/^Motion::~Motion() { }$/;"	f	class:ax::Motion	signature:()
+ax::ObjectFactory::CreateGroup	.\object-factory.cc	/^GroupPtr ObjectFactory::CreateGroup() { return GroupPtr(new Group()); }$/;"	f	class:ax::ObjectFactory	signature:()
+ax::ObjectFactory::CreateGroup	.\object-factory.cc	/^ObjectPtr ObjectFactory::CreateGroup(FILE *fp, Scene *s) {  $/;"	f	class:ax::ObjectFactory	signature:(FILE *fp, Scene *s)
+ax::ObjectFactory::LoadMaterial	.\object-factory.cc	/^MaterialPtr ObjectFactory::LoadMaterial(const char *ptr, Scene *s, FILE *fp) {$/;"	f	class:ax::ObjectFactory	signature:(const char *ptr, Scene *s, FILE *fp)
+ax::ObjectFactory::LoadWavefront	.\object-factory.cc	/^ObjectPtr ObjectFactory::LoadWavefront(FILE *fp, Scene *s, Options opts) {$/;"	f	class:ax::ObjectFactory	signature:(FILE *fp, Scene *s, Options opts)
+ax::OrbitMotion::Pitch	.\camera.cc	/^void OrbitMotion::Pitch(float angle) {$/;"	f	class:ax::OrbitMotion	signature:(float angle)
+ax::OrbitMotion::Roll	.\camera.cc	/^void OrbitMotion::Roll(float angle) {$/;"	f	class:ax::OrbitMotion	signature:(float angle)
+ax::OrbitMotion::UpdataPosition	.\camera.cc	/^void OrbitMotion::UpdataPosition() {$/;"	f	class:ax::OrbitMotion	signature:()
+ax::OrbitMotion::Walk	.\camera.cc	/^void OrbitMotion::Walk( float units ) {$/;"	f	class:ax::OrbitMotion	signature:( float units )
+ax::OrbitMotion::Yaw	.\camera.cc	/^void OrbitMotion::Yaw(float angle) {$/;"	f	class:ax::OrbitMotion	signature:(float angle)
+ax::ParseNumber	.\parser.cc	/^float ParseNumber(const char *str) {$/;"	f	namespace:ax	signature:(const char *str)
+ax::ProgramGLSL::AttachShader	.\program_glsl.cc	/^bool ProgramGLSL::AttachShader(const ShaderPtr shader) const {$/;"	f	class:ax::ProgramGLSL	signature:(const ShaderPtr shader) const
+ax::ProgramGLSL::AttachShader	.\program_glsl.cc	/^bool ProgramGLSL::AttachShader(int type, const char *file) {  $/;"	f	class:ax::ProgramGLSL	signature:(int type, const char *file)
+ax::ProgramGLSL::CheckLinkResult	.\program_glsl.cc	/^bool ProgramGLSL::CheckLinkResult() {$/;"	f	class:ax::ProgramGLSL	signature:()
+ax::ProgramGLSL::Create	.\program_glsl.cc	/^ProgramGLSLPtr ProgramGLSL::Create(const char *vertex_shader, $/;"	f	class:ax::ProgramGLSL	signature:(const char *vertex_shader, const char *fragment_shader, const std::string &name)
+ax::ProgramGLSL::GeometryShaderSettings	.\program_glsl.cc	/^void ProgramGLSL::GeometryShaderSettings(GLenum input_type, $/;"	f	class:ax::ProgramGLSL	signature:(GLenum input_type, int max_emitted_verts, GLenum output_type)
+ax::ProgramGLSL::Load	.\program_glsl.cc	/^bool ProgramGLSL::Load(const char *vertex_shader, const char *fragment_shader) {$/;"	f	class:ax::ProgramGLSL	signature:(const char *vertex_shader, const char *fragment_shader)
+ax::ProgramGLSL::PrintLinkLog	.\program_glsl.cc	/^void ProgramGLSL::PrintLinkLog() const {$/;"	f	class:ax::ProgramGLSL	signature:() const
+ax::ProgramGLSL::SetSubroutineVar	.\program_glsl.cc	/^void ProgramGLSL::SetSubroutineVar(const std::string &var_name, $/;"	f	class:ax::ProgramGLSL	signature:(const std::string &var_name, const std::string &routine_name, int shader_type)
+ax::ProgramGLSL::SetTextureVar	.\program_glsl.cc	/^void ProgramGLSL::SetTextureVar(const char *name, $/;"	f	class:ax::ProgramGLSL	signature:(const char *name, const Texture2DPtr &tex)
+ax::ProgramGLSL::SetTextureVar	.\program_glsl.cc	/^void ProgramGLSL::SetTextureVar(const char *name, const Texture2DPtr *texs,$/;"	f	class:ax::ProgramGLSL	signature:(const char *name, const Texture2DPtr *texs, size_t n)
+ax::Quad2DGL::CreateVBO	.\model_gl.cc	/^void Quad2DGL::CreateVBO() {$/;"	f	class:ax::Quad2DGL	signature:()
+ax::Quad2DGL::Draw	.\model_gl.cc	/^void Quad2DGL::Draw() {$/;"	f	class:ax::Quad2DGL	signature:()
+ax::Quad2DGL::indices_	.\model_gl.cc	/^const uint32 Quad2DGL::indices_[6] = { 0, 1, 2, 0, 2, 3 };$/;"	m	class:ax::Quad2DGL	file:
+ax::RenderBuffer::RenderBuffer	.\render_buffer.cc	/^RenderBuffer::RenderBuffer(int width, int height, GLint internal_format) $/;"	f	class:ax::RenderBuffer	signature:(int width, int height, GLint internal_format)
+ax::RenderBuffer::~RenderBuffer	.\render_buffer.cc	/^RenderBuffer::~RenderBuffer() {$/;"	f	class:ax::RenderBuffer	signature:()
+ax::RenderDeviceFBO::DisableColorBuffer	.\render_device_fbo.cc	/^void RenderDeviceFBO::DisableColorBuffer() {$/;"	f	class:ax::RenderDeviceFBO	signature:()
+ax::RenderDeviceFBO::DisableDepthBuffer	.\render_device_fbo.cc	/^void RenderDeviceFBO::DisableDepthBuffer() {$/;"	f	class:ax::RenderDeviceFBO	signature:()
+ax::RenderDeviceFBO::RestoreMVP	.\render_device_fbo.cc	/^void RenderDeviceFBO::RestoreMVP() {$/;"	f	class:ax::RenderDeviceFBO	signature:()
+ax::RenderDeviceFBO::SaveMVP	.\render_device_fbo.cc	/^void RenderDeviceFBO::SaveMVP() {$/;"	f	class:ax::RenderDeviceFBO	signature:()
+ax::RenderDeviceFBO::SetDepthBuffer	.\render_device_fbo.cc	/^void RenderDeviceFBO::SetDepthBuffer(const RenderBuffer *render_buffer) {$/;"	f	class:ax::RenderDeviceFBO	signature:(const RenderBuffer *render_buffer)
+ax::RenderDeviceFBO::SetDepthBuffer	.\render_device_fbo.cc	/^void RenderDeviceFBO::SetDepthBuffer(const Texture2DPtr texture) {$/;"	f	class:ax::RenderDeviceFBO	signature:(const Texture2DPtr texture)
+ax::RenderDeviceFBO::SetRenderTarget	.\render_device_fbo.cc	/^void RenderDeviceFBO::SetRenderTarget(const RenderBuffer *render_buffer) {$/;"	f	class:ax::RenderDeviceFBO	signature:(const RenderBuffer *render_buffer)
+ax::RenderDeviceFBO::SetRenderTarget	.\render_device_fbo.cc	/^void RenderDeviceFBO::SetRenderTarget(const Texture2DPtr texture) {$/;"	f	class:ax::RenderDeviceFBO	signature:(const Texture2DPtr texture)
+ax::RenderDeviceFBO::SetRenderTargets	.\render_device_fbo.cc	/^void RenderDeviceFBO::SetRenderTargets($/;"	f	class:ax::RenderDeviceFBO	signature:( int target_count, const RenderBuffer *const render_buffers[])
+ax::RenderDeviceFBO::SetRenderTargets	.\render_device_fbo.cc	/^void RenderDeviceFBO::SetRenderTargets(const std::vector<Texture2DPtr> &textures) {$/;"	f	class:ax::RenderDeviceFBO	signature:(const std::vector<Texture2DPtr> &textures)
+ax::RenderDeviceFBO::s_mrt	.\render_device_fbo.cc	/^GLenum RenderDeviceFBO::s_mrt[8] = {$/;"	m	class:ax::RenderDeviceFBO	file:
+ax::RenderDeviceFBO::s_viewport	.\render_device_fbo.cc	/^GLint RenderDeviceFBO::s_viewport[4];$/;"	m	class:ax::RenderDeviceFBO	file:
+ax::SaveFrameBuffer	.\gl_utils.cc	/^void SaveFrameBuffer(const char *filename) {$/;"	f	namespace:ax	signature:(const char *filename)
+ax::SaveImage	.\image.cc	/^void SaveImage(const char *filename, const int w, const int h,$/;"	f	namespace:ax	signature:(const char *filename, const int w, const int h, uint32 depth, uint8 n_channels, uint32 format, uint32 type, void *data)
+ax::Scene::Create	.\scene.cc	/^ScenePtr Scene::Create(const std::string &file, Options opts) {$/;"	f	class:ax::Scene	signature:(const std::string &file, Options opts)
+ax::Scene::DepthRange	.\scene.cc	/^void Scene::DepthRange(const Matrix4x4 &mat, $/;"	f	class:ax::Scene	signature:(const Matrix4x4 &mat, float *min_depth, float *max_depth) const
+ax::Scene::Draw	.\scene.cc	/^void Scene::Draw(Options opts) const {  $/;"	f	class:ax::Scene	signature:(Options opts) const
+ax::Scene::Draw	.\scene.cc	/^void Scene::Draw(ProgramGLSLPtr prog, Options opts) const {$/;"	f	class:ax::Scene	signature:(ProgramGLSLPtr prog, Options opts) const
+ax::Scene::Load	.\scene.cc	/^bool Scene::Load(const std::string &filename) {  $/;"	f	class:ax::Scene	signature:(const std::string &filename)
+ax::Scene::LoadMaterial	.\scene.cc	/^MaterialPtr Scene::LoadMaterial(const char *buff, FILE *fp) {$/;"	f	class:ax::Scene	signature:(const char *buff, FILE *fp)
+ax::Scene::LoadObject	.\scene.cc	/^ObjectPtr Scene::LoadObject(const char *buff, FILE *fp) {$/;"	f	class:ax::Scene	signature:(const char *buff, FILE *fp)
+ax::Scene::LoadTexture	.\scene.cc	/^Texture2DPtr Scene::LoadTexture(const char *buff) {$/;"	f	class:ax::Scene	signature:(const char *buff)
+ax::Scene::PreProcess	.\scene.cc	/^void Scene::PreProcess(Options opts) {$/;"	f	class:ax::Scene	signature:(Options opts)
+ax::Scene::~Scene	.\scene.cc	/^Scene::~Scene() { }$/;"	f	class:ax::Scene	signature:()
+ax::ScreenQuad::ScreenQuad	.\model_gl.cc	/^ScreenQuad::ScreenQuad() : Quad2DGL(0, 0, 1, 1) {$/;"	f	class:ax::ScreenQuad	signature:()
+ax::ShaderObject::CheckCompileLog	.\shader_object.cc	/^bool ShaderObject::CheckCompileLog() {$/;"	f	class:ax::ShaderObject	signature:()
+ax::ShaderObject::DeleteShader	.\shader_object.cc	/^void ShaderObject::DeleteShader() {$/;"	f	class:ax::ShaderObject	signature:()
+ax::ShaderObject::Load	.\shader_object.cc	/^bool ShaderObject::Load(int type, const char *file) {$/;"	f	class:ax::ShaderObject	signature:(int type, const char *file)
+ax::ShaderObject::PrintCompileLog	.\shader_object.cc	/^void ShaderObject::PrintCompileLog() {$/;"	f	class:ax::ShaderObject	signature:()
+ax::ShaderObject::ReadSahderFile	.\shader_object.cc	/^int ShaderObject::ReadSahderFile(const char *file, char** code) {$/;"	f	class:ax::ShaderObject	signature:(const char *file, char** code)
+ax::SpectatorMotion::Walk	.\camera.cc	/^void SpectatorMotion::Walk(float units) {$/;"	f	class:ax::SpectatorMotion	signature:(float units)
+ax::StripLeading	.\parser.cc	/^const char *StripLeading(const char *str) {  $/;"	f	namespace:ax	signature:(const char *str)
+ax::StripToken	.\parser.cc	/^const char *StripToken(const char *ptr, char *token) {$/;"	f	namespace:ax	signature:(const char *ptr, char *token)
+ax::Texture2D::Initialize	.\texture_gl.cc	/^bool Texture2D::Initialize(const Image &image, int i_format) {$/;"	f	class:ax::Texture2D	signature:(const Image &image, int i_format)
+ax::Texture2D::Initialize	.\texture_gl.cc	/^bool Texture2D::Initialize(int w, int h, int i_format) {$/;"	f	class:ax::Texture2D	signature:(int w, int h, int i_format)
+ax::Texture2D::InitializeDepth	.\texture_gl.cc	/^bool Texture2D::InitializeDepth(int w, int h, int i_format) {$/;"	f	class:ax::Texture2D	signature:(int w, int h, int i_format)
+ax::Texture2D::Save	.\texture_gl.cc	/^void Texture2D::Save(const char *filename, int level) const {  $/;"	f	class:ax::Texture2D	signature:(const char *filename, int level) const
+ax::Texture2D::Save	.\texture_gl.cc	/^void Texture2D::Save(const char *filename, int level, int type, int format, $/;"	f	class:ax::Texture2D	signature:(const char *filename, int level, int type, int format, void *data) const
+ax::Texture2DArray::Initialize	.\texture_gl.cc	/^bool Texture2DArray::Initialize(int w, int h, int z, int i_format) {$/;"	f	class:ax::Texture2DArray	signature:(int w, int h, int z, int i_format)
+ax::Texture2DArray::Save	.\texture_gl.cc	/^void Texture2DArray::Save(const char *filename, int z, int level) const {$/;"	f	class:ax::Texture2DArray	signature:(const char *filename, int z, int level) const
+ax::TextureGL::SetDefaultParameters	.\texture_gl.cc	/^void TextureGL::SetDefaultParameters() {$/;"	f	class:ax::TextureGL	signature:()
+ax::ToLower	.\parser.cc	/^void ToLower(char *str) {$/;"	f	namespace:ax	signature:(char *str)
+ax::TriVertAttribIdx	.\glmesh-loader.cc	/^typedef size_t TriVertAttribIdx(const GLMmodel *model, size_t tri, size_t vidx);$/;"	t	namespace:ax	file:
+ax::VOffset	.\glmesh-loader.cc	/^size_t VOffset(const Idxs &nidxs, size_t nidx) {$/;"	f	namespace:ax	signature:(const Idxs &nidxs, size_t nidx)
+ax::VertAttribStastics	.\glmesh-loader.cc	/^void VertAttribStastics(const GLMmodel *model, VertAttribsVec *vert_attribs,$/;"	f	namespace:ax	signature:(const GLMmodel *model, VertAttribsVec *vert_attribs, TriVertAttribIdx attrib)
+ax::VertAttribsVec	.\glmesh-loader.cc	/^typedef Array<Idxs> VertAttribsVec;$/;"	t	namespace:ax	file:
+ax::VisualizeTexture	.\gl_utils.cc	/^void VisualizeTexture(const Texture2DPtr tex) {$/;"	f	namespace:ax	signature:(const Texture2DPtr tex)
+diffuse	.\glm_avl.h	/^  GLfloat diffuse[4];           \/* diffuse component *\/$/;"	m	struct:_GLMmaterial	access:public
+emmissive	.\glm_avl.h	/^  GLfloat emmissive[4];         \/* emmissive component *\/$/;"	m	struct:_GLMmaterial	access:public
+facetnorms	.\glm_avl.h	/^  GLfloat* facetnorms;          \/* array of facetnorms *\/$/;"	m	struct:_GLMmodel	access:public
+findex	.\glm_avl.h	/^  GLuint findex;                \/* index of triangle facet normal *\/$/;"	m	struct:_GLMtriangle	access:public
+fly_	.\camera.cc	/^void Motion::fly_(float units) {$/;"	f	class:ax::Motion	signature:(float units)
+glmAbs	.\glm_avl.cpp	/^glmAbs(GLfloat f)$/;"	f	file:	signature:(GLfloat f)
+glmAddGroup	.\glm_avl.cpp	/^glmAddGroup(GLMmodel* model, char* name)$/;"	f	signature:(GLMmodel* model, char* name)
+glmCross	.\glm_avl.cpp	/^glmCross(GLfloat* u, GLfloat* v, GLfloat* n)$/;"	f	file:	signature:(GLfloat* u, GLfloat* v, GLfloat* n)
+glmDelete	.\glm_avl.cpp	/^glmDelete(GLMmodel* model)$/;"	f	signature:(GLMmodel* model)
+glmDelete	.\glm_avl.h	/^glmDelete(GLMmodel* model);$/;"	p	signature:(GLMmodel* model)
+glmDimensions	.\glm_avl.cpp	/^glmDimensions(GLMmodel* model, GLfloat* dimensions)$/;"	f	signature:(GLMmodel* model, GLfloat* dimensions)
+glmDimensions	.\glm_avl.h	/^glmDimensions(GLMmodel* model, GLfloat* dimensions);$/;"	p	signature:(GLMmodel* model, GLfloat* dimensions)
+glmDirName	.\glm_avl.cpp	/^glmDirName(char* path)$/;"	f	file:	signature:(char* path)
+glmDot	.\glm_avl.cpp	/^glmDot(GLfloat* u, GLfloat* v)$/;"	f	file:	signature:(GLfloat* u, GLfloat* v)
+glmDraw	.\glm_avl.cpp	/^glmDraw(GLMmodel* model, GLuint mode)$/;"	f	signature:(GLMmodel* model, GLuint mode)
+glmDraw	.\glm_avl.h	/^glmDraw(GLMmodel* model, GLuint mode);$/;"	p	signature:(GLMmodel* model, GLuint mode)
+glmEqual	.\glm_avl.cpp	/^glmEqual(GLfloat* u, GLfloat* v, GLfloat epsilon)$/;"	f	file:	signature:(GLfloat* u, GLfloat* v, GLfloat epsilon)
+glmFacetNormals	.\glm_avl.cpp	/^glmFacetNormals(GLMmodel* model)$/;"	f	signature:(GLMmodel* model)
+glmFacetNormals	.\glm_avl.h	/^glmFacetNormals(GLMmodel* model);$/;"	p	signature:(GLMmodel* model)
+glmFindGroup	.\glm_avl.cpp	/^glmFindGroup(GLMmodel* model, char* name)$/;"	f	signature:(GLMmodel* model, char* name)
+glmFindMaterial	.\glm_avl.cpp	/^glmFindMaterial(GLMmodel* model, char* name)$/;"	f	signature:(GLMmodel* model, char* name)
+glmFirstPass	.\glm_avl.cpp	/^glmFirstPass(GLMmodel* model, FILE* file) $/;"	f	file:	signature:(GLMmodel* model, FILE* file)
+glmFlipModelTextures	.\glm_avl.cpp	/^GLvoid glmFlipModelTextures(GLMmodel* model)$/;"	f	signature:(GLMmodel* model)
+glmFlipModelTextures	.\glm_avl.h	/^GLvoid glmFlipModelTextures(GLMmodel* model);$/;"	p	signature:(GLMmodel* model)
+glmFlipTexture	.\glm_avl.cpp	/^GLvoid glmFlipTexture(unsigned char* texture, int width, int height)$/;"	f	signature:(unsigned char* texture, int width, int height)
+glmFlipTexture	.\glm_avl.h	/^GLvoid glmFlipTexture(unsigned char* texture, int width, int height);$/;"	p	signature:(unsigned char* texture, int width, int height)
+glmLinearTexture	.\glm_avl.cpp	/^glmLinearTexture(GLMmodel* model)$/;"	f	signature:(GLMmodel* model)
+glmLinearTexture	.\glm_avl.h	/^glmLinearTexture(GLMmodel* model);$/;"	p	signature:(GLMmodel* model)
+glmList	.\glm_avl.cpp	/^glmList(GLMmodel* model, GLuint mode)$/;"	f	signature:(GLMmodel* model, GLuint mode)
+glmList	.\glm_avl.h	/^glmList(GLMmodel* model, GLuint mode);$/;"	p	signature:(GLMmodel* model, GLuint mode)
+glmMax	.\glm_avl.cpp	/^glmMax(GLfloat a, GLfloat b) $/;"	f	file:	signature:(GLfloat a, GLfloat b)
+glmNormalize	.\glm_avl.cpp	/^glmNormalize(GLfloat* v)$/;"	f	file:	signature:(GLfloat* v)
+glmReadMTL	.\glm_avl.cpp	/^glmReadMTL(GLMmodel* model, char* name)$/;"	f	file:	signature:(GLMmodel* model, char* name)
+glmReadOBJ	.\glm_avl.cpp	/^glmReadOBJ( const char* filename)$/;"	f	signature:( const char* filename)
+glmReadOBJ	.\glm_avl.h	/^glmReadOBJ( const char* filename);$/;"	p	signature:( const char* filename)
+glmReadPPM	.\glm_avl.cpp	/^glmReadPPM(char* filename, int* width, int* height)$/;"	f	signature:(char* filename, int* width, int* height)
+glmReadPPM	.\glm_avl.h	/^glmReadPPM(char* filename, int* width, int* height);$/;"	p	signature:(char* filename, int* width, int* height)
+glmReverseWinding	.\glm_avl.cpp	/^glmReverseWinding(GLMmodel* model)$/;"	f	signature:(GLMmodel* model)
+glmReverseWinding	.\glm_avl.h	/^glmReverseWinding(GLMmodel* model);$/;"	p	signature:(GLMmodel* model)
+glmScale	.\glm_avl.cpp	/^glmScale(GLMmodel* model, GLfloat scale)$/;"	f	signature:(GLMmodel* model, GLfloat scale)
+glmScale	.\glm_avl.h	/^glmScale(GLMmodel* model, GLfloat scale);$/;"	p	signature:(GLMmodel* model, GLfloat scale)
+glmSecondPass	.\glm_avl.cpp	/^glmSecondPass(GLMmodel* model, FILE* file) $/;"	f	file:	signature:(GLMmodel* model, FILE* file)
+glmSpheremapTexture	.\glm_avl.cpp	/^glmSpheremapTexture(GLMmodel* model)$/;"	f	signature:(GLMmodel* model)
+glmSpheremapTexture	.\glm_avl.h	/^glmSpheremapTexture(GLMmodel* model);$/;"	p	signature:(GLMmodel* model)
+glmUnitize	.\glm_avl.cpp	/^glmUnitize(GLMmodel* model)$/;"	f	signature:(GLMmodel* model)
+glmUnitize	.\glm_avl.h	/^glmUnitize(GLMmodel* model);$/;"	p	signature:(GLMmodel* model)
+glmVertexNormals	.\glm_avl.cpp	/^glmVertexNormals(GLMmodel* model, GLfloat angle)$/;"	f	signature:(GLMmodel* model, GLfloat angle)
+glmVertexNormals	.\glm_avl.h	/^glmVertexNormals(GLMmodel* model, GLfloat angle);$/;"	p	signature:(GLMmodel* model, GLfloat angle)
+glmWeld	.\glm_avl.cpp	/^glmWeld(GLMmodel* model, GLfloat epsilon)$/;"	f	signature:(GLMmodel* model, GLfloat epsilon)
+glmWeld	.\glm_avl.h	/^glmWeld(GLMmodel* model, GLfloat epsilon);$/;"	p	signature:(GLMmodel* model, GLfloat epsilon)
+glmWeldVectors	.\glm_avl.cpp	/^glmWeldVectors(GLfloat* vectors, GLuint* numvectors, GLfloat epsilon)$/;"	f	signature:(GLfloat* vectors, GLuint* numvectors, GLfloat epsilon)
+glmWriteMTL	.\glm_avl.cpp	/^glmWriteMTL(GLMmodel* model, char* modelpath, char* mtllibname)$/;"	f	file:	signature:(GLMmodel* model, char* modelpath, char* mtllibname)
+glmWriteOBJ	.\glm_avl.cpp	/^glmWriteOBJ(GLMmodel* model, char* filename, GLuint mode)$/;"	f	signature:(GLMmodel* model, char* filename, GLuint mode)
+glmWriteOBJ	.\glm_avl.h	/^glmWriteOBJ(GLMmodel* model, char* filename, GLuint mode);$/;"	p	signature:(GLMmodel* model, char* filename, GLuint mode)
+groups	.\glm_avl.h	/^  GLMgroup*    groups;          \/* linked list of groups *\/$/;"	m	struct:_GLMmodel	access:public
+height	.\glm_avl.h	/^  int height,$/;"	m	struct:_GLMmaterial	access:public
+image	.\glm_avl.h	/^  unsigned char* image;$/;"	m	struct:_GLMmaterial	access:public
+index	.\glm_avl.cpp	/^    GLuint         index;$/;"	m	struct:_GLMnode	file:	access:public
+indices_	.\model_gl.cc	/^const uint32 Quad2DGL::indices_[6] = { 0, 1, 2, 0, 2, 3 };$/;"	m	class:ax::Quad2DGL	file:
+kNullMatl	.\material.cc	/^const MaterialPtr Material::kNullMatl = $/;"	m	class:ax::Material	file:
+material	.\glm_avl.h	/^  GLuint            material;       \/* index to material for group *\/$/;"	m	struct:_GLMgroup	access:public
+materials	.\glm_avl.h	/^  GLMmaterial* materials;       \/* array of materials *\/$/;"	m	struct:_GLMmodel	access:public
+mtllibname	.\glm_avl.h	/^  char*    mtllibname;          \/* name of the material library *\/$/;"	m	struct:_GLMmodel	access:public
+name	.\glm_avl.h	/^  char*             name;           \/* name of this group *\/$/;"	m	struct:_GLMgroup	access:public
+name	.\glm_avl.h	/^  char* name;                   \/* name of material *\/$/;"	m	struct:_GLMmaterial	access:public
+next	.\glm_avl.cpp	/^    struct _GLMnode* next;$/;"	m	struct:_GLMnode	typeref:struct:_GLMnode::_GLMnode	file:	access:public
+next	.\glm_avl.h	/^  struct _GLMgroup* next;           \/* pointer to next group in model *\/$/;"	m	struct:_GLMgroup	typeref:struct:_GLMgroup::_GLMgroup	access:public
+nindices	.\glm_avl.h	/^  GLuint nindices[3];           \/* array of triangle normal indices *\/$/;"	m	struct:_GLMtriangle	access:public
+normals	.\glm_avl.h	/^  GLfloat* normals;             \/* array of normals *\/$/;"	m	struct:_GLMmodel	access:public
+numfacetnorms	.\glm_avl.h	/^  GLuint   numfacetnorms;       \/* number of facetnorms in model *\/$/;"	m	struct:_GLMmodel	access:public
+numgroups	.\glm_avl.h	/^  GLuint       numgroups;       \/* number of groups in model *\/$/;"	m	struct:_GLMmodel	access:public
+nummaterials	.\glm_avl.h	/^  GLuint       nummaterials;    \/* number of materials in model *\/$/;"	m	struct:_GLMmodel	access:public
+numnormals	.\glm_avl.h	/^  GLuint   numnormals;          \/* number of normals in model *\/$/;"	m	struct:_GLMmodel	access:public
+numtexcoords	.\glm_avl.h	/^  GLuint   numtexcoords;        \/* number of texcoords in model *\/$/;"	m	struct:_GLMmodel	access:public
+numtriangles	.\glm_avl.h	/^  GLuint            numtriangles;   \/* number of triangles in this group *\/$/;"	m	struct:_GLMgroup	access:public
+numtriangles	.\glm_avl.h	/^  GLuint       numtriangles;    \/* number of triangles in model *\/$/;"	m	struct:_GLMmodel	access:public
+numvertices	.\glm_avl.h	/^  GLuint   numvertices;         \/* number of vertices in model *\/$/;"	m	struct:_GLMmodel	access:public
+pathname	.\glm_avl.h	/^  char*    pathname;            \/* path to this model *\/$/;"	m	struct:_GLMmodel	access:public
+pitch_	.\camera.cc	/^void Motion::pitch_(float angle) {$/;"	f	class:ax::Motion	signature:(float angle)
+position	.\glm_avl.h	/^  GLfloat position[3];          \/* position of the model *\/$/;"	m	struct:_GLMmodel	access:public
+roll_	.\camera.cc	/^void Motion::roll_(float angle) {$/;"	f	class:ax::Motion	signature:(float angle)
+s_mrt	.\render_device_fbo.cc	/^GLenum RenderDeviceFBO::s_mrt[8] = {$/;"	m	class:ax::RenderDeviceFBO	file:
+s_unnamed	.\material.cc	/^const char *Material::s_unnamed = "<Unnamed Material>";$/;"	m	class:ax::Material	file:
+s_viewport	.\render_device_fbo.cc	/^GLint RenderDeviceFBO::s_viewport[4];$/;"	m	class:ax::RenderDeviceFBO	file:
+shininess	.\glm_avl.h	/^  GLfloat shininess;            \/* specular exponent *\/$/;"	m	struct:_GLMmaterial	access:public
+specular	.\glm_avl.h	/^  GLfloat specular[4];          \/* specular component *\/$/;"	m	struct:_GLMmaterial	access:public
+strafe_	.\camera.cc	/^void Motion::strafe_(float units) {$/;"	f	class:ax::Motion	signature:(float units)
+t_filename	.\glm_avl.h	/^  char *t_filename;$/;"	m	struct:_GLMmaterial	access:public
+t_id	.\glm_avl.h	/^  GLuint t_id[1];$/;"	m	struct:_GLMmaterial	access:public
+texcoords	.\glm_avl.h	/^  GLfloat* texcoords;           \/* array of texture coordinates *\/$/;"	m	struct:_GLMmodel	access:public
+textured	.\glm_avl.h	/^  int textured;$/;"	m	struct:_GLMmaterial	access:public
+tindices	.\glm_avl.h	/^  GLuint tindices[3];           \/* array of triangle texcoord indices*\/$/;"	m	struct:_GLMtriangle	access:public
+triangles	.\glm_avl.h	/^  GLMtriangle* triangles;       \/* array of triangles *\/$/;"	m	struct:_GLMmodel	access:public
+triangles	.\glm_avl.h	/^  GLuint*           triangles;      \/* array of triangle indices *\/$/;"	m	struct:_GLMgroup	access:public
+update_	.\camera.cc	/^void FlyMotion::update_() {$/;"	f	class:ax::FlyMotion	signature:()
+vertices	.\glm_avl.h	/^  GLfloat* vertices;            \/* array of vertices  *\/$/;"	m	struct:_GLMmodel	access:public
+vindices	.\glm_avl.h	/^  GLuint vindices[3];           \/* array of triangle vertex indices *\/$/;"	m	struct:_GLMtriangle	access:public
+walk_	.\camera.cc	/^void Motion::walk_(float units) {$/;"	f	class:ax::Motion	signature:(float units)
+width	.\glm_avl.h	/^      width;$/;"	m	struct:_GLMmaterial	access:public
+yaw_	.\camera.cc	/^void Motion::yaw_(float angle) {$/;"	f	class:ax::Motion	signature:(float angle)
+~FramebufferObject	.\framebuffer_object.cc	/^FramebufferObject::~FramebufferObject() {$/;"	f	class:ax::FramebufferObject	signature:()
+~GLMesh	.\glmesh.cc	/^GLMesh::~GLMesh() { }$/;"	f	class:ax::GLMesh	signature:()
+~Motion	.\camera.cc	/^Motion::~Motion() { }$/;"	f	class:ax::Motion	signature:()
+~RenderBuffer	.\render_buffer.cc	/^RenderBuffer::~RenderBuffer() {$/;"	f	class:ax::RenderBuffer	signature:()
+~Scene	.\scene.cc	/^Scene::~Scene() { }$/;"	f	class:ax::Scene	signature:()
