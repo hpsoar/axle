@@ -28,6 +28,7 @@ class Scene;
 class Object;
 class Group;
 class GLMesh;
+class ArrayBufferGL;
 
 typedef std::tr1::shared_ptr<Image> ImagePtr;
 typedef std::tr1::shared_ptr<ShaderObject> ShaderPtr;
@@ -40,6 +41,7 @@ typedef std::tr1::shared_ptr<Material> MaterialPtr;
 typedef std::tr1::shared_ptr<GLMaterial> GLMaterialPtr;
 typedef std::tr1::shared_ptr<GLSLMaterial> GLSLMaterialPtr;
 typedef std::tr1::shared_ptr<Scene> ScenePtr;
+typedef std::tr1::shared_ptr<ArrayBufferGL> ArrayBufferGLPtr;
 
 typedef std::tr1::shared_ptr<OrbitPerspectiveCameraGL> 
 OrbitPerspectiveCameraGLPtr;

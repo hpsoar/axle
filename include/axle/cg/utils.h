@@ -10,8 +10,15 @@
 #include "axle/cg/cg_fwd.h"
 
 namespace ax {
+GLuint64 GetGPUPtr(uint32 id, uint32 access);
+
 class ArrayBufferGL {
 public:
+  static ax::ArrayBufferGLPtr Create(uint32 size, uint32 access, const void *data = NULL) {    
+    ax::ArrayBufferGLPtr ptr = ax::ArrayBufferGLPtr(new ArrayBufferGL());
+    if (ptr->Initialize(size, access, data)) return ptr;
+    return NULL;
+  }
   ArrayBufferGL() : id_(0), gpu_ptr_(0), size_(0) { }
   ~ArrayBufferGL() { this->Release(); }    
   bool Initialize(uint32 size, uint32 access, const void *data = NULL);

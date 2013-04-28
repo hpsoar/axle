@@ -50,6 +50,7 @@ public:
   void Add(GLGroupPtr g) { objs_.push_back(g); }
 
   ax::TriMeshPtr tri_mesh() const { return this->mesh_; }
+  uint32 vert_vbo() const { return vert_vbo_; }
 private:
   GLMesh(ax::TriMeshPtr mesh) : 
       mesh_(mesh), idx_vbo_size_(0), vert_vbo_size_(0), 

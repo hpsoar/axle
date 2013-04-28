@@ -12,20 +12,20 @@ struct __ParamSet {
 public:
   typedef T KeyType;
 
-  int GetInt(const KeyType &name) const { 
-    return ParamSet::FetchValue(name, this->ints_);    
+  int GetInt(const KeyType &name, int d=0) const { 
+    return FIND(this->ints_, name, d);
   }
-  uint64 GetUint64(const KeyType &name) const {
-    return ParamSet::FetchValue(name, this->uint64s_);
+  uint64 GetUint64(const KeyType &name, uint64 d=0) const {
+    return FIND(this->uint64s_, name, d);    
   }
-  bool GetBool(const KeyType &name) const { 
-    return ParamSet::FetchValue(name, this->bools_);
+  bool GetBool(const KeyType &name, bool d=false) const { 
+    return FIND(this->bools_, name, d);    
   }
-  float GetFloat(const KeyType &name) const {
-    return ParamSet::FetchValue(name, this->floats_);
+  float GetFloat(const KeyType &name, float d=0.f) const {
+    return FIND(this->floats_, name, d);    
   }
-  const KeyType GetStr(const KeyType &name) const {
-    return ParamSet::FetchValue(name, this->strs_);
+  const KeyType GetStr(const KeyType &name, const std::string &d="") const {
+    return FIND(this->strs_, name, d);    
   }
   void SetInt(const KeyType &name, int value) {
     this->ints_[name] = value;
@@ -44,16 +44,14 @@ public:
   }
 protected:
   template<typename T>
-  static typename T::mapped_type FetchValue(
-      const typename T::key_type &key, const T &c) {    
-    typename T::const_iterator it = c.find(key);
-    assert(it != c.end());
-    if (it != c.end()) return it->second;
-    return T::mapped_type();
+  static typename T::mapped_type FIND(const T &m, const KeyType &key, typename T::mapped_type d) {
+    typename T::const_iterator it = m.find(key);
+    if (it != m.end()) return it->second;
+    return d;    
   }
 private:
   typedef std::map<KeyType, int> IntParams;
-  typedef std::map<KeyType, bool> BoolParams;  
+  typedef std::map<KeyType, bool> BoolParams;
   typedef std::map<KeyType, float> FloatParams;
   typedef std::map<KeyType, std::string> StrParams;
   typedef std::map<KeyType, uint64> Uint64Params;
@@ -68,25 +66,27 @@ private:
 template<typename T>
 struct __ParamSet2 : public __ParamSet<T> {
 public:  
-  ax::Matrix4x4 GetMat4(const KeyType &name) const {
-    return ParamSet::FetchValue(name, this->mats_);
+  ax::Matrix4x4 GetMat4(const KeyType &name, 
+                        const ax::Matrix4x4 &d=ax::Matrix4x4(1.f)) const {
+    return FIND(this->mat4s_, name, d);
   }
-  ax::Vector3 GetVec3(const KeyType &name) const {
-    return ParamSet::FetchValue(name, this->vecs_);
+  ax::Vector3 GetVec3(const KeyType &name, 
+                      const ax::Vector3 &d=ax::Vector3(0)) const {
+    return FIND(this->vec3s_, name, d);
   }
   template<typename PTR>
   PTR GetPtr(const KeyType &name) const {
-    return (PTR)ParamSet::FetchValue(name, this->ptrs_);
+    return (PTR)FIND(this->ptrs_, name, NULL);
   }
   ax::Texture2DPtr GetTexture(const KeyType &name) const {
-    return ParamSet::FetchValue(name, this->textures_);
+    return FIND(this->textures_, name, NULL);
   }
 
   void SetMat4(const KeyType &name, const ax::Matrix4x4 &m) {
-    this->mats_[name] = m;
+    this->mat4s_[name] = m;
   }
   void SetVec3(const KeyType &name, const ax::Vector3 &v) {
-    this->vecs_[name] = v;
+    this->vec3s_[name] = v;
   }
   template<typename PTR>
   void SetPtr(const KeyType &name, PTR ptr) {
@@ -101,8 +101,8 @@ private:
   typedef std::map<KeyType, void*> PtrParams;
   typedef std::map<KeyType, ax::Texture2DPtr> TexParams;
 
-  Mat4Params mats_;
-  Vec3Params vecs_;
+  Mat4Params mat4s_;
+  Vec3Params vec3s_;
   PtrParams ptrs_;
   TexParams textures_;
 };

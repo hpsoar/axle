@@ -8,6 +8,19 @@
 #include "axle/cg/image.h"
 
 namespace ax {
+GLuint64 GetGPUPtr(uint32 id, uint32 access) {
+  glBindBuffer(GL_ARRAY_BUFFER, id);
+
+  GLuint64 gpu_ptr = 0;
+  glMakeBufferResidentNV(GL_ARRAY_BUFFER, access);
+  glGetBufferParameterui64vNV(GL_ARRAY_BUFFER, GL_BUFFER_GPU_ADDRESS_NV,
+                              &gpu_ptr);
+
+  glBindBuffer(GL_ARRAY_BUFFER, 0); 
+
+  return gpu_ptr;
+}
+
 bool ArrayBufferGL::Initialize(uint32 size, uint32 access, const void *data) {
   V_RET(size != 0);
   if (this->size_ != size) {
