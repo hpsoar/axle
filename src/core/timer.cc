@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-#if defined(AXLE_IS_LINUX)
+#if !defined(AXLE_IS_WINDOWS)
 #include <sys/time.h>
 #else
 #include <windows.h>
@@ -10,7 +10,7 @@
 
 namespace ax {
 
-#if defined(AXLE_IS_LINUX)
+#if !defined(AXLE_IS_WINDOWS)
 double GetTime() {
   struct timeval time_of_day;
   gettimeofday(&time_of_day, NULL);

@@ -6,10 +6,8 @@
 #include "axle/core/settings.h"
 #include "axle/core/typedefs.h"
 #include "axle/core/macros.h"
+#include "axle/core/debug.h"
 
-#if defined(AXLE_IS_LINUX)
-#include <malloc.h>
-#endif
 #include <string.h>
 
 namespace ax {
@@ -26,7 +24,18 @@ public:
   static void *Allocate(size_t size) {
 #if defined(SYS_IS_WINDOWS)
     return _aligned_malloc(size, s_alignment);
-#elif defined(AXLE_IS_LINUX)
+#elif defined(SYS_IS_APPLE) || defined(SYS_IS_OPENBSD)
+    Logger::Log("untested function called at: %d", __LINE__);
+    void *mem = malloc(size + (AXLE_L1_CACHE_LINE_SIZE-1) + sizeof(void*));
+    char *amem = ((char*)mem) + sizeof(void*);
+#if (AXLE_POINTER_SIZE==8)
+    amem += AXLE_L1_CACHE_LINE_SIZE - (reinterpret_cast<uint64_t>(amem) & (AXLE_L1_CACHE_LINE_SIZE - 1));
+#else
+    amem += AXLE_L1_CACHE_LINE_SIZE - (reinterpret_cast<uint32_t>(amem) & (AXLE_L1_CACHE_LINE_SIZE - 1));
+#endif
+      ((void**)amem)[-1] = mem;
+      return amem;
+#else // Linux
     return memalign(s_alignment, size);
 #endif
   }
@@ -34,7 +43,7 @@ public:
     if (ptr == NULL) return;
 #if defined(SYS_IS_WINDOWS)
     return _aligned_free(ptr);
-#elif defined(AXLE_IS_LINUX)
+#elif defined(SYS_IS_LINUX)
     return free(ptr);
 #endif
   }

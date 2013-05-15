@@ -4,7 +4,7 @@
 
 #if defined(SYS_IS_WINDOWS)
 #include <windows.h>
-#elif defined(AXLE_IS_LINUX)
+#else
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include <errno.h>

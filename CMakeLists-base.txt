@@ -23,6 +23,8 @@ set(work_dir ${PROJECT_SOURCE_DIR}/..)
 
 if (WIN32)
   set(magic_dir D:)
+elseif (APPLE)
+  set(magic_dir ~/Development)
 else ()
   set(magic_dir /media/D)
 endif (WIN32)

@@ -1,12 +1,14 @@
 #include "axle/core/parallel.h"
+#include "axle/core/debug.h"
 
-#if defined(AXLE_IS_LINUX)
+#if !defined(AXLE_IS_WINDOWS)
 #include <unistd.h>
+#include <sys/sysctl.h>
 #endif
 
 namespace ax {
 int NumSystemCores() {
-#if defined(SYS_IS_WINDOWS)
+#if defined(AXLE_IS_WINDOWS)
   SYSTEM_INFO sysinfo;
   GetSystemInfo(&sysinfo);
   return sysinfo.dwNumberOfProcessors;

@@ -5,7 +5,11 @@
 #include "axle/ui/logic_window.h"
 #include "axle/core/typedefs.h"
 
+#if defined(SYS_IS_APPLE)
+#include <GLUT/glut.h>
+#else
 #include <GL/glut.h>
+#endif
 
 namespace ax {
 class GlutWindow : public LogicWindow {

@@ -1,6 +1,11 @@
 #include "axle/cg/camera.h"
 #include "axle/geom.h"
+
+#if defined(SYS_IS_APPLE)
+#include <OpenGL/gl.h>
+#else
 #include <GL/gl.h>
+#endif
 
 namespace ax {
 //////////////////////////////////////////////////////////////////////////

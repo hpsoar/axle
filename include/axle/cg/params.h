@@ -43,9 +43,9 @@ public:
     this->strs_[name] = value;
   }
 protected:
-  template<typename T>
-  static typename T::mapped_type FIND(const T &m, const KeyType &key, typename T::mapped_type d) {
-    typename T::const_iterator it = m.find(key);
+  template<typename CT>
+  static typename CT::mapped_type FIND(const CT &m, const typename CT::key_type &key, typename CT::mapped_type d) {
+    typename CT::const_iterator it = m.find(key);
     if (it != m.end()) return it->second;
     return d;    
   }
@@ -66,6 +66,7 @@ private:
 template<typename T>
 struct __ParamSet2 : public __ParamSet<T> {
 public:  
+  typedef typename __ParamSet<T>::KeyType KeyType;
   ax::Matrix4x4 GetMat4(const KeyType &name, 
                         const ax::Matrix4x4 &d=ax::Matrix4x4(1.f)) const {
     return FIND(this->mat4s_, name, d);

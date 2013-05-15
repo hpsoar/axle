@@ -4,7 +4,18 @@
 #if defined(_WIN32) || defined(_WIN64)
 #define SYS_IS_WINDOWS
 #elif defined(__linux__)
-#define AXLE_IS_LINUX
+#define SYS_IS_LINUX
+#elif defined(__APPLE__)
+
+#define SYS_IS_APPLE
+#if !(defined(__i386) || defined(__amd64__))
+#define SYS_IS_APPLE_PPC
+#else
+#define SYS_IS_APPLE_X86
+#endif
+
+#elif defined(__OpenBSD__)
+#define SYS_IS_OPENBSD
 #endif
 
 
@@ -65,6 +76,12 @@
 #include <memory>
 #else
 #include <tr1/memory>
+#endif
+#if !defined(SYS_IS_APPLE) && !defined(SYS_IS_OPENBSD)
+#include <malloc.h>
+#endif
+#if !defined(SYS_IS_WINDOWS) && !defined(SYS_IS_APPLE) && !defined(SYS_IS_OPENBSD)
+#include <alloca.h>
 #endif
 
 #pragma warning(disable:4996)

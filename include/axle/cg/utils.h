@@ -17,7 +17,7 @@ public:
   static ax::ArrayBufferGLPtr Create(uint32 size, uint32 access, const void *data = NULL) {    
     ax::ArrayBufferGLPtr ptr = ax::ArrayBufferGLPtr(new ArrayBufferGL());
     if (ptr->Initialize(size, access, data)) return ptr;
-    return NULL;
+    return ax::ArrayBufferGLPtr();
   }
   ArrayBufferGL() : id_(0), gpu_ptr_(0), size_(0) { }
   ~ArrayBufferGL() { this->Release(); }    

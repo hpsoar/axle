@@ -1,6 +1,10 @@
 #include "axle/cg/utils.h"
 
+#if defined(SYS_IS_APPLE)
+#include <GLUT/glut.h>
+#else
 #include <GL/glut.h>
+#endif
 #include <stdio.h>
 
 #include "axle/core/debug.h"

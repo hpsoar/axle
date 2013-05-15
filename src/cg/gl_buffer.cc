@@ -128,7 +128,7 @@ ax::Texture2DPtr MultiResolutionBuffer::GrabStencilBuffer() {
   int h = this->height();
 
   assert(w > 0 && h > 0);
-  if (w <= 0 || h <= 0) return NULL;
+  if (w <= 0 || h <= 0) return ax::Texture2DPtr();
 
   char *data = new char[w * h];
   glReadPixels(0, 0, w, h, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, data);
@@ -138,10 +138,11 @@ ax::Texture2DPtr MultiResolutionBuffer::GrabStencilBuffer() {
 
   ax::Texture2DPtr texture = ax::Texture2D::Create2D("stencil texture");
 
-  if (texture == NULL || !texture->Initialize(*image, GL_RGBA)) return NULL;
+  if (texture != NULL && texture->Initialize(*image, GL_RGBA)){
+    texture->SetDefaultParameters();
+    this->Unbind();
+  }
 
-  texture->SetDefaultParameters();
-  this->Unbind();
   return texture;
 }
 

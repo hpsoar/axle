@@ -99,7 +99,7 @@ ObjectPtr ObjectFactory::LoadWavefront(FILE *fp, Scene *s, Options opts) {
             s, ax::UserOptions::GetFullModelPath(token.ptr()), opts);
       }
       else {
-        ax::Logger::Log("Duplicated mesh file '%s' ignored!", token);
+        ax::Logger::Log("Duplicated mesh file '%s' ignored!", token.ptr());
       }
     }
     else if (token.Equals("matrix")) {
