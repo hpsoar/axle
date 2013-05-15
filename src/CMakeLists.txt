@@ -1,11 +1,29 @@
 set(inc_path ../include/axle)
+set(target_name axle)
 
 file(GLOB libaxle_inc ${inc_path}/*.h)
 
+macro(copy_file FILENAME DEST_FOLDER)
+  message(STATUS "filename=${FILENAME}")
+  message(STATUS "dest folder=${DEST_FOLDER}")
+  add_custom_command(
+      TARGET ${target_name} POST_BUILD
+      COMMAND ${CMAKE_COMMAND} -E copy ${FILENAME} ${DEST_FOLDER})
+endmacro(copy_file)
+
+macro(copy_headers module)
+  file(GLOB ${module}_headers ${module}/*.h)
+  #copy_file(${module}_headers ${inc_path}/${module})
+  foreach(FILENAME ${${module}_headers})
+    copy_file(${FILENAME} ${inc_dir}/axle/${module})
+  endforeach(FILENAME)
+endmacro(copy_headers)
+
 macro(add_module module)
+  set(module_inc_path ${inc_path}/${module})
   set(${module}_inc_path ${inc_path}/${module})
 
-  file(GLOB ${module}_inc ${${module}_inc_path}/*.h ${${module}_inc_path}/.hpp)
+  file(GLOB ${module}_inc ${module_inc_path}/*.h ${module_inc_path}/.hpp)
   file(GLOB ${module}_src ${module}/*.cc ${module}/*.cpp)
   
   # the \\ can't be changed to /
@@ -23,8 +41,13 @@ add_module(model)
 add_module(cg)
 #$MODULE$
 
-set(target_name axle)
 add_library(${target_name} STATIC ${libaxle_src} ${libaxle_inc})
+#copy_headers(core)
+#copy_headers(geom)
+#copy_headers(ui)
+#copy_headers(model)
+copy_headers(cg)
+#$MODULE_HEADERS$
 
 set(output "${target_name}")
 set(debug_output "${output}_d")
