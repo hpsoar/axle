@@ -69,7 +69,7 @@ void LoadUserOptions() {
 }
 
 void InitOptions() {
-  InitSysOptions();   
+  InitSysOptions();
   LoadUserOptions();
 }
 } // ax
