@@ -4,7 +4,7 @@
 #include "axle/core/settings.h"
 #include "axle/core/typedefs.h"
 
-#if defined(AXLE_IS_APPLE_PPC)
+#if defined(SYS_IS_APPLE_PPC)
 #include <libkern/OSAtomic.h>
 #endif
 

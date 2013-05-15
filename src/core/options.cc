@@ -46,7 +46,7 @@ void InitSysOptions() {
   SYSTEM_INFO sys_info;
   GetSystemInfo(&sys_info);
   SysOptions::s_cores_num_ = sys_info.dwNumberOfProcessors;
-#elif defined(AXLE_IS_LINUX)
+#elif defined(SYS_IS_LINUX)
   SysOptions::s_cores_num_ = sysconf(_SC_NPROCESSORS_ONLN);
 #endif
   SysOptions::s_initialized_ = true;
@@ -62,7 +62,7 @@ void LoadUserOptions() {
   // if not specified in file
 #if defined(SYS_IS_WINDOWS)
   UserOptions::set_default_media_path("E:/workspace/media/");
-#elif defined(AXLE_IS_LINUX)
+#elif defined(SYS_IS_LINUX)
   UserOptions::set_default_media_path("/media/E/workspace/media/");
 #endif
   UserOptions::finalize();
