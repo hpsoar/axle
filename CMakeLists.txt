@@ -10,4 +10,6 @@ if (APPLE)
 include_directories(/opt/local/include)
 endif ()
 
+add_definitions(-std=c++0x)
+
 add_subdirectory(src)
