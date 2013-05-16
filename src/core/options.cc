@@ -66,21 +66,21 @@ void PathList::AddPath(const char *path) {
 }
 
 std::string PathList::GetFullPath(const char *filename) {
-  for (auto path : this->path_list_) {
+  /*for (auto path : this->path_list_) {
     auto fullname = path + filename;
     auto fp = fopen(fullname.c_str(), "r");
     if (fp != NULL) return fullname;
   }
-  ax::Logger::Log("file: %s, not found", filename);
+  ax::Logger::Log("file: %s, not found", filename);*/
   return "";
 }
 
 FILE *PathList::OpenFile(const char *filename) {
-  for (auto path: this->path_list_) {
+  /*for (auto path: this->path_list_) {
     auto fullname = path + filename;
     auto fp = fopen(fullname.c_str(), "r");
     if (fp != NULL) return fp;
-  }
+  }*/
   return nullptr;
 }
 } // ax

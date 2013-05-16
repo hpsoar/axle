@@ -4,12 +4,14 @@ set(target_name axle)
 macro(copy_file SRC_PATH DEST_FOLDER)
   get_filename_component(filename ${SRC_PATH} NAME)
   add_custom_command(
-      TARGET copy PRE_BUILD
-      COMMAND ${CMAKE_COMMAND} -E make_directory ${DEST_FOLDER}
-      COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SRC_PATH} ${DEST_FOLDER}/${filename})
+    TARGET copy PRE_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${SRC_PATH} ${DEST_FOLDER}/${filename})
 endmacro(copy_file)
 
 macro(copy_files FILES DEST_FOLDER)
+  add_custom_command(
+      TARGET copy PRE_BUILD
+      COMMAND ${CMAKE_COMMAND} -E make_directory ${DEST_FOLDER})
   foreach(FILENAME ${FILES})
     copy_file(${FILENAME} ${DEST_FOLDER})
   endforeach(FILENAME)
