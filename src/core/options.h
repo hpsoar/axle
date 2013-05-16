@@ -1,7 +1,7 @@
 #ifndef AXLE_CORE_OPTIONS_H
 #define AXLE_CORE_OPTIONS_H
 
-#include "../core/settings.h"
+#include "settings.h"
 
 #include <string>
 #include <list>
@@ -22,7 +22,9 @@ private:
 
 #if defined(SYS_IS_WINDOWS)
 const std::string kDefaultMediaPath = "E:/workspace/media/";
-#elif defined(SYS_IS_LINUX)
+#elif defined(SYS_IS_APPLE)
+const std::string kDefaultMediaPath = "";
+#elif 
 const std::string kDefaultMediaPath = "/media/E/workspace/media/";
 #endif
 
@@ -58,3 +60,4 @@ void InitOptions();
 } // ax
 
 #endif // AXLE_CORE_OPTIONS_H
+

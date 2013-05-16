@@ -15,19 +15,19 @@ bool UserOptions::s_initialized_ = false;
 
 std::string UserOptions::GetFullModelPath(const char *filename) {    
   char buff[kMaxPath];
-  sprintf(buff, "models/%s", s_default_media_path_.c_str(), filename);
+  sprintf(buff, "models/%s", filename);
   return UserOptions::GetFullPath(buff);
 }
 
 std::string UserOptions::GetFullTexturePath(const char *filename) {  
   char buff[kMaxPath];
-  sprintf(buff, "textures/%s", s_default_media_path_.c_str(), filename);
+  sprintf(buff, "textures/%s", filename);
   return UserOptions::GetFullPath(buff);
 }
 
 std::string UserOptions::GetFullEnvMapPath(const char *filename) {  
   char buff[kMaxPath];
-  sprintf(buff, "env_maps/%s", s_default_media_path_.c_str(), filename);
+  sprintf(buff, "env_maps/%s", filename);
   return UserOptions::GetFullPath(buff);
 }
 
@@ -76,5 +76,11 @@ std::string PathList::GetFullPath(const char *filename) {
 }
 
 FILE *PathList::OpenFile(const char *filename) {
+  for (auto path: this->path_list_) {
+    auto fullname = path + filename;
+    auto fp = fopen(fullname.c_str(), "r");
+    if (fp != NULL) return fp;
+  }
+  return nullptr;
 }
 } // ax
