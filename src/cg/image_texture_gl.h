@@ -1,8 +1,8 @@
-#ifndef AXLE_GRAPHICS_IMAGE_TEXTURE_GL_H
-#define AXLE_GRAPHICS_IMAGE_TEXTURE_GL_H
+#ifndef AXLE_CG_IMAGE_TEXTURE_GL_H
+#define AXLE_CG_IMAGE_TEXTURE_GL_H
 
-#include "axle/core/settings.h"
-#include "axle/core/typedefs.h"
+#include "../core/settings.h"
+#include "../core/typedefs.h"
 #include <GL/glew.h>
 
 namespace ax {
@@ -56,4 +56,4 @@ class ImageTextureGL {
 
 } // ax
 
-#endif // AXLE_GRAPHICS_IMAGE_TEXTURE_GL_H
+#endif // AXLE_CG_IMAGE_TEXTURE_GL_H

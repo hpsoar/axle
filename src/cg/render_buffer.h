@@ -1,7 +1,7 @@
-#ifndef AXLE_GRAPHICS_RENDERBUFFER_H
-#define AXLE_GRAPHICS_RENDERBUFFER_H
+#ifndef AXLE_CG_RENDERBUFFER_H
+#define AXLE_CG_RENDERBUFFER_H
 
-#include "axle/core/settings.h"
+#include "../core/settings.h"
 #include <GL/glew.h>
 
 namespace ax {
@@ -19,5 +19,5 @@ class RenderBuffer {
 };
 } // ax
 
-#endif // AXLE_GRAPHICS_RENDERBUFFER_H
+#endif // AXLE_CG_RENDERBUFFER_H
 

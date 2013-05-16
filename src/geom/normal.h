@@ -1,8 +1,8 @@
 #ifndef AXLE_GEOMETRY_NORMAL_H
 #define AXLE_GEOMETRY_NORMAL_H
 
-#include "axle/core/settings.h"
-#include "axle/geom/vector3.h"
+#include "../core/settings.h"
+#include "../geom/vector3.h"
 
 namespace ax {
 class Vector3;

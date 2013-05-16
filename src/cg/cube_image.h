@@ -1,8 +1,8 @@
-#ifndef AXLE_GRAPHICS_CUBEIMAGE_H
-#define AXLE_GRAPHICS_CUBEIMAGE_H
+#ifndef AXLE_CG_CUBEIMAGE_H
+#define AXLE_CG_CUBEIMAGE_H
 
-#include "axle/core/settings.h"
-#include "axle/core/macros.h"
+#include "../core/settings.h"
+#include "../core/macros.h"
 
 namespace ax {
 /*
@@ -38,4 +38,4 @@ class CubeImage {
 };
 } // ax
 
-#endif // AXLE_GRAPHICS_CUBEIMAGE_H
+#endif // AXLE_CG_CUBEIMAGE_H

@@ -1,11 +1,11 @@
-#ifndef AXLE_GRAPHICS_CG_GL_H
-#define AXLE_GRAPHICS_CG_GL_H
+#ifndef AXLE_CG_CG_GL_H
+#define AXLE_CG_CG_GL_H
 
-#include "axle/core.h"
-#include "axle/model/triangle_mesh.h"
-#include "axle/geom.h"
-#include "axle/cg/utils.h"
-#include "axle/cg/cg_fwd.h"
+#include "../core.h"
+#include "../model/triangle_mesh.h"
+#include "../geom.h"
+#include "../cg/utils.h"
+#include "../cg/cg_fwd.h"
 
 namespace ax {
 /* 
@@ -93,4 +93,4 @@ inline void DrawCube(const Point &p1, const Point &p2) {
 
 } // ax
 
-#endif // AXLE_GRAPHICS_CG_GL_H
+#endif // AXLE_CG_CG_GL_H

@@ -1,7 +1,7 @@
 #ifndef AXLE_IMG_IMAGE_IP_HPP
 #define AXLE_IMG_IMAGE_IP_HPP
 
-#include "axle/core/settings.h"
+#include "../core/settings.h"
 
 namespace ax {
 template<typename T>

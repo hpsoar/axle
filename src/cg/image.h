@@ -1,10 +1,10 @@
-#ifndef AXLE_GRAPHICS_IMAGE_H
-#define AXLE_GRAPHICS_IMAGE_H
+#ifndef AXLE_CG_IMAGE_H
+#define AXLE_CG_IMAGE_H
 
-#include "axle/core/settings.h"
-#include "axle/core/typedefs.h"
-#include "axle/core/macros.h"
-#include "axle/cg/cg_fwd.h"
+#include "../core/settings.h"
+#include "../core/typedefs.h"
+#include "../core/macros.h"
+#include "../cg/cg_fwd.h"
 
 namespace ax {
 /*
@@ -54,4 +54,4 @@ void SaveImage(const char *filename, const int w, const int h,
                const void *data);
 } // ax
 
-#endif // AXLE_GRAPHICS_IMAGE_H
+#endif // AXLE_CG_IMAGE_H

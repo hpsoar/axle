@@ -1,7 +1,7 @@
 #ifndef CHETTAH_CORE_MATH_H
 #define CHETTAH_CORE_MATH_H
 
-#include "axle/core/settings.h"
+#include "../core/settings.h"
 
 #include <math.h>
 

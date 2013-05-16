@@ -1,7 +1,7 @@
-#include "axle/cg/model_gl.h"
+#include "../cg/model_gl.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <GL/glew.h>
-#include "axle/cg/utils.h"
+#include "../cg/utils.h"
 
 namespace ax {
 const uint32 Quad2DGL::indices_[6] = { 0, 1, 2, 0, 2, 3 };

@@ -1,5 +1,5 @@
-#include "axle/core/parallel.h"
-#include "axle/core/debug.h"
+#include "../core/parallel.h"
+#include "../core/debug.h"
 
 #if !defined(SYS_IS_WINDOWS)
 #include <unistd.h>

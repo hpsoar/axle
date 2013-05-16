@@ -1,9 +1,9 @@
 #ifndef AXLE_CG_GLSLMATERIAL_H
 #define AXLE_CG_GLSLMATERIAL_H
 
-#include "axle/cg/material.h"
-#include "axle/cg/cg_fwd.h"
-#include "axle/geom.h"
+#include "../cg/material.h"
+#include "../cg/cg_fwd.h"
+#include "../geom.h"
 #include <vector>
 
 namespace ax {

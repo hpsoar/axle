@@ -1,10 +1,10 @@
-#ifndef AX_GRAPHICS_PARAMS_H
-#define AX_GRAPHICS_PARAMS_H
+#ifndef AX_CG_PARAMS_H
+#define AX_CG_PARAMS_H
 
 #include <map>
 
-#include "axle/geom.h"
-#include "axle/cg/texture_gl.h"
+#include "../geom.h"
+#include "../cg/texture_gl.h"
 
 namespace ax {
 template<typename T>
@@ -113,5 +113,5 @@ typedef __ParamSet2<std::string> ParamSet2;
 
 }
 
-#endif // AX_GRAPHICS_PARAMS_H
+#endif // AX_CG_PARAMS_H
 

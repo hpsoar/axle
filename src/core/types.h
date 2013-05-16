@@ -21,6 +21,6 @@ enum { kMaxPath = 256 };
 enum { kMaxLine = 256 };
 } // ax
 
-#include "axle/core/typedefs.h"
+#include "../core/typedefs.h"
 
 #endif // AXLE_TYPES_H

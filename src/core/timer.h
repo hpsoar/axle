@@ -1,13 +1,13 @@
 #ifndef AXLE_CORE_TIMER_H
 #define AXLE_CORE_TIMER_H
 
-#include "axle/core/settings.h"
+#include "../core/settings.h"
 
 #include <string>
 #include <stack>
 #include <vector>
 
-#include "axle/core/types.h"
+#include "../core/types.h"
 
 namespace ax {
 

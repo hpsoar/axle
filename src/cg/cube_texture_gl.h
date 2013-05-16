@@ -1,8 +1,8 @@
-#ifndef AXLE_GRAPHICS_CUBE_TEXTURE_GL_H
-#define AXLE_GRAPHICS_CUBE_TEXTURE_GL_H
+#ifndef AXLE_CG_CUBE_TEXTURE_GL_H
+#define AXLE_CG_CUBE_TEXTURE_GL_H
 
-#include "axle/core/settings.h"
-#include "axle/core/macros.h"
+#include "../core/settings.h"
+#include "../core/macros.h"
 #include <GL/glew.h>
 
 namespace ax {
@@ -37,4 +37,4 @@ class CubeTextureGL {
 
 } // ax
 
-#endif // AXLE_GRAPHICS_CUBE_TEXTURE_GL_H
+#endif // AXLE_CG_CUBE_TEXTURE_GL_H

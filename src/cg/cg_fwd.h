@@ -1,7 +1,7 @@
 #ifndef AXLE_CG_FWD_H
 #define AXLE_CG_FWD_H
 
-#include "axle/core/settings.h"
+#include "../core/settings.h"
 
 namespace ax {
 class FlyMotion;

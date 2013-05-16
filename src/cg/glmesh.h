@@ -1,10 +1,10 @@
 #ifndef AXLE_CG_OBJMESH_H
 #define AXLE_CG_OBJMESH_H
 
-#include "axle/cg/globject.h"
+#include "../cg/globject.h"
 #include <vector>
-#include "axle/model/triangle_mesh.h"
-#include "axle/cg/cg_fwd.h"
+#include "../model/triangle_mesh.h"
+#include "../cg/cg_fwd.h"
 
 namespace ax {
 class GLGroup : public Object {

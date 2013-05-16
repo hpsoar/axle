@@ -1,7 +1,7 @@
-#include "axle/cg/render_device_fbo.h"
+#include "../cg/render_device_fbo.h"
 
-#include "axle/cg/texture_gl.h"
-#include "axle/cg/render_buffer.h"
+#include "../cg/texture_gl.h"
+#include "../cg/render_buffer.h"
 
 namespace ax {
 GLenum RenderDeviceFBO::s_mrt[8] = {

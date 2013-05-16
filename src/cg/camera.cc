@@ -1,5 +1,5 @@
-#include "axle/cg/camera.h"
-#include "axle/geom.h"
+#include "../cg/camera.h"
+#include "../geom.h"
 
 #if defined(SYS_IS_APPLE)
 #include <OpenGL/gl.h>

@@ -1,5 +1,5 @@
-#ifndef AXLE_GRAPHICS_COLOR_H
-#define AXLE_GRAPHICS_COLOR_H
+#ifndef AXLE_CG_COLOR_H
+#define AXLE_CG_COLOR_H
 
 namespace ax {
 template<typename T>
@@ -31,4 +31,4 @@ typedef Color<float> Colorf;
 typedef Color<double> Colord;
 }//ax
 
-#endif//AXLE_GRAPHICS_COLOR_H
+#endif//AXLE_CG_COLOR_H

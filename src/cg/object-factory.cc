@@ -1,9 +1,9 @@
-#include "axle/cg/object-factory.h"
+#include "../cg/object-factory.h"
 #include <glm/gtc/matrix_transform.hpp>
-#include "axle/cg/scene.h"
-#include "axle/cg/group.h"
-#include "axle/cg/glmesh.h"
-#include "axle/cg/parser.h"
+#include "../cg/scene.h"
+#include "../cg/group.h"
+#include "../cg/glmesh.h"
+#include "../cg/parser.h"
 
 namespace ax {
 glm::mat4 ExtractMatrix(const char *str) {

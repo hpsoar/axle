@@ -1,7 +1,7 @@
 #ifndef AXLE_CG_GLMATERIAL_H
 #define AXLE_CG_GLMATERIAL_H
 
-#include "axle/cg/material.h"
+#include "../cg/material.h"
 
 namespace ax {
 class GLMaterial : public Material {

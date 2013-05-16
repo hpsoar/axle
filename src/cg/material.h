@@ -1,9 +1,9 @@
 #ifndef AXLE_CG_MATERIAL_H
 #define AXLE_CG_MATERIAL_H
 
-#include "axle/core.h"
-#include "axle/cg/color.h"
-#include "axle/cg/cg_fwd.h"
+#include "../core.h"
+#include "../cg/color.h"
+#include "../cg/cg_fwd.h"
 
 namespace ax {
 class Material {

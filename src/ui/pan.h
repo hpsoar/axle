@@ -1,7 +1,7 @@
 #ifndef AXLE_PAN_H
 #define AXLE_PAN_H
 
-#include "axle/geom.h"
+#include "../geom.h"
   
 namespace ax {
 class Pan {

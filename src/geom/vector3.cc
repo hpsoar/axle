@@ -1,7 +1,7 @@
-#include "axle/geom/vector3.h"
+#include "../geom/vector3.h"
 
-#include "axle/geom/point.h"
-#include "axle/geom/normal.h"
+#include "../geom/point.h"
+#include "../geom/normal.h"
 
 namespace ax {
   Vector3::Vector3(const Normal& n) : x(n.x), y(n.y), z(n.z) { }

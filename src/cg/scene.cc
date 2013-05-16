@@ -1,11 +1,11 @@
-#include "axle/cg/scene.h"
+#include "../cg/scene.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <GL/glew.h>
-#include "axle/cg/object-factory.h"
-#include "axle/cg/material-factory.h"
-#include "axle/cg/texture_gl.h"
-#include "axle/cg/group.h"
-#include "axle/cg/parser.h"
+#include "../cg/object-factory.h"
+#include "../cg/material-factory.h"
+#include "../cg/texture_gl.h"
+#include "../cg/group.h"
+#include "../cg/parser.h"
 
 namespace ax {
 ScenePtr Scene::Create(const std::string &file, Options opts) {

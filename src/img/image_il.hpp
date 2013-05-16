@@ -7,7 +7,7 @@
 
 #include "pixel.hpp"
 
-#include "axle/core/memory.h"
+#include "../core/memory.h"
 
 namespace ax {
 

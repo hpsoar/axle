@@ -1,13 +1,13 @@
-#ifndef AXLE_GRAPHICS_UTILS_H
-#define AXLE_GRAPHICS_UTILS_H
+#ifndef AXLE_CG_UTILS_H
+#define AXLE_CG_UTILS_H
 
-#include "axle/core/settings.h"
-#include "axle/core/typedefs.h"
-#include "axle/core/math.h"
-#include "axle/geom.h"
+#include "../core/settings.h"
+#include "../core/typedefs.h"
+#include "../core/math.h"
+#include "../geom.h"
 
 #include <GL/glew.h>
-#include "axle/cg/cg_fwd.h"
+#include "../cg/cg_fwd.h"
 
 namespace ax {
 GLuint64 GetGPUPtr(uint32 id, uint32 access);
@@ -138,4 +138,4 @@ void VisualizeViewSpace(const C &camera) {
 }
 } // ax
 
-#endif // AXLE_GRAPHICS_UTILS_H
+#endif // AXLE_CG_UTILS_H

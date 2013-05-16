@@ -1,5 +1,5 @@
-#include "axle/cg/glslmaterial.h"
-#include "axle/cg/program_glsl.h"
+#include "../cg/glslmaterial.h"
+#include "../cg/program_glsl.h"
 
 namespace ax {
 void GLSLMaterial::Enable(const Scene *s) const {

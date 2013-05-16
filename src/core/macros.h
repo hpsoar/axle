@@ -1,7 +1,7 @@
 #ifndef AXLE_CORE_MICROS_H
 #define AXLE_CORE_MICROS_H
 
-#include "axle/core/types.h"
+#include "../core/types.h"
 
 #define DISABLE_COPY_AND_ASSIGN(TypeName)  \
   TypeName(const TypeName&);               \

@@ -1,7 +1,7 @@
 #ifndef AXLE_IMG_PIXEL_H
 #define AXLE_IMG_PIXEL_H
 
-#include "axle/core/types.h"
+#include "../core/types.h"
 
 namespace ax {
 

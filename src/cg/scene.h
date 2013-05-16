@@ -1,10 +1,10 @@
 #ifndef AXLE_CG_SCENE_H
 #define AXLE_CG_SCENE_H
 
-#include "axle/core.h"
-#include "axle/geom.h"
-#include "axle/cg/cg_fwd.h"
-#include "axle/cg/group.h"
+#include "../core.h"
+#include "../geom.h"
+#include "../cg/cg_fwd.h"
+#include "../cg/group.h"
 #include <map>
 
 namespace ax {

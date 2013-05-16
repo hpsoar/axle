@@ -1,7 +1,7 @@
-#include "axle/geom/vector3.h"
-#include "axle/geom/point.h"
-#include "axle/geom/normal.h"
-#include "axle/geom/matrix4x4.h"
+#include "../geom/vector3.h"
+#include "../geom/point.h"
+#include "../geom/normal.h"
+#include "../geom/matrix4x4.h"
 
 namespace ax {
 const float Matrix4x4::kZeroArray[16] = {0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0};

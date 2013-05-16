@@ -3,8 +3,8 @@
 
 #include <string.h>
 
-#include "axle/core/settings.h"
-#include "axle/core/math.h"
+#include "../core/settings.h"
+#include "../core/math.h"
 
 namespace ax {
 

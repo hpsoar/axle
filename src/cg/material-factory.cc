@@ -1,8 +1,8 @@
-#include "axle/cg/material-factory.h"
-#include "axle/cg/glmaterial.h"
-#include "axle/cg/glslmaterial.h"
-#include "axle/cg/scene.h"
-#include "axle/cg/parser.h"
+#include "../cg/material-factory.h"
+#include "../cg/glmaterial.h"
+#include "../cg/glslmaterial.h"
+#include "../cg/scene.h"
+#include "../cg/parser.h"
 
 namespace ax {
 GLMaterialPtr MaterialFactory::CreateGLMaterial() {

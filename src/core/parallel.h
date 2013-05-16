@@ -1,8 +1,8 @@
 #ifndef AXLE_CORE_PARALLEL_H
 #define AXLE_CORE_PARALLEL_H
 
-#include "axle/core/settings.h"
-#include "axle/core/typedefs.h"
+#include "../core/settings.h"
+#include "../core/typedefs.h"
 
 #if defined(SYS_IS_APPLE_PPC)
 #include <libkern/OSAtomic.h>
@@ -14,7 +14,7 @@
 #include <pthread.h>
 //#include <semaphore.h>
 #endif
-//#include "axle/core/probes.h"
+//#include "../core/probes.h"
 
 #if defined(SYS_IS_WINDOWS)
 	#if _MSC_VER >= 1300

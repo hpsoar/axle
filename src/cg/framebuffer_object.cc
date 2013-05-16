@@ -1,6 +1,6 @@
-#include "axle/cg/framebuffer_object.h"
+#include "../cg/framebuffer_object.h"
 
-#include "axle/core/debug.h"
+#include "../core/debug.h"
 
 namespace ax {
 

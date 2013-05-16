@@ -1,8 +1,8 @@
 #ifndef AXLE_CORE_DEBUG_H
 #define AXLE_CORE_DEBUG_H
 
-#include "axle/core/settings.h"
-#include "axle/core/macros.h"
+#include "../core/settings.h"
+#include "../core/macros.h"
 
 #include <time.h>
 #include <stdio.h>

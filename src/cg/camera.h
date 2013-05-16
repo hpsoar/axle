@@ -1,5 +1,5 @@
-#ifndef AXLE_GRAPHICS_CAMERA_H
-#define AXLE_GRAPHICS_CAMERA_H
+#ifndef AXLE_CG_CAMERA_H
+#define AXLE_CG_CAMERA_H
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -236,4 +236,4 @@ private:
 };
 } // ax
 
-#endif//AXLE_GRAPHICS_CAMERA_H
+#endif//AXLE_CG_CAMERA_H

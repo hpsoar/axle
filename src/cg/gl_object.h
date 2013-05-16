@@ -1,7 +1,7 @@
 #ifndef AXLE_CG_CG_OBJECT_H
 #define AXLE_CG_CG_OBJECT_H
 
-#include "axle/cg/utils.h"
+#include "../cg/utils.h"
 #include <GL/glew.h>
 
 namespace ax {

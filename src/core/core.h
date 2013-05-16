@@ -1,11 +1,11 @@
 #ifndef AXLE_CORE_CORE_H
 #define AXLE_CORE_CORE_H
 
-#include "axle/core/settings.h"
-#include "axle/core/typedefs.h"
-#include "axle/core/macros.h"
-#include "axle/core/types.h"
-#include "axle/core/error.h"
-#include "axle/core/options.h"
+#include "../core/settings.h"
+#include "../core/typedefs.h"
+#include "../core/macros.h"
+#include "../core/types.h"
+#include "../core/error.h"
+#include "../core/options.h"
 
 #endif // AXLE_CORE_CORE_H

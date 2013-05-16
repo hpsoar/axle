@@ -1,7 +1,7 @@
 #ifndef AXLE_CORE_RANDOM_H
 #define AXLE_CORE_RANDOM_H
 
-#include "axle/core/settings.h"
+#include "../core/settings.h"
 
 #include <stdlib.h>
 

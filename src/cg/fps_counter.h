@@ -1,8 +1,8 @@
-#ifndef AXLE_GRAPHICS_FPS_COUNTER_H
-#define AXLE_GRAPHICS_FPS_COUNTER_H
+#ifndef AXLE_CG_FPS_COUNTER_H
+#define AXLE_CG_FPS_COUNTER_H
 
-#include "axle/core/settings.h"
-#include "axle/core/timer.h"
+#include "../core/settings.h"
+#include "../core/timer.h"
 
 namespace ax {
 class FpsCounter {
@@ -51,4 +51,4 @@ private:
 };
 } // ax
 
-#endif // AXLE_GRAPHICS_FPS_COUNTER_H
+#endif // AXLE_CG_FPS_COUNTER_H

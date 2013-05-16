@@ -1,4 +1,4 @@
-#include "axle/ui/glut_window.h"
+#include "../ui/glut_window.h"
 
 #include <string.h>
 

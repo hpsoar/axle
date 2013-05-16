@@ -1,9 +1,9 @@
 #ifndef AXLE_UI_GLUT_WINDOW_H
 #define AXLE_UI_GLUT_WINDOW_H
 
-#include "axle/core/settings.h"
-#include "axle/ui/logic_window.h"
-#include "axle/core/typedefs.h"
+#include "../core/settings.h"
+#include "../ui/logic_window.h"
+#include "../core/typedefs.h"
 
 #if defined(SYS_IS_APPLE)
 #include <GLUT/glut.h>

@@ -1,12 +1,12 @@
-#ifndef AXLE_GRAPHICS_RENDER_DEVICE_H
-#define AXLE_GRAPHICS_RENDER_DEVICE_H
+#ifndef AXLE_CG_RENDER_DEVICE_H
+#define AXLE_CG_RENDER_DEVICE_H
 
-#include "axle/core/settings.h"
+#include "../core/settings.h"
 
 #include <vector>
 
-#include "axle/cg/framebuffer_object.h"
-#include "axle/cg/cg_fwd.h"
+#include "../cg/framebuffer_object.h"
+#include "../cg/cg_fwd.h"
 
 namespace ax {
 class Texture2D;
@@ -60,4 +60,4 @@ private:
 
 } // ax
 
-#endif // AXLE_GRAPHICS_RENDER_DEVICE_H
+#endif // AXLE_CG_RENDER_DEVICE_H
