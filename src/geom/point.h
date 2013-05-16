@@ -1,9 +1,9 @@
 #ifndef AXLE_GEOMETRY_POINT_H
 #define AXLE_GEOMETRY_POINT_H
 
-#include "axle/core/settings.h"
-#include "axle/core/math.h"
-#include "axle/geom/vector3.h"
+#include "../core/settings.h"
+#include "../core/math.h"
+#include "../geom/vector3.h"
 
 namespace ax {
 class Point {

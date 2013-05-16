@@ -4,8 +4,8 @@ cmake_minimum_required(VERSION 2.8)
 
 include(CMakeLists-base.txt)
 
-include_directories(./include 
-                    ${magic_dir}/glm-0.9.4.3)
+include_directories(${magic_dir}/glm-0.9.4.3)
+
 if (APPLE)
 include_directories(/opt/local/include)
 endif ()

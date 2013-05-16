@@ -1,4 +1,4 @@
-#include "axle/cg/utils.h"
+#include "../cg/utils.h"
 
 #if defined(SYS_IS_APPLE)
 #include <GLUT/glut.h>
@@ -7,9 +7,9 @@
 #endif
 #include <stdio.h>
 
-#include "axle/core/debug.h"
-#include "axle/cg/texture_gl.h"
-#include "axle/cg/image.h"
+#include "../core/debug.h"
+#include "../cg/texture_gl.h"
+#include "../cg/image.h"
 
 namespace ax {
 GLuint64 GetGPUPtr(uint32 id, uint32 access) {

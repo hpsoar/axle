@@ -1,4 +1,4 @@
-#include "axle/model/triangle_mesh.h"
+#include "../model/triangle_mesh.h"
 
 namespace ax {
 TriangleMesh::~TriangleMesh() {

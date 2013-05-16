@@ -1,7 +1,7 @@
 #ifndef AXLE_UI_TRACKBALL_H
 #define AXLE_UI_TRACKBALL_H
 
-#include "axle/geom.h"
+#include "../geom.h"
 #include <glm/gtc/quaternion.hpp>
 
 namespace ax {

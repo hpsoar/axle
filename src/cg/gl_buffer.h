@@ -1,9 +1,9 @@
-#ifndef AXLE_GRAPHICS_GL_BUFFER_H
-#define AXLE_GRAPHICS_GL_BUFFER_H
+#ifndef AXLE_CG_GL_BUFFER_H
+#define AXLE_CG_GL_BUFFER_H
 
-#include "axle/core.h"
-#include "axle/cg.h"
-#include "axle/cg/params.h"
+#include "../core.h"
+#include "../cg.h"
+#include "../cg/params.h"
 
 namespace ax {
 class FrameBuffer {
@@ -121,4 +121,4 @@ private:
 
 }
 
-#endif // AXLE_GRAPHICS_GL_BUFFER_H
+#endif // AXLE_CG_GL_BUFFER_H

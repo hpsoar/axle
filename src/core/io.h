@@ -1,8 +1,8 @@
 #ifndef AXLE_CORE_IO_H
 #define AXLE_CORE_IO_H
 
-#include "axle/core/settings.h"
-#include "axle/core/types.h"
+#include "../core/settings.h"
+#include "../core/types.h"
 #include <vector>
 
 namespace ax {

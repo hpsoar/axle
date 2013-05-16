@@ -1,7 +1,7 @@
 #ifndef AXLE_CG_GROUP_H
 #define AXLE_CG_GROUP_H
 
-#include "axle/cg/globject.h"
+#include "../cg/globject.h"
 #include <vector>
 
 namespace ax {

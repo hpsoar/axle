@@ -1,9 +1,9 @@
 #ifndef AXLE_CG_PARSER_H
 #define AXLE_CG_PARSER_H
 
-#include "axle/core.h"
-#include "axle/geom.h"
-#include "axle/cg/color.h"
+#include "../core.h"
+#include "../geom.h"
+#include "../cg/color.h"
 
 namespace ax {
 const char *StripLeading(const char *str);

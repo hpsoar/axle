@@ -1,9 +1,9 @@
-#ifndef AXLE_GRAPHICS_SHADEROBJECT_H
-#define AXLE_GRAPHICS_SHADEROBJECT_H
+#ifndef AXLE_CG_SHADEROBJECT_H
+#define AXLE_CG_SHADEROBJECT_H
 
-#include "axle/core/settings.h"
-#include "axle/cg/cg_fwd.h"
-#include "axle/cg/gl_object.h"
+#include "../core/settings.h"
+#include "../cg/cg_fwd.h"
+#include "../cg/gl_object.h"
 
 namespace ax {
 class ShaderObject : public GLObject {
@@ -30,5 +30,5 @@ private:
 };
 } // ax
 
-#endif // AXLE_GRAPHICS_SHADEROBJECT_H
+#endif // AXLE_CG_SHADEROBJECT_H
 

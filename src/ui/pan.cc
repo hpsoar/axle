@@ -1,4 +1,4 @@
-#include "axle/ui/pan.h"
+#include "../ui/pan.h"
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace ax {

@@ -1,8 +1,8 @@
 #ifndef AXLE_MODEL_TRIANGLEMESH_H
 #define AXLE_MODEL_TRIANGLEMESH_H
 
-#include "axle/core.h"
-#include "axle/geom/aabb.h"
+#include "../core.h"
+#include "../geom/aabb.h"
 #include <vector>
 
 namespace ax {

@@ -1,6 +1,6 @@
-#include "axle/cg/render_buffer.h"
+#include "../cg/render_buffer.h"
 
-#include "axle/cg/utils.h"
+#include "../cg/utils.h"
 
 namespace ax {
 RenderBuffer::RenderBuffer(int width, int height, GLint internal_format) 

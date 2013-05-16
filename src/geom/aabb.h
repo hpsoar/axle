@@ -1,12 +1,12 @@
 #ifndef AXLE_GEOMETRY_AABB_H
 #define AXLE_GEOMETRY_AABB_H
 
-#include "axle/core/settings.h"
+#include "../core/settings.h"
 
 #include <string.h> //for memcpy
 
-#include "axle/core/math.h"
-#include "axle/geom.h"
+#include "../core/math.h"
+#include "../geom.h"
 
 
 namespace ax {

@@ -1,8 +1,8 @@
-#include "axle/cg/shader_object.h"
+#include "../cg/shader_object.h"
 
 #include <stdio.h>
 
-#include "axle/core/debug.h"
+#include "../core/debug.h"
 
 namespace ax {
 

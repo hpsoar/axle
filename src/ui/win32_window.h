@@ -1,13 +1,13 @@
 #ifndef AXLE_UI_WIN32_WINDOW_H
 #define AXLE_UI_WIN32_WINDOW_H
 
-#include "axle/core/settings.h"
+#include "../core/settings.h"
 
 #ifdef SYS_IS_WINDOWS
 #include <windows.h>
 #include <map>
-#include "axle/core/macros.h"
-#include "axle/ui/logic_window.h"
+#include "../core/macros.h"
+#include "../ui/logic_window.h"
 
 namespace ax {
 class Win32Window : public LogicWindow {

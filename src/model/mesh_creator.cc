@@ -1,5 +1,5 @@
-#include "axle/model/triangle_mesh.h"
-#include "axle/core/math.h"
+#include "../model/triangle_mesh.h"
+#include "../core/math.h"
 
 namespace ax {
 /*        (x2, y2)

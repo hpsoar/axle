@@ -1,9 +1,9 @@
-#include "axle/core/options.h"
+#include "../core/options.h"
 #include <stdio.h>
 #if defined(SYS_IS_WINDOWS)
 #include <windows.h>
 #endif
-#include "axle/core/types.h"
+#include "../core/types.h"
 
 namespace ax {
 int SysOptions::s_cores_num_ = 1;

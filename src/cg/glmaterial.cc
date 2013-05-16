@@ -1,5 +1,5 @@
-#include "axle/cg/glmaterial.h"
-#include "axle/cg/utils.h"
+#include "../cg/glmaterial.h"
+#include "../cg/utils.h"
 #include <GL/glew.h>
 
 namespace ax {

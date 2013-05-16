@@ -1,13 +1,13 @@
-#ifndef AXLE_GRAPHICS_TEXTURE_GL_H
-#define AXLE_GRAPHICS_TEXTURE_GL_H
+#ifndef AXLE_CG_TEXTURE_GL_H
+#define AXLE_CG_TEXTURE_GL_H
 
-#include "axle/core.h"
+#include "../core.h"
 
-#include "axle/cg/image.h"
-#include "axle/cg/cube_image.h"
+#include "../cg/image.h"
+#include "../cg/cube_image.h"
 
-#include "axle/cg/cg_fwd.h"
-#include "axle/cg/gl_object.h"
+#include "../cg/cg_fwd.h"
+#include "../cg/gl_object.h"
 
 namespace ax {
 class TextureGL : public GLObject {
@@ -138,5 +138,5 @@ private:
 
 } // ax
 
-#endif // AXLE_GRAPHICS_TEXTURE_GL_H
+#endif // AXLE_CG_TEXTURE_GL_H
 

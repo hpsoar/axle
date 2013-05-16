@@ -1,7 +1,7 @@
-#include "axle/cg/program_glsl.h"
+#include "../cg/program_glsl.h"
 
-#include "axle/cg/shader_object.h"
-#include "axle/cg/texture_gl.h"
+#include "../cg/shader_object.h"
+#include "../cg/texture_gl.h"
 #include <GL/glew.h>
 
 namespace ax {

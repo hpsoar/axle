@@ -1,9 +1,9 @@
-#ifndef AXLE_GRAPHICS_PROGRAM_GLSL_H
-#define AXLE_GRAPHICS_PROGRAM_GLSL_H
+#ifndef AXLE_CG_PROGRAM_GLSL_H
+#define AXLE_CG_PROGRAM_GLSL_H
 
-#include "axle/core.h"
-#include "axle/cg/cg_fwd.h"
-#include "axle/cg/gl_object.h"
+#include "../core.h"
+#include "../cg/cg_fwd.h"
+#include "../cg/gl_object.h"
 
 #include <vector>
 
@@ -214,4 +214,4 @@ inline bool InvalidVar(const int var) { return var < 0; }
 
 } // ax
 
-#endif // AXLE_GRAPHICS_PROGRAM_GLSL_H
+#endif // AXLE_CG_PROGRAM_GLSL_H

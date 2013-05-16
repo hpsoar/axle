@@ -1,7 +1,7 @@
 #ifndef AXLE_CG_OBJECT_FACTORY_H
 #define AXLE_CG_OBJECT_FACTORY_H
 
-#include "axle/cg/cg_fwd.h"
+#include "../cg/cg_fwd.h"
 
 namespace ax {
 class ObjectFactory {

@@ -1,4 +1,4 @@
-#include "axle/core/io.h"
+#include "../core/io.h"
 
 #if defined(SYS_IS_WINDOWS)
 #include <windows.h>
@@ -6,8 +6,8 @@
 #include <dirent.h>
 #endif
 
-#include "axle/core/debug.h"
-#include "axle/core/types.h"
+#include "../core/debug.h"
+#include "../core/types.h"
 
 namespace ax {
 #if defined(SYS_IS_WINDOWS)

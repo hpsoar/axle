@@ -1,6 +1,6 @@
-#include "axle/cg/glmesh.h"
-#include "axle/core/container.hpp"
-#include "axle/cg/scene.h"
+#include "../cg/glmesh.h"
+#include "../core/container.hpp"
+#include "../cg/scene.h"
 #include "glm_avl.h"
 
 namespace ax {

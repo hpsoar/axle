@@ -1,4 +1,4 @@
-#include "axle/cg/material.h"
+#include "../cg/material.h"
 #include <string.h>
 
 namespace ax {

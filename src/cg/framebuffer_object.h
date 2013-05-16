@@ -1,7 +1,7 @@
-#ifndef AXLE_GRAPHICS_FRAMEBUFFER_OBJECT_H
-#define AXLE_GRAPHICS_FRAMEBUFFER_OBJECT_H
+#ifndef AXLE_CG_FRAMEBUFFER_OBJECT_H
+#define AXLE_CG_FRAMEBUFFER_OBJECT_H
 
-#include "axle/core/settings.h"
+#include "../core/settings.h"
 #include <GL/glew.h>
 
 namespace ax {
@@ -97,5 +97,5 @@ private:
 };
 } // ax
 
-#endif // AXLE_GRAPHICS_FRAMEBUFFER_OBJECT_H
+#endif // AXLE_CG_FRAMEBUFFER_OBJECT_H
 

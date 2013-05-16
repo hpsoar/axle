@@ -1,5 +1,5 @@
-#include "axle/cg/glmesh.h"
-#include "axle/cg/utils.h"
+#include "../cg/glmesh.h"
+#include "../cg/utils.h"
 
 namespace ax {
 void GLGroup::Draw(ProgramGLSLPtr prog, Options opts) const {  

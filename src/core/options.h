@@ -1,7 +1,7 @@
 #ifndef AXLE_CORE_OPTIONS_H
 #define AXLE_CORE_OPTIONS_H
 
-#include "axle/core/settings.h"
+#include "../core/settings.h"
 
 #include <string>
 

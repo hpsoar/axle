@@ -1,5 +1,5 @@
-#include "axle/cg/texture_gl.h"
-#include "axle/cg/utils.h"
+#include "../cg/texture_gl.h"
+#include "../cg/utils.h"
 
 namespace ax {
 void TextureGL::SetDefaultParameters() {

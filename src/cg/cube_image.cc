@@ -1,5 +1,5 @@
-#include "axle/cg/cube_image.h"
-#include "axle/core/debug.h"
+#include "../cg/cube_image.h"
+#include "../core/debug.h"
 
 #include <string.h>
 #include <IL/il.h>

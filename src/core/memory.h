@@ -3,10 +3,10 @@
 
 #include <vector>
 
-#include "axle/core/settings.h"
-#include "axle/core/typedefs.h"
-#include "axle/core/macros.h"
-#include "axle/core/debug.h"
+#include "../core/settings.h"
+#include "../core/typedefs.h"
+#include "../core/macros.h"
+#include "../core/debug.h"
 
 #include <string.h>
 

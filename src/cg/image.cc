@@ -1,5 +1,5 @@
-#include "axle/cg/image.h"
-#include "axle/core/debug.h"
+#include "../cg/image.h"
+#include "../core/debug.h"
 
 #include <string.h>
 

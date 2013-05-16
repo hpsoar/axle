@@ -1,10 +1,10 @@
 #ifndef AXLE_CG_GLOBJECT_H
 #define AXLE_CG_GLOBJECT_H
 
-#include "axle/core.h"
-#include "axle/geom.h"
-#include "axle/cg/cg_fwd.h"
-#include "axle/cg/material.h"
+#include "../core.h"
+#include "../geom.h"
+#include "../cg/cg_fwd.h"
+#include "../cg/material.h"
 
 namespace ax {
 // should be handled with pointer only, 

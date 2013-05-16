@@ -1,7 +1,7 @@
 #ifndef AXLE_GLOBAL_UTILS_H
 #define AXLE_GLOBAL_UTILS_H
 
-#include "axle/core/settings.h"
+#include "../core/settings.h"
 
 namespace ax { 
 int TerminalWidth();

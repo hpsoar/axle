@@ -1,10 +1,10 @@
-#include "axle/model/triangle_mesh.h"
+#include "../model/triangle_mesh.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <list>
 
-#include "axle/core/types.h"
+#include "../core/types.h"
 
 namespace ax {
 
