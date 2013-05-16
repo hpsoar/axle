@@ -4,6 +4,7 @@
 #include "../core/settings.h"
 
 #include <string>
+#include <list>
 
 namespace ax {
 class SysOptions {
@@ -19,25 +20,38 @@ private:
   friend void InitSysOptions();
 };
 
+#if defined(SYS_IS_WINDOWS)
+const std::string kDefaultMediaPath = "E:/workspace/media/";
+#elif defined(SYS_IS_LINUX)
+const std::string kDefaultMediaPath = "/media/E/workspace/media/";
+#endif
+
+class PathList {
+public:
+  std::string GetFullPath(const char *filename);
+  FILE *OpenFile(const char *filename);
+  void AddPath(const char *path);
+private:
+  FILE *OpenFile_(const std::string &path);
+  std::list<std::string> path_list_;
+};
+
 class UserOptions {
 public:
   static const std::string &DefaultMediaPath() { 
     assert(s_initialized_);    
     return s_default_media_path_; 
   }
-  static std::string GetFullModelPath(const char *filename);
-  static std::string GetFullTexturePath(const char *filename);
-  static std::string GetFullEnvMapPath(const char *filename);
+  DEPRECATED(static std::string GetFullModelPath(const char *filename));
+  DEPRECATED(static std::string GetFullTexturePath(const char *filename));
+  DEPRECATED(static std::string GetFullEnvMapPath(const char *filename));
+
+  static std::string GetFullPath(const char *filename);
 
 private:
-  static void set_default_media_path(const char *path);
-  static void finalize() { s_initialized_ = true; }
-  static bool initialized() { return s_initialized_; }
-
+  static void LoadDefault();
   static std::string s_default_media_path_;
-  static bool s_initialized_;
-
-  friend void LoadUserOptions();
+  static bool s_initialized_;  
 };
 
 void InitOptions();
