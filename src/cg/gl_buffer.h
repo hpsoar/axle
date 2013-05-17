@@ -49,6 +49,8 @@ public:
     return 0;
   }
 
+  // !!! make sure buffer is bind
+  ax::Texture2DPtr GrabStencilBuffer();
 protected:
   ax::FBODevicePtr device_;
 
@@ -82,10 +84,7 @@ public:
 
   void RenderFullScreen(ax::ProgramGLSLPtr shader);
   void RenderFullScreen(ax::ProgramGLSLPtr shader, int mipmap_level);
-  void ClearColorBuffer(ax::ProgramGLSLPtr shader);
-
-  // !!! make sure buffer is bind
-  ax::Texture2DPtr GrabStencilBuffer();
+  void ClearColorBuffer(ax::ProgramGLSLPtr shader); 
 
 private:
   void ComputeMipmapViewports();

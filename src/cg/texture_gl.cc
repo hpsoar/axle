@@ -88,9 +88,9 @@ ImagePtr Texture2D::GetTextureImage(int level, int format,  int type,
 
   const int iformat = this->iformat();
   char *data = new char[size];    
-  if (iformat >= GL_R8I && iformat <= GL_R32UI) {
+ /* if (iformat >= GL_R8I && iformat <= GL_R32UI) {
     format = GL_RED_INTEGER;    
-  }
+  }*/
   glGetTexImage(this->target(), level, format, type, data);
   return Image::Create(width, height, format, type, data);
 }
