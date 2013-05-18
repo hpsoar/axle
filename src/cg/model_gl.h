@@ -4,8 +4,8 @@
 #include "../core.h"
 #include "../model/triangle_mesh.h"
 #include "../geom.h"
-#include "../cg/utils.h"
-#include "../cg/cg_fwd.h"
+#include "utils.h"
+#include "cg_fwd.h"
 
 namespace ax {
 /* 
@@ -81,6 +81,8 @@ public:
   }
   const Matrix4x4 &mvp() const { return mvp_; }
   const float *mvp_ptr() const { return &mvp_[0][0]; }
+  void Draw(ax::ProgramGLSLPtr prog);
+  using Quad2DGL::Draw;
 private:
   ScreenQuad();
 private:

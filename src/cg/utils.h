@@ -7,7 +7,7 @@
 #include "../geom.h"
 
 #include <GL/glew.h>
-#include "../cg/cg_fwd.h"
+#include "cg_fwd.h"
 
 namespace ax {
 GLuint64 GetGPUPtr(uint32 id, uint32 access);

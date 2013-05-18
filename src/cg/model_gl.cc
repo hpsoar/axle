@@ -1,7 +1,8 @@
-#include "../cg/model_gl.h"
+#include "model_gl.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <GL/glew.h>
-#include "../cg/utils.h"
+#include "utils.h"
+#include "program_glsl.h"
 
 namespace ax {
 const uint32 Quad2DGL::indices_[6] = { 0, 1, 2, 0, 2, 3 };
@@ -45,6 +46,11 @@ void Quad2DGL::CreateVBO() {
 
 ScreenQuad::ScreenQuad() : Quad2DGL(0, 0, 1, 1) {
   mvp_ = glm::ortho(0, 1, 0, 1);
+}
+
+void ScreenQuad::Draw(ax::ProgramGLSLPtr prog) {
+  prog->Set4DMatVar("g_mvp_mat", this->mvp());
+  this->Draw();
 }
 
 } // ax

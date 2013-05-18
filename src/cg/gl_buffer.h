@@ -15,6 +15,7 @@ public:
     static const std::string kHasDepthBuffer;
     static const std::string kHasStencilBuffer;
     static const std::string kColorFormat;
+    static const std::string kDepthFormat;
   }; 
 
   FrameBuffer() : included_buffers_(0) { }
@@ -35,7 +36,13 @@ public:
   void Unbind() { this->device_->Deactivate(); }
 
   ax::Texture2DPtr ColorBuffer(int i) const { return this->color_buffers_[i]; }
-  ax::Texture2DPtr DepthBuffer() const { return depth_buffer_; }
+
+  DEPRECATED(ax::Texture2DPtr DepthBuffer() const) {
+    return depth_buffer_; 
+  }
+
+  const std::vector<ax::Texture2DPtr> color_buffers() const { return this->color_buffers_; }
+  ax::Texture2DPtr depth_buffer() const { return this->depth_buffer_; }
 
   int width() const {
     if (this->depth_buffer_ != NULL) return this->depth_buffer_->width();
@@ -51,6 +58,8 @@ public:
 
   // !!! make sure buffer is bind
   ax::Texture2DPtr GrabStencilBuffer();
+
+  ax::Texture2DPtr GrabDepthBuffer();
 protected:
   ax::FBODevicePtr device_;
 
@@ -66,6 +75,7 @@ private:
   bool has_stencil_buffer_;
   int texture_target_;
   int color_format_;
+  int depth_format_;
 };
 
 // TODO: change to support non-square buffer

@@ -7,14 +7,25 @@ const std::string FrameBuffer::ParamNames::kColorBufferCount = "frame buffer col
 const std::string FrameBuffer::ParamNames::kHasDepthBuffer = "frame buffer has depth buffer";
 const std::string FrameBuffer::ParamNames::kHasStencilBuffer = "frame buffer has stencil buffer";
 const std::string FrameBuffer::ParamNames::kColorFormat = "frame buffer color format";
+const std::string FrameBuffer::ParamNames::kDepthFormat = "frame buffer depth format";
 
 bool FrameBuffer::Initialize(const ax::ParamSet &params) {
   this->name_ = params.GetStr(ParamNames::kBufferName, "frame buffer");
   this->texture_target_ = params.GetInt(ParamNames::kTextureTarget, GL_TEXTURE_2D);
   this->color_format_ = params.GetInt(ParamNames::kColorFormat, GL_RGBA);
-  this->n_color_buffers_ = params.GetInt(ParamNames::kColorBufferCount, 1);
+  this->n_color_buffers_ = params.GetInt(ParamNames::kColorBufferCount, 1);  
   this->has_stencil_buffer_ = params.GetBool(ParamNames::kHasStencilBuffer, false);
   this->has_zbuffer_ = params.GetBool(ParamNames::kHasDepthBuffer, false);
+
+  this->depth_format_ = params.GetInt(ParamNames::kDepthFormat, 0);
+  if (this->depth_format_ == 0) {
+    if (this->has_stencil_buffer_) {
+      // it seems that stencil buffer ought to has depth buffer with it
+      this->depth_format_ = GL_DEPTH24_STENCIL8;
+    } else if (this->has_zbuffer_) {
+      this->depth_format_ = GL_DEPTH_COMPONENT;
+    }
+  }
 
   this->included_buffers_ = 0;
   if (this->n_color_buffers_) this->included_buffers_ |= GL_COLOR_BUFFER_BIT;
@@ -34,34 +45,34 @@ bool FrameBuffer::Resize(int w, int h) {
     V_RET(this->device_ = ax::RenderDeviceFBO::Create());
   }
 
-  this->color_buffers_.resize(this->n_color_buffers_);
-  for (int i = 0; i < this->n_color_buffers_; ++i) {
-    V_RET(this->color_buffers_[i] = ax::Texture2D::Create(
-          this->texture_target_, this->name_));
-    V_RET(this->color_buffers_[i]->Initialize(w, h, this->color_format_));
-    this->color_buffers_[i]->SetDefaultParameters();
+  if (this->n_color_buffers_ > 0) {
+    this->color_buffers_.resize(this->n_color_buffers_);
+    for (int i = 0; i < this->n_color_buffers_; ++i) {
+      V_RET(this->color_buffers_[i] = ax::Texture2D::Create(
+            this->texture_target_, this->name_));
+      V_RET(this->color_buffers_[i]->Initialize(w, h, this->color_format_));
+      this->color_buffers_[i]->SetDefaultParameters();
+    }
   }
-
-  int depth_format = 0;
-  if (this->has_stencil_buffer_) {
-    // it seems that stencil buffer ought to has depth buffer with it
-    depth_format = GL_DEPTH24_STENCIL8;
-  } else if (this->has_zbuffer_) {
-    depth_format = GL_DEPTH_COMPONENT;
-  }  
 
   if (this->has_stencil_buffer_ || this->has_zbuffer_) {
     V_RET(this->depth_buffer_ = ax::Texture2D::Create(
           this->texture_target_, this->name_ + " zbuffer"));
-    V_RET(this->depth_buffer_->InitializeDepth(w, h, depth_format));
+    V_RET(this->depth_buffer_->InitializeDepth(w, h, this->depth_format_));
+    this->depth_buffer_->SetDefaultParameters();
   }
 
   this->device_->Activate();
-  this->device_->SetRenderTargets(this->color_buffers_);
+  if (this->n_color_buffers_ > 0)
+    this->device_->SetRenderTargets(this->color_buffers_);
+  else
+    this->device_->DisableColorBuffer();
+
   if (this->has_zbuffer_ || this->has_stencil_buffer_)
     this->device_->SetDepthBuffer(this->depth_buffer_);  
   else
     this->device_->DisableDepthBuffer();
+
   if (this->has_stencil_buffer_) 
     this->device_->SetStencilBuffer(this->depth_buffer_);
   this->device_->Deactivate();  

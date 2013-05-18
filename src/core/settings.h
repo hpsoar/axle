@@ -84,7 +84,7 @@
 #include <alloca.h>
 #endif
 
-#pragma warning(disable:4996)
+//#pragma warning(disable:4996)
 
 #ifdef __GNUC__
 #define DEPRECATED(func) func __attribute__ ((deprecated))
