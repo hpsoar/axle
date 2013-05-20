@@ -3,18 +3,32 @@
 
 #include "../core.h"
 
-#include "../cg/image.h"
-#include "../cg/cube_image.h"
+#include "image.h"
+#include "cube_image.h"
 
-#include "../cg/cg_fwd.h"
-#include "../cg/gl_object.h"
+#include "cg_fwd.h"
+#include "gl_object.h"
 
 namespace ax {
+class UnitIdManager {
+public:
+  int nextId() {
+    int id = this->next_id_++;
+    if (this->next_id_ > this->kMaxUnit) {
+      ax::Logger::Log("More than %d image units are used, you may need more efficient management", this->kMaxUnit);
+    }
+    return id;
+  }
+private:
+  static int next_id_;
+  static const int kMaxUnit = 16;
+};
+
 class TextureGL : public GLObject {
 public:
   TextureGL(uint32 target, const std::string &name) 
       : GLObject(name), target_(target),
-        width_(0), height_(0), iformat_(0) {
+        width_(0), height_(0), iformat_(0), unit_id_(-1) {
     glGenTextures(1, &id_);
   }
 
@@ -33,7 +47,18 @@ public:
                         uint32 access, uint32 format) {
     glBindImageTexture(unit, this->id(), level,
                        layered, layer, access, format);
+    this->unit_id_ = unit;
     this->CheckResult("TextureGL::BindImageTexture");
+  }
+
+  void BindImageTexture(int32 level, bool layered, int32 layer, uint32 access, uint32 format) {
+    this->BindImageTexture(this->unit_mgr_.nextId(), level, layered, layer, access, format);
+  }
+
+  int ImageUnit() const { 
+    assert(this->unit_id_ >= 0);
+    if (this->unit_id_ < 0) ax::Logger::Log("call BindImageTexture first");
+    return this->unit_id_; 
   }
 
   void SetDefaultParameters();
@@ -71,6 +96,10 @@ private:
   int width_;
   int height_;
   int iformat_;
+
+  int unit_id_;
+
+  static ax::UnitIdManager unit_mgr_;
 
   DISABLE_COPY_AND_ASSIGN(TextureGL);
 };

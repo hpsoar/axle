@@ -1,7 +1,11 @@
-#include "../cg/texture_gl.h"
-#include "../cg/utils.h"
+#include "texture_gl.h"
+#include "utils.h"
 
 namespace ax {
+int UnitIdManager::next_id_ = 0;
+
+UnitIdManager TextureGL::unit_mgr_;
+
 void TextureGL::SetDefaultParameters() {
   this->Bind();
   glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
