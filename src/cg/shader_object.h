@@ -2,10 +2,20 @@
 #define AXLE_CG_SHADEROBJECT_H
 
 #include "../core/settings.h"
-#include "../cg/cg_fwd.h"
-#include "../cg/gl_object.h"
+#include "cg_fwd.h"
+#include "gl_object.h"
+
+#include <list>
+#include <hash_map>
 
 namespace ax {
+struct ShaderMacro {
+  std::string name;
+  std::string value;
+};
+
+typedef std::hash_map<std::string, std::string> MacroList;
+
 class ShaderObject : public GLObject {
 public:
   static ShaderPtr Create(int type, const char *file) {
@@ -14,14 +24,18 @@ public:
     return ptr;
   }
 
+  static ShaderPtr Create(int type, const char *file, const MacroList &macros) {
+    ShaderPtr ptr = ShaderPtr(new ShaderObject(file));
+    if (NULL == ptr || !ptr->Load(type, file, macros)) return ShaderPtr();
+    return ptr;
+  }
+
   ~ShaderObject() { this->DeleteShader(); }
 
 private:
-  static int ReadSahderFile(const char *file, char **code);
-
   ShaderObject(const std::string name = "") : GLObject(name) { };
 
-  bool Load(int type, const char *file);
+  bool Load(int type, const char *file, const MacroList &macros = MacroList());
 
   void DeleteShader();
 

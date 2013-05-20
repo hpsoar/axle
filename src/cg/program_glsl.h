@@ -2,8 +2,10 @@
 #define AXLE_CG_PROGRAM_GLSL_H
 
 #include "../core.h"
-#include "../cg/cg_fwd.h"
-#include "../cg/gl_object.h"
+#include "cg_fwd.h"
+#include "gl_object.h"
+#include "shader_object.h"
+
 
 #include <vector>
 
@@ -12,7 +14,8 @@ class ProgramGLSL : public GLObject {
 public:
   static ProgramGLSLPtr Create(const char *vertex_shader, 
                                const char *fragment_shader,
-                               const std::string &name = "");
+                               const std::string &name = "",
+                               const MacroList &macros = MacroList());
 
   virtual ~ProgramGLSL() { this->DeleteProgram(); }
 
@@ -22,8 +25,12 @@ public:
     glUseProgram(0); 
   }
 
+  bool Load(const char *vertex_shader, const char *fragment_shader, const MacroList &macros = MacroList());
+
   bool AttachShader(const ShaderPtr shader) const;
-  bool AttachShader(int type, const char *file);
+
+  bool AttachShader(int type, const char *file, const MacroList &macros = MacroList());
+
   bool AttachFragShader(const char *file) { 
     return this->AttachShader(GL_FRAGMENT_SHADER, file);
   }
@@ -162,9 +169,7 @@ private:
 
   void DeleteProgram() {
     if (id_ > 0) glDeleteProgram(id_);    
-  }
-  
-  bool Load(const char *vertex_shader, const char *fragment_shader);
+  }  
   
   template<typename T, typename F>
   void SetScalarVar(const char *name, T val, F f) const {

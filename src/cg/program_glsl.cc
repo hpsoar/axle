@@ -1,21 +1,22 @@
-#include "../cg/program_glsl.h"
+#include "program_glsl.h"
 
-#include "../cg/shader_object.h"
-#include "../cg/texture_gl.h"
+#include "shader_object.h"
+#include "texture_gl.h"
 #include <GL/glew.h>
 
 namespace ax {
 ProgramGLSLPtr ProgramGLSL::Create(const char *vertex_shader, 
                                    const char *fragment_shader,
-                                   const std::string &name) {
+                                   const std::string &name,
+                                   const MacroList &macros) {
   ProgramGLSLPtr ptr = ProgramGLSLPtr(new ProgramGLSL(name));
-  if (NULL == ptr || !ptr->Load(vertex_shader, fragment_shader))
+  if (NULL == ptr || !ptr->Load(vertex_shader, fragment_shader, macros))
     return ProgramGLSLPtr();
   return ptr;
 }
 
 void ProgramGLSL::GeometryShaderSettings(GLenum input_type, 
-                                         int max_emitted_verts, 
+                                         int max_emitted_verts,
                                          GLenum output_type) {
   glProgramParameteri(id_, GL_GEOMETRY_INPUT_TYPE_EXT, input_type);
   glProgramParameteri(id_, GL_GEOMETRY_OUTPUT_TYPE_EXT, output_type);
@@ -56,16 +57,16 @@ bool ProgramGLSL::AttachShader(const ShaderPtr shader) const {
   return true;
 }
 
-bool ProgramGLSL::AttachShader(int type, const char *file) {  
-  return this->AttachShader(ShaderObject::Create(type, file));
+bool ProgramGLSL::AttachShader(int type, const char *file, const MacroList &macros) {
+  return this->AttachShader(ShaderObject::Create(type, file, macros));
 }
 
-bool ProgramGLSL::Load(const char *vertex_shader, const char *fragment_shader) {
+bool ProgramGLSL::Load(const char *vertex_shader, const char *fragment_shader, const MacroList &macros) {
   if (NULL != vertex_shader) {
-    if (!this->AttachShader(GL_VERTEX_SHADER, vertex_shader)) return false;
+    if (!this->AttachShader(GL_VERTEX_SHADER, vertex_shader, macros)) return false;
   }
   if (NULL != fragment_shader) {
-    if (!this->AttachShader(GL_FRAGMENT_SHADER, fragment_shader)) return false;
+    if (!this->AttachShader(GL_FRAGMENT_SHADER, fragment_shader, macros)) return false;
   }
   return true;
 }

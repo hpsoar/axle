@@ -5,36 +5,7 @@
 #include "../core/debug.h"
 
 namespace ax {
-
-void ShaderObject::DeleteShader() {
-  if(id_ > 0) {
-    glDeleteShader(id_);
-    id_ = 0;
-  }
-}
-
-bool ShaderObject::Load(int type, const char *file) {
-  assert(NULL != file);
-
-  this->DeleteShader();
-
-  id_ = glCreateShader(type);
-  if (0 == id_) {
-    this->CheckResult("ShaderObject::ShaderObject");
-    return false;	
-  }
-
-  char *code = NULL;
-  GLint len = ReadSahderFile(file, &code);
-  if (0 == len) return false;
-  glShaderSource(id_, 1, const_cast<const GLchar**>(&code), &len);
-  delete[] code;
-
-  glCompileShader(id_);
-  return CheckCompileLog();
-}
-
-int ShaderObject::ReadSahderFile(const char *file, char** code) {
+std::string ReadSahderFile(const char *file) {
   FILE *fp = fopen(file, "rb");
   if (NULL == fp) {
     Logger::Log("'ShaderObject::ReadShaderFile', failed to open '%s'", file);
@@ -48,13 +19,63 @@ int ShaderObject::ReadSahderFile(const char *file, char** code) {
     buf = new char[len + 1];
     fread(buf, sizeof(char), len, fp);
     buf[len] = '\0';
-  }else {
-    len = 0;
-  }
-  *code = buf;
+  }  
   fclose(fp);
 
-  return len;
+  return std::string(buf);
+}
+
+size_t FindNextMacro(const std::string &code, int s) {
+  const std::string tag = "#define ";
+  size_t p = code.find(tag, s);
+  if (p == std::string::npos) return p;
+  return p + tag.length();
+}
+
+void DefineMacros(std::string &code, const MacroList &macros) {
+  if (macros.empty()) return;
+
+  size_t p = 0;
+  char macro[ax::kMaxLine];
+  while ((p = ax::FindNextMacro(code, p)) != std::string::npos) {
+    sscanf(code.c_str() + p, "%s", macro);
+    auto mv = macros.find(macro);
+    if (mv == macros.end()) continue;
+
+    sprintf(macro + strlen(macro), " %s\n", mv->second.c_str()); // construct macro
+    size_t n = code.find('\n', p);
+    code.replace(p, n - p + 1, macro);
+  }
+}
+
+void ShaderObject::DeleteShader() {
+  if(id_ > 0) {
+    glDeleteShader(id_);
+    id_ = 0;
+  }
+}
+
+bool ShaderObject::Load(int type, const char *file, const MacroList &macros) {
+  assert(NULL != file);
+
+  this->DeleteShader();
+
+  id_ = glCreateShader(type);
+  if (0 == id_) {
+    this->CheckResult("ShaderObject::ShaderObject");
+    return false;	
+  }
+  
+  std::string code = ReadSahderFile(file);
+  if (code.length() < 10) return false; // NOTE: just be conservative!
+
+  ax::DefineMacros(code, macros);
+
+  const char *src = code.c_str();
+  glShaderSource(id_, 1, const_cast<const GLchar**>(&src), NULL);  
+
+  glCompileShader(id_);
+  return CheckCompileLog();
 }
 
 bool ShaderObject::CheckCompileLog() {
