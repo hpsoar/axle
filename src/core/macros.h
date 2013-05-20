@@ -16,32 +16,33 @@
 
 #define NULL_STR "\0"
 
-inline bool Failed(bool ret) { 
-  assert(ret);
+inline bool Failed(bool ret) {   
   return !ret; 
 }
 
-inline bool Failed(int ret) { 
-  assert(ret == ax::kOK);
+inline bool Failed(int ret) {   
   return ax::kOK != ret; 
 }
 
 template<typename T>
-inline bool Failed(T ptr)  {
-  assert(ptr != NULL);
+inline bool Failed(T ptr)  {  
   return NULL == ptr; 
 }
 
 // note that arg may be a function, it should not appear twice in the macro
 #define V_RET(arg)                \
 {                                 \
-  if (Failed(arg)) return false;  \
+  bool failed = Failed(arg);      \
+  assert(!failed);                \
+  if (failed) return false;       \
 }
 
+// note that arg may be a function, it should not appear twice in the macro
 #define RET(arg)                  \
 {                                 \
+  bool failed = Failed(arg);      \
+  assert(!failed);                \
   if (Failed(arg)) return;        \
-}
-    
+} 
 
 #endif // AXLE_CORE_MICROS_H

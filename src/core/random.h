@@ -4,33 +4,30 @@
 #include "../core/settings.h"
 
 #include <stdlib.h>
+#include <time.h>
 
 namespace ax {
-inline float Rand(float range) {
-  return (float(rand()) / RAND_MAX) * range; 
+inline void set_seed(int seed) {    
+  srand(seed);
+}
+inline void SetTimeSeed() {
+  set_seed(time(NULL));
 }
 
-class Random {
-public:
-  Random() : seed_(0) { }
-  Random(int seed) : seed_(seed) {
-    srand(seed);
-  }
-  void set_seed(int seed) { 
-    seed_ = seed;
-    srand(seed);
-  }
-  int Uniform(int min_val, int max_val) {
-    assert(max_val > min_val);
-    int r = rand();
-    return min_val + (r % (max_val - min_val));
-  }
-  float Uniform(float min_val, float max_val) {
-    return ax::Rand(max_val - min_val) + min_val;
-  }
-private:
-  int seed_;
-};
+template<typename T>
+inline T Rand(T range = 1.0f) {
+  return (T(rand()) / RAND_MAX) * range; 
+}
+
+inline int Uniform(int min_val, int max_val) {
+  assert(max_val > min_val);
+  int r = rand();
+  return min_val + (r % (max_val - min_val));
+}
+
+inline float Uniform(float min_val, float max_val) {
+  return Rand(max_val - min_val) + min_val;
+}
 
 } // ax
 

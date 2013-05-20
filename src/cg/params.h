@@ -4,7 +4,7 @@
 #include <map>
 
 #include "../geom.h"
-#include "../cg/texture_gl.h"
+#include "cg_fwd.h"
 
 namespace ax {
 template<typename T>

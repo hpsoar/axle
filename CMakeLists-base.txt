@@ -54,3 +54,4 @@ message(STATUS "LIB_DIR=${lib_dir}")
 message(STATUS "WORK_DIR=${work_dir}")
 message(STATUS "LIB_TYPE = ${lib_type}")
 message(STATUS "MAGIC_DIR = ${magic_dir}")
+

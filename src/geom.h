@@ -2,6 +2,8 @@
 #define AXLE_GEOM_H
 #include <glm/glm.hpp>
 
+#include "core/random.h"
+
 namespace ax {
 typedef glm::vec3 Point;
 typedef glm::vec3 Normal;
@@ -37,6 +39,14 @@ return Matrix3x3(Transpose(Invert(mat)));
 void Print(const Point &p, const char *name = "");
 void Print(const Matrix4x4 &m, const char *name = "");
 void Print(const Matrix3x3 &m, const char *name = "");
+
+inline ax::Vector3 RandVec3(float scale) {
+  return ax::Vector3(ax::Rand(scale), ax::Rand(scale), ax::Rand(scale));
+}
+
+inline ax::Vector4 RandVec4(float scale) {
+  return ax::Vector4(ax::Rand(scale), ax::Rand(scale), ax::Rand(scale), ax::Rand(scale));
+}
 } // ax
 
 inline glm::vec3 operator*(const ax::Matrix4x4 &m, const glm::vec3 &p) {
@@ -44,5 +54,6 @@ inline glm::vec3 operator*(const ax::Matrix4x4 &m, const glm::vec3 &p) {
 }
 
 #include "geom/aabb.h"
+
 
 #endif // AXLE_GEOM_H

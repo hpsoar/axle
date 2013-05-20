@@ -67,8 +67,9 @@ public:
   Options() : opts_(0) { }
   Options(int opts) : opts_(opts) { }
   void Clear(int opt) { opts_ &= ~opt; }
+  void Add(int opt) { this->opts_ |= opt; }
   bool Contain(int opt) const { return (opts_ &opt) != 0; }
-  bool IsEmpty() const { return opts_ == kNone; }
+  bool IsEmpty() const { return opts_ == kNone; }  
 private:
   int opts_;
 };

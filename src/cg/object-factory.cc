@@ -29,7 +29,7 @@ glm::mat4 ExtractMatrix(const char *str) {
   else {
     ax::Unsupported("transformation type", token.ptr());
     return glm::mat4(1.f);
-  }  
+  }
 }
 
 ObjectPtr ObjectFactory::CreateGroup(FILE *fp, Scene *s) {  

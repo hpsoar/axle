@@ -4,10 +4,21 @@
 #include "../core.h"
 #include "../model/triangle_mesh.h"
 #include "../geom.h"
-#include "utils.h"
 #include "cg_fwd.h"
 
 namespace ax {
+void DrawQuad(float x1, float y1, float x2, float y2);
+void DrawQuad(float x1, float y1, float z1,
+              float x2, float y2, float z2,
+              float x3, float y3, float z3);
+inline void DrawQuad() { DrawQuad(0, 0, 1, 1); }
+inline void DrawQuad(float size) {
+  DrawQuad(0, 0, size, size);
+}
+void DrawQuad(float x1, float y1, float x2, float y2, float z);
+void DrawCube(float x1, float y1, float z1,
+              float x2, float y2, float z2);
+
 /* 
  * The implementation should make sure that sizeof(Normal) == sizeof(Position)
  */
@@ -92,6 +103,17 @@ private:
 inline void DrawCube(const Point &p1, const Point &p2) {
   DrawCube(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z);
 }
+
+class DEPRECATED(MyScreenQuad) {
+public:
+  bool Initialize();
+  void Draw();
+private:
+  uint32 vbo_;
+  int vertex_location_;
+
+  static const float quadVArray[24];
+};
 
 } // ax
 

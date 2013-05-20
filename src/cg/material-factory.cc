@@ -1,8 +1,8 @@
-#include "../cg/material-factory.h"
-#include "../cg/glmaterial.h"
-#include "../cg/glslmaterial.h"
-#include "../cg/scene.h"
-#include "../cg/parser.h"
+#include "material-factory.h"
+#include "glmaterial.h"
+#include "glslmaterial.h"
+#include "scene.h"
+#include "parser.h"
 
 namespace ax {
 GLMaterialPtr MaterialFactory::CreateGLMaterial() {
@@ -77,6 +77,12 @@ MaterialPtr MaterialFactory::CreateGLSLMaterial(const char *name, FILE *fp,
       }
       else if (token.Equals("const3")) {
         matl->BindConstVec3(var_name.ptr(), ax::ExtractVec3(ptr));
+      }
+      else if (token.Equals("rand3")) {        
+        matl->BindConstVec3(var_name.ptr(), ax::RandVec3(ax::ParseNumber(ptr, 1.0f)));
+      }
+      else if (token.Equals("rand4")) {
+        matl->BindConstVec4(var_name.ptr(), ax::RandVec4(ax::ParseNumber(ptr, 1.0f)));
       }
       else if (token.Equals("tex")) {
         ptr = token.Extract(ptr);

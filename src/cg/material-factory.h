@@ -1,7 +1,7 @@
 #ifndef AXLE_CG_MATERIAL_FACTORY_H
 #define AXLE_CG_MATERIAL_FACTORY_H
 
-#include "../cg/cg_fwd.h"
+#include "cg_fwd.h"
 
 namespace ax {
 class MaterialFactory {

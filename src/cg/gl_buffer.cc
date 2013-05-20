@@ -41,6 +41,11 @@ bool FrameBuffer::Resize(int w, int h) {
   V_RET(w > 0 && h > 0);
   if (this->width() == w && this->height() == h) return true;
 
+  if (this->included_buffers_ == 0) {
+    ax::Logger::Log("FrameBuffer::Resize: no buffer is included");
+    return false;
+  }
+
   if (this->device_ == NULL) {
     V_RET(this->device_ = ax::RenderDeviceFBO::Create());
   }
@@ -175,151 +180,52 @@ void MultiResolutionBuffer::RenderFullScreen(
   this->screen_quad_->Draw();
 }
 
-bool TextureUtil::Initialize() {
-  V_RET(this->device_ = ax::RenderDeviceFBO::Create());
-  V_RET(this->quad_ = ax::ScreenQuad::Create());
+//// ArrayBufferGL
 
-  V_RET(this->max_depth_derivative_prog_ = ax::ProgramGLSL::Create(
-      "shaders/quad.vp", "shaders/max_depth_derivative.fp", 
-      "max depth derivative"));
-  V_RET(this->max_depth_derivative_prog_->Link());
+GLuint64 GetGPUPtr(uint32 id, uint32 access) {
+  glBindBuffer(GL_ARRAY_BUFFER, id);
 
-  V_RET(this->min_max_normal_prog_ = ax::ProgramGLSL::Create(
-      "shaders/quad.vp", "shaders/min_max_normal.fp", "min max normal"));
-  V_RET(this->min_max_normal_prog_->Link());
+  GLuint64 gpu_ptr = 0;
+  glMakeBufferResidentNV(GL_ARRAY_BUFFER, access);
+  glGetBufferParameterui64vNV(GL_ARRAY_BUFFER, GL_BUFFER_GPU_ADDRESS_NV,
+                              &gpu_ptr);
 
-  V_RET(this->reduction_prog_ = ax::ProgramGLSL::Create(
-      "shaders/quad.vp", "shaders/min_max_depth_mipmap.fp", "depth mipmap"));
-  V_RET(this->reduction_prog_->Link());
+  glBindBuffer(GL_ARRAY_BUFFER, 0); 
 
+  return gpu_ptr;
+}
+
+bool ArrayBufferGL::Initialize(uint32 size, uint32 access, const void *data) {
+  V_RET(size != 0);
+  if (this->size_ != size) {
+    this->Release();
+    glGenBuffers(1, &this->id_);
+    glBindBuffer(GL_ARRAY_BUFFER, this->id_);
+
+    glBufferData(GL_ARRAY_BUFFER, size, data, GL_STREAM_DRAW);
+    V_RET(!ax::CheckErrorsGL("ArrayBufferGL::Initialize"));
+    this->size_ = size;
+    glMakeBufferResidentNV(GL_ARRAY_BUFFER, access);
+    glGetBufferParameterui64vNV(GL_ARRAY_BUFFER, GL_BUFFER_GPU_ADDRESS_NV,
+                                &this->gpu_ptr_);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+  }  
   return true;
 }
 
-int TextureUtil::CreateCustomMipmap(ax::ProgramGLSLPtr shader, 
-                                    ax::Texture2DPtr texture,
-                                    int min_res) {
-  glPushAttrib(GL_ENABLE_BIT);
-  glDisable(GL_DEPTH_TEST);
-
-  this->device_->Activate();
-  this->device_->SaveMVP();
-
-  shader->Begin();
-  shader->Set4DMatVar("mvp_mat", this->quad_->mvp());
-  shader->SetTextureVar("g_input_tex", texture);
-  
-  float step = 1.0f;
-  int width = texture->width() / 2;
-  int level = 1;
-  
-  texture->Bind();  
-
-  while (width >= min_res) {
-    this->device_->SetRenderTarget(texture, level);
-    this->device_->AdjustViewport(width, width);
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    texture->SetParameter(GL_TEXTURE_BASE_LEVEL, level - 1);
-    texture->SetParameter(GL_TEXTURE_MAX_LEVEL, level - 1);
-    texture->SetParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    texture->SetParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);    
-
-    shader->SetVar("g_offset", step / texture->width());
-
-    this->quad_->Draw();
-
-    ++level;
-    step *= 2;
-    width /= 2;
+void ArrayBufferGL::Release() {
+  if (this->id_ > 0) {
+    glDeleteBuffers(1, &this->id_);
+    id_ = 0;
+    gpu_ptr_ = 0;
+    size_ = 0;
   }
-  texture->SetParameter(GL_TEXTURE_BASE_LEVEL, 0);  
-  texture->SetParameter(GL_TEXTURE_MAX_LEVEL, level - 1);
-  texture->Unbind();
-
-  shader->End();
-
-  this->device_->RestoreMVP();
-  this->device_->Deactivate();
-
-  glPopAttrib();
-
-  ax::CheckErrorsGL("TextureUtil::CreateCustomMipmap");
-
-  return level;
 }
 
-void TextureUtil::CreateMaxDepthDerivativeTexture(
-    ax::Texture2DPtr position_tex, ax::Texture2DPtr texture) {
-  glPushAttrib(GL_ENABLE_BIT);
-  glDisable(GL_DEPTH_TEST);
+void ArrayBufferGL::SetData(int offset, int size, const void *data) {
+  glBindBuffer(GL_ARRAY_BUFFER, this->id_);
+  glBufferSubData(GL_ARRAY_BUFFER, offset, size, data);  
 
-  this->device_->Activate();
-  this->device_->SetRenderTarget(texture);
-  this->device_->DisableDepthBuffer();
-  this->device_->AdjustViewport(texture);
-  glClear(GL_COLOR_BUFFER_BIT);
-
-  this->max_depth_derivative_prog_->Begin();
-
-  this->max_depth_derivative_prog_->Set4DMatVar("mvp_mat", this->quad_->mvp());
-  this->max_depth_derivative_prog_->SetTextureVar(
-      "g_position_buffer", position_tex);
-  
-  //this->max_depth_derivative_prog_->SetVar("g_zfar", this->camera_.z_far());
-
-  this->max_depth_derivative_prog_->SetVar(
-      "g_offset", 1.0f / texture->width());
-
-  this->quad_->Draw(); 
-  this->max_depth_derivative_prog_->End();
-
-  this->device_->Deactivate();
-
-  glPopAttrib();
-  ax::CheckErrorsGL("TextureUtil::CreateMaxDepthDerivativeTexture");
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
-
-void TextureUtil::CreateMinMaxNormalTexture(
-    ax::Texture2DPtr normal_tex, ax::Texture2DPtr texture) {
-  glPushAttrib(GL_ENABLE_BIT);
-  glDisable(GL_DEPTH_TEST);
-
-  this->device_->Activate();
-  this->device_->SetRenderTarget(texture);
-  this->device_->DisableDepthBuffer();
-  this->device_->AdjustViewport(texture);
-  glClear(GL_COLOR_BUFFER_BIT);
-
-  this->min_max_normal_prog_->Begin();
-
-  this->min_max_normal_prog_->Set4DMatVar("mvp_mat", this->quad_->mvp());
-  this->min_max_normal_prog_->SetTextureVar("g_normal_tex", normal_tex);
-  this->min_max_normal_prog_->SetVar("g_offset", 1.0f / texture->width());
-
-  this->quad_->Draw();
-
-  this->min_max_normal_prog_->End();
-
-  this->device_->Deactivate();
-
-  glPopAttrib();
-}
-
-// TODO: make it general
-void TextureUtil::Reduce(ax::Texture2DPtr texture, float *ret, int n) { 
-  int levels = this->CreateCustomMipmap(this->reduction_prog_, texture, 64); 
-
-  ax::ImagePtr img = texture->GetTextureImage(
-      levels - 1, GL_RG, GL_FLOAT, n, 4);
-
-  const float *min_max = (const float*)(img->data());
-  float dmin = FLT_MAX;
-  float dmax = -dmin;
-  for (int i = 0; i < img->width() * img->height(); ++i) {
-    if (min_max[i*2] < dmin) dmin = min_max[i*2];
-    if (min_max[i*2+1] > dmax) dmax = min_max[i*2+1];
-  }
-  ret[0] = dmin; ret[1] = dmax;
-}
-
 }

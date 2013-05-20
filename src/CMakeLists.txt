@@ -1,4 +1,3 @@
-set(inc_path ../include/axle)
 set(target_name axle)
 
 macro(copy_file SRC_PATH DEST_FOLDER)

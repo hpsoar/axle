@@ -10,143 +10,206 @@
 #include "../core/debug.h"
 #include "texture_gl.h"
 #include "image.h"
+#include "program_glsl.h"
+#include "render_device_fbo.h"
 
 namespace ax {
-GLuint64 GetGPUPtr(uint32 id, uint32 access) {
-  glBindBuffer(GL_ARRAY_BUFFER, id);
+//// TextureCopier
 
-  GLuint64 gpu_ptr = 0;
-  glMakeBufferResidentNV(GL_ARRAY_BUFFER, access);
-  glGetBufferParameterui64vNV(GL_ARRAY_BUFFER, GL_BUFFER_GPU_ADDRESS_NV,
-                              &gpu_ptr);
-
-  glBindBuffer(GL_ARRAY_BUFFER, 0); 
-
-  return gpu_ptr;
+void TextureCopier::Copy(ax::Texture2DPtr texture) {
+  TextureCopier::Copy(texture, texture->width(), texture->height());
 }
 
-bool ArrayBufferGL::Initialize(uint32 size, uint32 access, const void *data) {
-  V_RET(size != 0);
-  if (this->size_ != size) {
-    this->Release();
-    glGenBuffers(1, &this->id_);
-    glBindBuffer(GL_ARRAY_BUFFER, this->id_);
-
-    glBufferData(GL_ARRAY_BUFFER, size, data, GL_STREAM_DRAW);
-    V_RET(!ax::CheckErrorsGL("ArrayBufferGL::Initialize"));
-    this->size_ = size;
-    glMakeBufferResidentNV(GL_ARRAY_BUFFER, access);
-    glGetBufferParameterui64vNV(GL_ARRAY_BUFFER, GL_BUFFER_GPU_ADDRESS_NV,
-                                &this->gpu_ptr_);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+void TextureCopier::Copy(ax::Texture2DPtr texture, int width, int height) {
+  glViewport(0, 0, width, height);  
+  if (texture->target() == GL_TEXTURE_2D) {
+    TextureCopier::CopyTexture2D(texture);
+  }
+  else if (texture->target() == GL_TEXTURE_RECTANGLE) {
+    TextureCopier::CopyTextureRect(texture);
   }  
+}
+
+// need shaders, TODO: solve the dependency
+void TextureCopier::CopyTexture2D(ax::Texture2DPtr texture) {
+  static ax::ProgramGLSLPtr prog = NULL;
+  if (prog == NULL) {
+    prog = ax::ProgramGLSL::Create(
+        "shaders/pass_through.vp", "shaders/copy_tex_2d.fp",
+        "copy_tex_2d program");
+    prog->Link();
+  }
+  prog->Begin();
+  prog->SetTextureVar("g_tex", texture);
+  prog->SetVar("g_width", texture->width());
+  prog->SetVar("g_height", texture->height());
+  TextureCopier::DrawFullScreenQuad();
+  prog->End();
+}
+
+// TODO: solve dependency on shaders
+void TextureCopier::CopyTextureRect(ax::Texture2DPtr texture) {
+  static ax::ProgramGLSLPtr prog = NULL;
+  if (prog == NULL) {
+    prog = ax::ProgramGLSL::Create(
+        "shaders/pass_through.vp", "shaders/copy_tex_rect.fp",
+        "copy_tex_2d program");
+    prog->Link();
+  }
+  prog->Begin();
+  prog->SetTextureVar("g_tex", texture);  
+  TextureCopier::DrawFullScreenQuad();
+  prog->End();
+}
+
+//// TextureUtil
+
+// need corresponding shaders under shaders directory, TODO: solve this dependency
+bool TextureUtil::Initialize() {
+  V_RET(this->device_ = ax::RenderDeviceFBO::Create());
+  V_RET(this->quad_ = ax::ScreenQuad::Create());
+
+  V_RET(this->max_depth_derivative_prog_ = ax::ProgramGLSL::Create(
+      "shaders/quad.vp", "shaders/max_depth_derivative.fp", 
+      "max depth derivative"));
+  V_RET(this->max_depth_derivative_prog_->Link());
+
+  V_RET(this->min_max_normal_prog_ = ax::ProgramGLSL::Create(
+      "shaders/quad.vp", "shaders/min_max_normal.fp", "min max normal"));
+  V_RET(this->min_max_normal_prog_->Link());
+
+  V_RET(this->reduction_prog_ = ax::ProgramGLSL::Create(
+      "shaders/quad.vp", "shaders/min_max_depth_mipmap.fp", "depth mipmap"));
+  V_RET(this->reduction_prog_->Link());
+
   return true;
 }
 
-void ArrayBufferGL::Release() {
-  if (this->id_ > 0) {
-    glDeleteBuffers(1, &this->id_);
-    id_ = 0;
-    gpu_ptr_ = 0;
-    size_ = 0;
+int TextureUtil::CreateCustomMipmap(ax::ProgramGLSLPtr shader, 
+                                    ax::Texture2DPtr texture,
+                                    int min_res) {
+  glPushAttrib(GL_ENABLE_BIT);
+  glDisable(GL_DEPTH_TEST);
+
+  this->device_->Activate();
+  this->device_->SaveMVP();
+
+  shader->Begin();
+  shader->Set4DMatVar("mvp_mat", this->quad_->mvp());
+  shader->SetTextureVar("g_input_tex", texture);
+  
+  float step = 1.0f;
+  int width = texture->width() / 2;
+  int level = 1;
+  
+  texture->Bind();  
+
+  while (width >= min_res) {
+    this->device_->SetRenderTarget(texture, level);
+    this->device_->AdjustViewport(width, width);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    texture->SetParameter(GL_TEXTURE_BASE_LEVEL, level - 1);
+    texture->SetParameter(GL_TEXTURE_MAX_LEVEL, level - 1);
+    texture->SetParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    texture->SetParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);    
+
+    shader->SetVar("g_offset", step / texture->width());
+
+    this->quad_->Draw();
+
+    ++level;
+    step *= 2;
+    width /= 2;
   }
+  texture->SetParameter(GL_TEXTURE_BASE_LEVEL, 0);  
+  texture->SetParameter(GL_TEXTURE_MAX_LEVEL, level - 1);
+  texture->Unbind();
+
+  shader->End();
+
+  this->device_->RestoreMVP();
+  this->device_->Deactivate();
+
+  glPopAttrib();
+
+  ax::CheckErrorsGL("TextureUtil::CreateCustomMipmap");
+
+  return level;
 }
 
-void ArrayBufferGL::SetData(int offset, int size, const void *data) {
-  glBindBuffer(GL_ARRAY_BUFFER, this->id_);
-  glBufferSubData(GL_ARRAY_BUFFER, offset, size, data);  
+void TextureUtil::CreateMaxDepthDerivativeTexture(
+    ax::Texture2DPtr position_tex, ax::Texture2DPtr texture) {
+  glPushAttrib(GL_ENABLE_BIT);
+  glDisable(GL_DEPTH_TEST);
 
-  glBindBuffer(GL_ARRAY_BUFFER, 0);
+  this->device_->Activate();
+  this->device_->SetRenderTarget(texture);
+  this->device_->DisableDepthBuffer();
+  this->device_->AdjustViewport(texture);
+  glClear(GL_COLOR_BUFFER_BIT);
+
+  this->max_depth_derivative_prog_->Begin();
+
+  this->max_depth_derivative_prog_->Set4DMatVar("mvp_mat", this->quad_->mvp());
+  this->max_depth_derivative_prog_->SetTextureVar(
+      "g_position_buffer", position_tex);
+  
+  //this->max_depth_derivative_prog_->SetVar("g_zfar", this->camera_.z_far());
+
+  this->max_depth_derivative_prog_->SetVar(
+      "g_offset", 1.0f / texture->width());
+
+  this->quad_->Draw(); 
+  this->max_depth_derivative_prog_->End();
+
+  this->device_->Deactivate();
+
+  glPopAttrib();
+  ax::CheckErrorsGL("TextureUtil::CreateMaxDepthDerivativeTexture");
 }
 
-void DrawQuad(float x1, float y1, float x2, float y2) {
-  glBegin(GL_QUADS);
-  glTexCoord2f(x1, y1); glVertex2f(x1, y1);
-  glTexCoord2f(x1, y2); glVertex2f(x1, y2);
-  glTexCoord2f(x2, y2); glVertex2f(x2, y2);
-  glTexCoord2f(x2, y1); glVertex2f(x2, y1);
-  glEnd();
+void TextureUtil::CreateMinMaxNormalTexture(
+    ax::Texture2DPtr normal_tex, ax::Texture2DPtr texture) {
+  glPushAttrib(GL_ENABLE_BIT);
+  glDisable(GL_DEPTH_TEST);
+
+  this->device_->Activate();
+  this->device_->SetRenderTarget(texture);
+  this->device_->DisableDepthBuffer();
+  this->device_->AdjustViewport(texture);
+  glClear(GL_COLOR_BUFFER_BIT);
+
+  this->min_max_normal_prog_->Begin();
+
+  this->min_max_normal_prog_->Set4DMatVar("mvp_mat", this->quad_->mvp());
+  this->min_max_normal_prog_->SetTextureVar("g_normal_tex", normal_tex);
+  this->min_max_normal_prog_->SetVar("g_offset", 1.0f / texture->width());
+
+  this->quad_->Draw();
+
+  this->min_max_normal_prog_->End();
+
+  this->device_->Deactivate();
+
+  glPopAttrib();
 }
 
-void DrawQuad(float x1, float y1, float z1,  float x2, float y2, float z2) {
-  glBegin(GL_QUADS);
-  glEnd();
-}
+// TODO: make it general
+void TextureUtil::Reduce(ax::Texture2DPtr texture, float *ret, int n) { 
+  int levels = this->CreateCustomMipmap(this->reduction_prog_, texture, 64); 
 
-void DrawQuad(float x1, float y1 ,float x2, float y2, float z) {
-  glBegin(GL_QUADS);
-  glTexCoord2f(0, 0); glVertex3f(x1, y1, z);
-  glTexCoord2f(0, 1); glVertex3f(x1, y2, z);
-  glTexCoord2f(1, 1); glVertex3f(x2, y2, z);
-  glTexCoord2f(1, 0); glVertex3f(x2, y1, z);
-  glEnd();
-}
+  ax::ImagePtr img = texture->GetTextureImage(
+      levels - 1, GL_RG, GL_FLOAT, n, 4);
 
-void DrawCube(float size);
-
-void DrawCube(float x1, float y1, float z1, float x2, float y2, float z2) {
-  glBegin(GL_QUADS);
-
-  glNormal3f(0, -1, 0); 
-  glVertex3f(x1, y1, z1);
-  glVertex3f(x2, y1, z1);
-  glVertex3f(x2, y1, z2);
-  glVertex3f(x1, y1, z2);
-
-  glNormal3f(0, 1, 0); 
-  glVertex3f(x1, y2, z1);
-  glVertex3f(x1, y2, z2);
-  glVertex3f(x2, y2, z2);
-  glVertex3f(x2, y2, z1);
-
-  glNormal3f(-1, 0, 0); 
-  glVertex3f(x1, y1, z1);
-  glVertex3f(x1, y1, z2);
-  glVertex3f(x1, y2, z2);
-  glVertex3f(x1, y2, z1);
-
-  glNormal3f(1,0, 0); 
-  glVertex3f(x2, y1, z1);
-  glVertex3f(x2, y2, z1);
-  glVertex3f(x2, y2, z2);
-  glVertex3f(x2, y1, z2);
-
-  glNormal3f(0, 0, -1); 
-  glVertex3f(x1, y1, z1);
-  glVertex3f(x1, y2, z1);
-  glVertex3f(x2, y2, z1);
-  glVertex3f(x2, y1, z1);
-
-  glNormal3f(0, 0, 1);
-  glVertex3f(x1, y1, z2);
-  glVertex3f(x2, y1, z2);
-  glVertex3f(x2, y2, z2);
-  glVertex3f(x1, y2, z2);
-  glEnd();
-}
-
-GLuint MakeFullScreenQuad() {
-  GLuint display_list = glGenLists(1);
-  if (display_list) {
-    glNewList(display_list, GL_COMPILE);
-    
-    // the vertex shader only need to pass the vertex through
-    glMatrixMode(GL_PROJECTION);
-    glPushMatrix();
-    glLoadIdentity();
-    gluOrtho2D(0, 1, 0, 1);
-    glMatrixMode(GL_MODELVIEW);
-    glPushMatrix();
-    glLoadIdentity();
-    //glRectf(-1, -1, 1, 1);
-    DrawQuad(0, 0, 1, 1);
-    glPopMatrix();
-    glMatrixMode(GL_PROJECTION);
-    glPopMatrix();
-    glMatrixMode(GL_MODELVIEW);
-    glEndList();
+  const float *min_max = (const float*)(img->data());
+  float dmin = FLT_MAX;
+  float dmax = -dmin;
+  for (int i = 0; i < img->width() * img->height(); ++i) {
+    if (min_max[i*2] < dmin) dmin = min_max[i*2];
+    if (min_max[i*2+1] > dmax) dmax = min_max[i*2+1];
   }
-  return display_list;
+  ret[0] = dmin; ret[1] = dmax;
 }
 
 void DisplayStatistics(const char *name, float data, const char *unit, 
@@ -185,9 +248,16 @@ static const char *vis_tex_vp =
   ""
   "";
 
-void VisualizeTexture(const Texture2DPtr tex) {  
+void VisualizeTexture(const Texture2DPtr tex, bool full_screen) {  
   if (NULL == tex) return;
-  glViewport(0, 0, tex->width(), tex->height());
+  if (full_screen) {
+    int w = glutGet(GLUT_WINDOW_WIDTH);
+    int h = glutGet(GLUT_WINDOW_WIDTH);
+    glViewport(0, 0, w, h);
+  }
+  else {
+    glViewport(0, 0, tex->width(), tex->height());
+  }  
   glPushAttrib(GL_ALL_ATTRIB_BITS);  
   glDepthMask(GL_FALSE);
   glDisable(GL_DEPTH_TEST);

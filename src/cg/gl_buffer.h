@@ -18,10 +18,11 @@ public:
     static const std::string kDepthFormat;
   }; 
 
-  FrameBuffer() : included_buffers_(0) { }
+  FrameBuffer() : included_buffers_(0), n_color_buffers_(0), has_stencil_buffer_(false), has_zbuffer_(false) { }
 
   bool Initialize(const ax::ParamSet &params);
 
+  // @param w > 0, h > 0, reallocate only when size changed
   bool Resize(int w, int h);
 
   // !!! unsafe
@@ -108,24 +109,29 @@ private:
   std::vector<int> widths_;
 };
 
-class TextureUtil {
+GLuint64 GetGPUPtr(uint32 id, uint32 access);
+
+class ArrayBufferGL {
 public:
-  bool Initialize();
-  int CreateCustomMipmap(ax::ProgramGLSLPtr shader, ax::Texture2DPtr texture,
-                         int min_res = 2);
-  void CreateMaxDepthDerivativeTexture(ax::Texture2DPtr position_tex,
-                                       ax::Texture2DPtr texture);
-  void CreateMinMaxNormalTexture(ax::Texture2DPtr normal_tex,
-                                 ax::Texture2DPtr texture);  
-  void Reduce(ax::Texture2DPtr texture, float *ret, int n);
+  static ax::ArrayBufferGLPtr Create(uint32 size, uint32 access, const void *data = NULL) {    
+    ax::ArrayBufferGLPtr ptr = ax::ArrayBufferGLPtr(new ArrayBufferGL());
+    if (ptr->Initialize(size, access, data)) return ptr;
+    return ax::ArrayBufferGLPtr();
+  }
+  ArrayBufferGL() : id_(0), gpu_ptr_(0), size_(0) { }
+  ~ArrayBufferGL() { this->Release(); }    
+  bool Initialize(uint32 size, uint32 access, const void *data = NULL);
+
+  void SetData(int offset, int size, const void *data);
+  GLuint id() const { return this->id_; }
+  GLuint64EXT gpu_ptr() const { return this->gpu_ptr_; }
+  uint32 size() const { return this->size_; }
 private:
-  ax::FBODevicePtr device_;
-  ax::ScreenQuadPtr quad_;
-
-  ax::ProgramGLSLPtr max_depth_derivative_prog_;
-  ax::ProgramGLSLPtr min_max_normal_prog_;
-
-  ax::ProgramGLSLPtr reduction_prog_;
+  void Release();
+private:
+  GLuint id_;
+  GLuint64EXT gpu_ptr_;
+  uint32 size_;
 };
 
 }

@@ -11,6 +11,9 @@ class Color {
 
    Color() : r(0), g(0), b(0), a(0) { }
 
+   template<typename V>
+   Color(const V &v) : r(v.r), g(v.g), b(v.b), a(v.a) { }
+
    T *ptr() { return &r; }
 
    const T *ptr() const { return &r; }

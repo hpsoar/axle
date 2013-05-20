@@ -19,12 +19,6 @@ void ToLower(char *str) {
   }
 }
 
-float ParseNumber(const char *str) {
-  float s;
-  sscanf(str, "%f", &s);
-  return s;
-}
-
 void EatToEndKeyword(FILE *fp, LineToken &token) {
   char buf[512];
   while (fgets(buf, 512, fp) != NULL) {

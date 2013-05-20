@@ -9,7 +9,12 @@ namespace ax {
 const char *StripLeading(const char *str);
 const char *StripToken(const char *ptr, char *token);
 void ToLower(char *str);
-float ParseNumber(const char *str);
+
+inline float ParseNumber(const char *str, float def=1.0f) {
+  float s;
+  if (sscanf(str, "%f", &s) > 0) return s;
+  return def;
+}
 
 inline bool Equals(const char *s1, const char *s2) {
   return strcmp(s1, s2) == 0;
@@ -19,22 +24,33 @@ inline bool IsBlankOrComment(const char *str) {
   return str[0] == '\0' || str[0] == '#'; 
 }
 
+template<typename T>
+void FixMissing(T v[], int n, int k) {
+  if (k < 1) {
+    ax::Logger::Log("please provide enough numbers");
+    return;
+  }
+  for (int i = k; i < n; ++i) {
+    v[i] = v[k - 1];
+  }
+}
+
 inline ax::Vector4 ExtractVec4(const char *str) {
-  float r, g, b, a;
-  sscanf(str, "%f%f%f%f", &r, &g, &b, &a);
-  return ax::Vector4(r, g, b, a);
+  float v[4];
+  int k = sscanf(str, "%f%f%f%f", v, v+1, v+2, v+3);
+  ax::FixMissing(v, 4, k);
+  return ax::Vector4(v[0], v[1], v[2], v[3]);
 }
 
 inline ax::Vector3 ExtractVec3(const char *str) {
-  float r, g, b;
-  sscanf(str, "%f%f%f", &r, &g, &b);
-  return ax::Vector3(r, g, b);
+  float v[3];
+  int k = sscanf(str, "%f%f%f", v, v+1, v+2);
+  ax::FixMissing(v, 3, k);
+  return ax::Vector3(v[0], v[1], v[2]);
 }
 
-inline Colorf ExtractColorf(const char *str) {
-  float r, g, b, a;
-  sscanf(str, "%f%f%f%f", &r, &g, &b, &a);
-  return Colorf(r, g, b, a);
+inline Colorf ExtractColorf(const char *str) {  
+  return Colorf(ax::ExtractVec4(str));
 }
 
 class LineToken {
