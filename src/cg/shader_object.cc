@@ -56,15 +56,7 @@ void ShaderObject::DeleteShader() {
 }
 
 bool ShaderObject::Load(int type, const char *file, const MacroList &macros) {
-  assert(NULL != file);
-
-  this->DeleteShader();
-
-  id_ = glCreateShader(type);
-  if (0 == id_) {
-    this->CheckResult("ShaderObject::ShaderObject");
-    return false;	
-  }
+  assert(NULL != file);  
   
   std::string code = ReadSahderFile(file);
   if (code.length() < 10) return false; // NOTE: just be conservative!
@@ -72,10 +64,24 @@ bool ShaderObject::Load(int type, const char *file, const MacroList &macros) {
   ax::DefineMacros(code, macros);
 
   const char *src = code.c_str();
-  glShaderSource(id_, 1, const_cast<const GLchar**>(&src), NULL);  
 
-  glCompileShader(id_);
-  return CheckCompileLog();
+  return this->LoadCode(type, code.c_str()); 
+}
+
+bool ShaderObject::LoadCode(int type, const char *code) {
+  this->DeleteShader();
+
+  id_ = glCreateShader(type);
+  if (0 == id_) {
+    this->CheckResult("ShaderObject::ShaderObject");
+    return false;	
+  }
+
+  glShaderSource(id_, 1, const_cast<const GLchar**>(&code), NULL);  
+
+  glCompileShader(id_);  
+
+  return this->CheckCompileLog();
 }
 
 bool ShaderObject::CheckCompileLog() {

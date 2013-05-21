@@ -17,16 +17,16 @@ struct ShaderMacro {
 typedef std::hash_map<std::string, std::string> MacroList;
 
 class ShaderObject : public GLObject {
-public:
-  static ShaderPtr Create(int type, const char *file) {
+public:  
+  static ShaderPtr Create(int type, const char *file, const MacroList &macros = MacroList()) {
     ShaderPtr ptr = ShaderPtr(new ShaderObject(file));
-    if (NULL == ptr || !ptr->Load(type, file)) return ShaderPtr();
+    if (NULL == ptr || !ptr->Load(type, file, macros)) return ShaderPtr();
     return ptr;
   }
 
-  static ShaderPtr Create(int type, const char *file, const MacroList &macros) {
-    ShaderPtr ptr = ShaderPtr(new ShaderObject(file));
-    if (NULL == ptr || !ptr->Load(type, file, macros)) return ShaderPtr();
+  static ShaderPtr CreateFromCode(int type, const char *code, const char *name = "") {
+    ShaderPtr ptr = ShaderPtr(new ShaderObject(name));
+    if (ptr == NULL || !ptr->LoadCode(type, code)) return ShaderPtr();    
     return ptr;
   }
 
@@ -36,6 +36,8 @@ private:
   ShaderObject(const std::string name = "") : GLObject(name) { };
 
   bool Load(int type, const char *file, const MacroList &macros = MacroList());
+
+  bool LoadCode(int type, const char *code);
 
   void DeleteShader();
 

@@ -17,6 +17,8 @@ public:
                                const std::string &name = "",
                                const MacroList &macros = MacroList());
 
+  static ProgramGLSLPtr CreateFromCode(const char *vert_src, const char *frag_src, const char *name = "");
+
   virtual ~ProgramGLSL() { this->DeleteProgram(); }
 
   void Begin() { glUseProgram(id_); }

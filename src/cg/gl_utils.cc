@@ -30,20 +30,76 @@ void TextureCopier::Copy(ax::Texture2DPtr texture, int width, int height) {
   }  
 }
 
+const char *quad_src = 
+"#version 330 \n"
+"layout (location = 0) in vec2 i_position; \n"
+"layout (location = 1) in vec2 i_tcoord; \n"
+"uniform mat4 g_mvp_mat; \n"
+"out vec2 g_tcoord; \n"
+"void main(void) { \n"
+"  gl_Position = g_mvp_mat * vec4(i_position, 0, 1.0); \n"
+"  g_tcoord = i_tcoord; \n"
+"}\n";
+
+const char *copy_tex_rect_src =
+"#version 330 \n"
+"#extension GL_ARB_texture_rectangle : enable \n"
+"out vec4 g_color; \n"
+"uniform sampler2DRect g_tex;\n"
+"void main() {\n"
+"  ivec2 tcoord = ivec2(gl_FragCoord.xy);\n"
+"  g_color = texture2DRect(g_tex, tcoord);\n"
+"}\n" ;
+
+const char *copy_tex_2d_src = 
+"#version 330\n"
+"out vec4 g_color;\n"
+"uniform sampler2D g_tex;\n"
+"uniform int g_width;\n"
+"uniform int g_height;\n"
+"void main() {\n"
+"  vec2 tcoord = vec2(gl_FragCoord.x / g_width, gl_FragCoord.y / g_height);\n"
+"  g_color = texture2D(g_tex, tcoord);\n"
+"}\n";
+
+const char *min_max_mipmap_src = 
+"#version 400\n"
+"layout (location = 0) out vec4 out_color;\n"
+"uniform sampler2D g_input_tex;\n"
+"uniform float g_offset;\n"
+"in vec2 g_tcoord;\n"
+"vec2 MinMaxDepth(float xoffset, float yoffset) {\n"
+"  return texture2D(g_input_tex, g_tcoord + vec2(xoffset, yoffset)).xy;\n"
+"}\n"
+"void main() {\n"
+"  vec2 mmd0 = MinMaxDepth(0, 0);\n"
+"  vec2 mmd1 = MinMaxDepth(g_offset, 0);\n"
+"  vec2 mmd2 = MinMaxDepth(g_offset, g_offset);\n"
+"  vec2 mmd3 = MinMaxDepth(0, g_offset);\n"
+"  vec2 mmd = mmd0;\n"
+"  mmd.x = min(mmd.x, mmd1.x);\n"
+"  mmd.y = max(mmd.y, mmd1.y);\n"
+"  mmd.x = min(mmd.x, mmd2.x);\n"
+"  mmd.y = max(mmd.y, mmd2.y);\n"
+"  mmd.x = min(mmd.x, mmd3.x);\n"
+"  mmd.y = max(mmd.y, mmd3.y);\n"
+"  out_color.xy = mmd;\n"
+"}\n";
+
 // need shaders, TODO: solve the dependency
 void TextureCopier::CopyTexture2D(ax::Texture2DPtr texture) {
   static ax::ProgramGLSLPtr prog = NULL;
   if (prog == NULL) {
-    prog = ax::ProgramGLSL::Create(
-        "shaders/pass_through.vp", "shaders/copy_tex_2d.fp",
-        "copy_tex_2d program");
-    prog->Link();
+    RET(prog = ax::ProgramGLSL::CreateFromCode(quad_src, copy_tex_2d_src, "copy_tex_2d program"));
+    if (!prog->Link()) prog = NULL;
   }
+  RET(prog);
+
   prog->Begin();
   prog->SetTextureVar("g_tex", texture);
   prog->SetVar("g_width", texture->width());
   prog->SetVar("g_height", texture->height());
-  TextureCopier::DrawFullScreenQuad();
+  TextureCopier::DrawFullScreenQuad(prog);
   prog->End();
 }
 
@@ -51,51 +107,71 @@ void TextureCopier::CopyTexture2D(ax::Texture2DPtr texture) {
 void TextureCopier::CopyTextureRect(ax::Texture2DPtr texture) {
   static ax::ProgramGLSLPtr prog = NULL;
   if (prog == NULL) {
-    prog = ax::ProgramGLSL::Create(
-        "shaders/pass_through.vp", "shaders/copy_tex_rect.fp",
-        "copy_tex_2d program");
-    prog->Link();
+    RET(prog = ax::ProgramGLSL::Create(quad_src, copy_tex_rect_src, "copy_tex_2d program"));
+    if (!prog->Link()) prog = NULL;
   }
+  RET(prog);
+
   prog->Begin();
   prog->SetTextureVar("g_tex", texture);  
-  TextureCopier::DrawFullScreenQuad();
+  TextureCopier::DrawFullScreenQuad(prog);
   prog->End();
+}
+
+void TextureCopier::DrawFullScreenQuad(ax::ProgramGLSLPtr prog) {
+  static ax::ScreenQuadPtr quad = NULL;
+  if (quad == NULL) quad = ax::ScreenQuad::Create();
+  RET(quad);
+  quad->Draw(prog);
 }
 
 //// TextureUtil
 
 // need corresponding shaders under shaders directory, TODO: solve this dependency
-bool TextureUtil::Initialize() {
-  V_RET(this->device_ = ax::RenderDeviceFBO::Create());
-  V_RET(this->quad_ = ax::ScreenQuad::Create());
+//bool TextureUtil::Initialize() {
+//  V_RET(this->device_ = ax::RenderDeviceFBO::Create());
+//  V_RET(this->quad_ = ax::ScreenQuad::Create());
+//
+//  V_RET(this->max_depth_derivative_prog_ = ax::ProgramGLSL::Create(
+//      "shaders/quad.vp", "shaders/max_depth_derivative.fp", 
+//      "max depth derivative"));
+//  V_RET(this->max_depth_derivative_prog_->Link());
+//
+//  V_RET(this->min_max_normal_prog_ = ax::ProgramGLSL::Create(
+//      "shaders/quad.vp", "shaders/min_max_normal.fp", "min max normal"));
+//  V_RET(this->min_max_normal_prog_->Link());
+//
+//  V_RET(this->reduction_prog_ = ax::ProgramGLSL::Create(
+//      "shaders/quad.vp", "shaders/min_max_depth_mipmap.fp", "depth mipmap"));
+//  V_RET(this->reduction_prog_->Link());
+//
+//  return true;
+//}
 
-  V_RET(this->max_depth_derivative_prog_ = ax::ProgramGLSL::Create(
-      "shaders/quad.vp", "shaders/max_depth_derivative.fp", 
-      "max depth derivative"));
-  V_RET(this->max_depth_derivative_prog_->Link());
+ax::ScreenQuadPtr ax::TextureUtil::quad_;
+ax::FBODevicePtr ax::TextureUtil::device_;
 
-  V_RET(this->min_max_normal_prog_ = ax::ProgramGLSL::Create(
-      "shaders/quad.vp", "shaders/min_max_normal.fp", "min max normal"));
-  V_RET(this->min_max_normal_prog_->Link());
-
-  V_RET(this->reduction_prog_ = ax::ProgramGLSL::Create(
-      "shaders/quad.vp", "shaders/min_max_depth_mipmap.fp", "depth mipmap"));
-  V_RET(this->reduction_prog_->Link());
-
+bool TextureUtil::Initiaialze() {
+  if (TextureUtil::device_ == NULL) {
+    V_RET(TextureUtil::device_ = ax::RenderDeviceFBO::Create());
+  }
+  if (TextureUtil::quad_ == NULL) {
+    V_RET(TextureUtil::quad_ = ax::ScreenQuad::Create());
+  }
   return true;
 }
 
-int TextureUtil::CreateCustomMipmap(ax::ProgramGLSLPtr shader, 
-                                    ax::Texture2DPtr texture,
-                                    int min_res) {
+int TextureUtil::CreateCustomMipmap(ax::ProgramGLSLPtr shader, ax::Texture2DPtr texture, int min_res) {
+  if (!TextureUtil::Initiaialze()) return 0;
+
   glPushAttrib(GL_ENABLE_BIT);
   glDisable(GL_DEPTH_TEST);
 
-  this->device_->Activate();
-  this->device_->SaveMVP();
+  TextureUtil::device_->Activate();
+  TextureUtil::device_->SaveMVP();
 
   shader->Begin();
-  shader->Set4DMatVar("mvp_mat", this->quad_->mvp());
+  shader->Set4DMatVar("g_mvp_mat", TextureUtil::quad_->mvp());
   shader->SetTextureVar("g_input_tex", texture);
   
   float step = 1.0f;
@@ -105,8 +181,8 @@ int TextureUtil::CreateCustomMipmap(ax::ProgramGLSLPtr shader,
   texture->Bind();  
 
   while (width >= min_res) {
-    this->device_->SetRenderTarget(texture, level);
-    this->device_->AdjustViewport(width, width);
+    TextureUtil::device_->SetRenderTarget(texture, level);
+    TextureUtil::device_->AdjustViewport(width, width);
     glClear(GL_COLOR_BUFFER_BIT);
 
     texture->SetParameter(GL_TEXTURE_BASE_LEVEL, level - 1);
@@ -116,7 +192,7 @@ int TextureUtil::CreateCustomMipmap(ax::ProgramGLSLPtr shader,
 
     shader->SetVar("g_offset", step / texture->width());
 
-    this->quad_->Draw();
+    TextureUtil::quad_->Draw();
 
     ++level;
     step *= 2;
@@ -128,12 +204,12 @@ int TextureUtil::CreateCustomMipmap(ax::ProgramGLSLPtr shader,
 
   shader->End();
 
-  this->device_->RestoreMVP();
-  this->device_->Deactivate();
+  TextureUtil::device_->RestoreMVP();
+  TextureUtil::device_->Deactivate();
 
   glPopAttrib();
 
-  ax::CheckErrorsGL("TextureUtil::CreateCustomMipmap");
+  if (ax::CheckErrorsGL("TextureUtil::CreateCustomMipmap")) return 0;
 
   return level;
 }
@@ -182,7 +258,7 @@ void TextureUtil::CreateMinMaxNormalTexture(
 
   this->min_max_normal_prog_->Begin();
 
-  this->min_max_normal_prog_->Set4DMatVar("mvp_mat", this->quad_->mvp());
+  this->min_max_normal_prog_->Set4DMatVar("g_mvp_mat", this->quad_->mvp());
   this->min_max_normal_prog_->SetTextureVar("g_normal_tex", normal_tex);
   this->min_max_normal_prog_->SetVar("g_offset", 1.0f / texture->width());
 
@@ -195,12 +271,8 @@ void TextureUtil::CreateMinMaxNormalTexture(
   glPopAttrib();
 }
 
-// TODO: make it general
-void TextureUtil::Reduce(ax::Texture2DPtr texture, float *ret, int n) { 
-  int levels = this->CreateCustomMipmap(this->reduction_prog_, texture, 64); 
-
-  ax::ImagePtr img = texture->GetTextureImage(
-      levels - 1, GL_RG, GL_FLOAT, n, 4);
+void TextureUtil::ReduceMinMax(ax::ImagePtr img, float *ret) {
+  RET(img != NULL && ret != NULL);
 
   const float *min_max = (const float*)(img->data());
   float dmin = FLT_MAX;
@@ -210,6 +282,18 @@ void TextureUtil::Reduce(ax::Texture2DPtr texture, float *ret, int n) {
     if (min_max[i*2+1] > dmax) dmax = min_max[i*2+1];
   }
   ret[0] = dmin; ret[1] = dmax;
+}
+
+void TextureUtil::ReduceMinMax(ax::Texture2DPtr tex, float *ret) {
+  static ax::ProgramGLSLPtr prog = NULL;
+  if (prog == NULL) {
+    RET(prog = ax::ProgramGLSL::CreateFromCode(quad_src, min_max_mipmap_src, "min max mipmap"));
+    if (!prog->Link()) prog = NULL;
+  }
+  RET(prog);
+  int levels = TextureUtil::CreateCustomMipmap(prog, tex, 64);
+
+  TextureUtil::ReduceMinMax(tex->GetTextureImage(levels - 1, GL_RG, GL_FLOAT, 2, 4), ret);
 }
 
 void DisplayStatistics(const char *name, float data, const char *unit, 

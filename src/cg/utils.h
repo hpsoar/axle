@@ -132,23 +132,28 @@ class TextureUtil {
 public:
   TextureUtil() { }
 
-  bool Initialize();
-
-  int CreateCustomMipmap(ax::ProgramGLSLPtr shader, ax::Texture2DPtr texture,
-                         int min_res = 2);
+  //bool Initialize();
+  // TODO: move out
   void CreateMaxDepthDerivativeTexture(ax::Texture2DPtr position_tex,
                                        ax::Texture2DPtr texture);
   void CreateMinMaxNormalTexture(ax::Texture2DPtr normal_tex,
                                  ax::Texture2DPtr texture);  
-  void Reduce(ax::Texture2DPtr texture, float *ret, int n);
+    
+  static void ReduceMinMax(ax::ImagePtr img, float *ret);  
+
+  //NOTE: support Texture2D only, require power of two size
+  static int CreateCustomMipmap(ax::ProgramGLSLPtr shader, ax::Texture2DPtr texture, int min_res = 2);
+
+  static void ReduceMinMax(ax::Texture2DPtr tex, float *ret);
+
 private:
-  ax::FBODevicePtr device_;
-  ax::ScreenQuadPtr quad_;
+  static bool Initiaialze();
+
+  static ax::FBODevicePtr device_;
+  static ax::ScreenQuadPtr quad_;  
 
   ax::ProgramGLSLPtr max_depth_derivative_prog_;
-  ax::ProgramGLSLPtr min_max_normal_prog_;
-
-  ax::ProgramGLSLPtr reduction_prog_;
+  ax::ProgramGLSLPtr min_max_normal_prog_;  
 
   DISABLE_COPY_AND_ASSIGN(TextureUtil);
 };
@@ -163,11 +168,7 @@ public:
   static void Copy(ax::Texture2DPtr texture);
   static void Copy(ax::Texture2DPtr, int width, int height);
 private:
-  static void DrawFullScreenQuad() {
-    static MyScreenQuad quad;
-    static bool init = quad.Initialize();
-    if (init) quad.Draw();
-  }
+  static void DrawFullScreenQuad(ax::ProgramGLSLPtr prog);
   static void CopyTexture2D(ax::Texture2DPtr texture);
   static void CopyTextureRect(ax::Texture2DPtr texture);
 };

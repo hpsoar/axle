@@ -15,6 +15,14 @@ ProgramGLSLPtr ProgramGLSL::Create(const char *vertex_shader,
   return ptr;
 }
 
+ProgramGLSLPtr ProgramGLSL::CreateFromCode(const char *vert_src, const char *frag_src, const char *name) {
+  ProgramGLSLPtr ptr = ProgramGLSLPtr(new ProgramGLSL(name));
+  if (ptr == NULL ||
+      !ptr->AttachShader(ax::ShaderObject::CreateFromCode(GL_VERTEX_SHADER, vert_src, name))||
+      !ptr->AttachShader(ax::ShaderObject::CreateFromCode(GL_FRAGMENT_SHADER, frag_src, name))) return ProgramGLSLPtr();
+  return ptr;
+}
+
 void ProgramGLSL::GeometryShaderSettings(GLenum input_type, 
                                          int max_emitted_verts,
                                          GLenum output_type) {
