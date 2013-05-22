@@ -3,12 +3,22 @@
 
 #include "../core.h"
 #include "../cg.h"
-#include "../cg/params.h"
+#include "params.h"
 
 namespace ax {
+struct FBParams {
+  static const std::string kBufferName;
+  static const std::string kTextureTarget;
+  static const std::string kColorBufferCount;
+  static const std::string kHasDepthBuffer;
+  static const std::string kHasStencilBuffer;
+  static const std::string kColorFormat;
+  static const std::string kDepthFormat;
+};
+
 class FrameBuffer {
 public:
-  struct ParamNames {
+  struct DEPRECATED(ParamNames) {
     static const std::string kBufferName;
     static const std::string kTextureTarget;
     static const std::string kColorBufferCount;
@@ -16,7 +26,7 @@ public:
     static const std::string kHasStencilBuffer;
     static const std::string kColorFormat;
     static const std::string kDepthFormat;
-  }; 
+  };
 
   FrameBuffer() : included_buffers_(0), n_color_buffers_(0), has_stencil_buffer_(false), has_zbuffer_(false) { }
 

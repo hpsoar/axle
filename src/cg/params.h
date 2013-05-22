@@ -19,6 +19,10 @@ public:                                                        \
   {                                                            \
     this->T_TAG##s_[key] = value;                              \
   }                                                            \
+  void Set##T_TAG##IfNotExist(const KEY &key, RT value)        \
+  {                                                            \
+    if (!this->Has##T_TAG(key)) this->Set##T_TAG(key, value);  \
+  }                                                            \
   bool Has##T_TAG(const KEY& key) const                        \
   {                                                            \
     return this->T_TAG##s_.find(key) != this->T_TAG##s_.end(); \
@@ -71,8 +75,10 @@ public:
   void SetPtr(const KeyType &key, PTR ptr) { this->SetRawPtr(key, (const void*)ptr); }
 };
 
-typedef __ParamSet<std::string> ParamSet;
-typedef __ParamSet2<std::string> ParamSet2;
+typedef std::string CGParamKeyType;
+
+typedef __ParamSet<CGParamKeyType> ParamSet;
+typedef __ParamSet2<CGParamKeyType> ParamSet2;
 }
 
 #endif // AX_CG_PARAMS_H

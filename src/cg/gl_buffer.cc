@@ -1,23 +1,31 @@
 #include "gl_buffer.h"
 
 namespace ax {
-const std::string FrameBuffer::ParamNames::kBufferName = "frame buffer name";
-const std::string FrameBuffer::ParamNames::kTextureTarget = "frame buffer texture target";
-const std::string FrameBuffer::ParamNames::kColorBufferCount = "frame buffer color buffer count";
-const std::string FrameBuffer::ParamNames::kHasDepthBuffer = "frame buffer has depth buffer";
-const std::string FrameBuffer::ParamNames::kHasStencilBuffer = "frame buffer has stencil buffer";
-const std::string FrameBuffer::ParamNames::kColorFormat = "frame buffer color format";
-const std::string FrameBuffer::ParamNames::kDepthFormat = "frame buffer depth format";
+const std::string ax::FBParams::kBufferName = "frame buffer name";
+const std::string ax::FBParams::kTextureTarget = "frame buffer texture target";
+const std::string ax::FBParams::kColorBufferCount = "frame buffer color buffer count";
+const std::string ax::FBParams::kHasDepthBuffer = "frame buffer has depth buffer";
+const std::string ax::FBParams::kHasStencilBuffer = "frame buffer has stencil buffer";
+const std::string ax::FBParams::kColorFormat = "frame buffer color format";
+const std::string ax::FBParams::kDepthFormat = "frame buffer depth format";
+
+const std::string FrameBuffer::ParamNames::kBufferName = ax::FBParams::kBufferName;
+const std::string FrameBuffer::ParamNames::kTextureTarget = ax::FBParams::kTextureTarget;
+const std::string FrameBuffer::ParamNames::kColorBufferCount = ax::FBParams::kColorBufferCount;
+const std::string FrameBuffer::ParamNames::kHasDepthBuffer = ax::FBParams::kHasDepthBuffer;
+const std::string FrameBuffer::ParamNames::kHasStencilBuffer = ax::FBParams::kHasStencilBuffer;
+const std::string FrameBuffer::ParamNames::kColorFormat = ax::FBParams::kColorFormat;
+const std::string FrameBuffer::ParamNames::kDepthFormat = ax::FBParams::kDepthFormat;
 
 bool FrameBuffer::Initialize(const ax::ParamSet &params) {
-  this->name_ = params.GetStr(ParamNames::kBufferName, "frame buffer");
-  this->texture_target_ = params.GetInt(ParamNames::kTextureTarget, GL_TEXTURE_2D);
-  this->color_format_ = params.GetInt(ParamNames::kColorFormat, GL_RGBA);
-  this->n_color_buffers_ = params.GetInt(ParamNames::kColorBufferCount, 1);  
-  this->has_stencil_buffer_ = params.GetBool(ParamNames::kHasStencilBuffer, false);
-  this->has_zbuffer_ = params.GetBool(ParamNames::kHasDepthBuffer, false);
+  this->name_ = params.GetStr(ax::FBParams::kBufferName, "frame buffer");
+  this->texture_target_ = params.GetInt(ax::FBParams::kTextureTarget, GL_TEXTURE_2D);
+  this->color_format_ = params.GetInt(ax::FBParams::kColorFormat, GL_RGBA);
+  this->n_color_buffers_ = params.GetInt(ax::FBParams::kColorBufferCount, 1);  
+  this->has_stencil_buffer_ = params.GetBool(ax::FBParams::kHasStencilBuffer, false);
+  this->has_zbuffer_ = params.GetBool(ax::FBParams::kHasDepthBuffer, false);
 
-  this->depth_format_ = params.GetInt(ParamNames::kDepthFormat, 0);
+  this->depth_format_ = params.GetInt(ax::FBParams::kDepthFormat, 0);
   if (this->depth_format_ == 0) {
     if (this->has_stencil_buffer_) {
       // it seems that stencil buffer ought to has depth buffer with it
