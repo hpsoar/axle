@@ -5,15 +5,9 @@
 #include "cg_fwd.h"
 #include "gl_object.h"
 
-#include <list>
 #include <hash_map>
 
 namespace ax {
-struct ShaderMacro {
-  std::string name;
-  std::string value;
-};
-
 typedef std::hash_map<std::string, std::string> MacroList;
 
 class ShaderObject : public GLObject {

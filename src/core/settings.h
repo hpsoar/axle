@@ -86,6 +86,7 @@
 
 //#pragma warning(disable:4996)
 
+#ifndef DEPRECATED
 #ifdef __GNUC__
 #define DEPRECATED(func) func __attribute__ ((deprecated))
 #elif defined(_MSC_VER)
@@ -93,6 +94,7 @@
 #else
 #pragma message("WARNING: You need to implement DEPRECATED for this compiler")
 #define DEPRECATED(func) func
+#endif
 #endif
 
 #endif // AXLE_CORE_SETTINGS_H

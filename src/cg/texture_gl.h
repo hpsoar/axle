@@ -57,7 +57,7 @@ public:
 
   int ImageUnit() const { 
     assert(this->unit_id_ >= 0);
-    if (this->unit_id_ < 0) ax::Logger::Log("call BindImageTexture first");
+    if (this->unit_id_ < 0) ax::Logger::Log("%s: call BindImageTexture first", this->name().c_str());
     return this->unit_id_; 
   }
 

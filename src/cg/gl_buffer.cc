@@ -171,7 +171,7 @@ void MultiResolutionBuffer::AdjustViewport(int mipmap_level) {
 }
 
 void MultiResolutionBuffer::RenderFullScreen(ax::ProgramGLSLPtr shader) {
-  shader->Set4DMatVar("mvp_mat", this->screen_quad_->mvp());
+  shader->Set4DMatVar("g_mvp_mat", this->screen_quad_->mvp());
 
   for (int i = 0; i < 6; ++i) {
     shader->SetVar("g_mipmap_level", i);
@@ -182,7 +182,7 @@ void MultiResolutionBuffer::RenderFullScreen(ax::ProgramGLSLPtr shader) {
 
 void MultiResolutionBuffer::RenderFullScreen(
     ax::ProgramGLSLPtr shader, int mipmap_level) {
-  shader->Set4DMatVar("mvp_mat", this->screen_quad_->mvp());
+  shader->Set4DMatVar("g_mvp_mat", this->screen_quad_->mvp());
   shader->SetVar("g_mipmap_level", mipmap_level);
   this->AdjustViewport(mipmap_level);
   this->screen_quad_->Draw();

@@ -111,10 +111,10 @@ public:
   RenderAppI(const std::string &name) : name_(name), width_(0), height_(0) { }
   virtual ~RenderAppI() { }  
   virtual void Resize(int w, int h) { this->width_ = w, this->height_ = h; }
-  virtual void Render(const ax::ScenePtr scene, const ax::ParamSet2 &params) = 0;
+  virtual void Render(const ax::ScenePtr scene, const ax::ParamSet2 &params) = 0;  
   const std::string &name() const { return name_; }
   int width() const { return this->width_; }
-  int height() const { return this->height_; }
+  int height() const { return this->height_; }  
 private:
   virtual bool Initialize(const ax::ParamSet2 &params) = 0;
 private:
