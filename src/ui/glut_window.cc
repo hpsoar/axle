@@ -1,4 +1,5 @@
 #include "../ui/glut_window.h"
+#include "../core/debug.h"
 
 #include <string.h>
 
@@ -125,7 +126,10 @@ inline void GlutWindow::visibility(int state ){
 }
 inline void GlutWindow::menu_status(int state, int x, int y) {
 }  
-inline int GlutWindow::MapSpecialKey(int key) { return 0; }
+inline int GlutWindow::MapSpecialKey(int key) { 
+  ax::Logger::Log("special key not supported yet!");
+  return 0; 
+}
 
 GlutWindow* GlutWindow::s_windows[kMaxGlutWindowCount];
 

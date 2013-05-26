@@ -59,7 +59,8 @@ enum {
   kUseVBO = 2,
   kGenNormal = 4,
   kGenTexcoord = 8,
-  kIgnoreGroup = 16
+  kIgnoreGroup = 16,
+  kNeedAdjacency = 32
 };
 
 class Options {

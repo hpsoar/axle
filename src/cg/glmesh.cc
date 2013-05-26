@@ -60,7 +60,12 @@ bool GLMesh::AllocateIdxVBO(size_t size, const void *data) {
 
 void GLMesh::PreProcess(Options opts) {
   if (opts.Contain(kComputeBound)) bound_ = mesh_->Bound();
+  if (opts.Contain(kNeedAdjacency)) this->ComputeAdjacency();
   if (opts.Contain(kUseVBO)) this->LoadToVBO(opts);
+}
+
+void GLMesh::ComputeAdjacency() {
+  ax::Logger::Log("TODO[GLMesh::ComputeAdjacency]: support object group");
 }
 
 void GLMesh::LoadToVBO(Options opts) {

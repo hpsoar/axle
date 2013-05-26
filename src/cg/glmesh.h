@@ -61,9 +61,10 @@ private:
   bool AllocateIdxVBO(size_t size, const void *data);
   bool AllocateVertVBO(size_t size);
   void LoadToVBO(Options opts);
-
+  void ComputeAdjacency();
 private:
   typedef std::vector<GLGroupPtr> ObjectList;
+
   ObjectList objs_;
   uint32 vert_vbo_;
   uint32 idx_vbo_;
@@ -72,7 +73,8 @@ private:
   int tcoord_slot_;
   size_t idx_vbo_size_;
   size_t vert_vbo_size_;
-  ax::TriMeshPtr mesh_;  
+
+  ax::TriMeshPtr mesh_;
 };
 
 ObjectPtr LoadGLMesh(Scene *s, const std::string &filename, Options opts);

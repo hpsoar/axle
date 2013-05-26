@@ -24,7 +24,7 @@ private:
 const std::string kDefaultMediaPath = "E:/workspace/media/";
 #elif defined(SYS_IS_APPLE)
 const std::string kDefaultMediaPath = "";
-#elif 
+#else
 const std::string kDefaultMediaPath = "/media/E/workspace/media/";
 #endif
 

@@ -55,6 +55,10 @@ public:
 
   bool IsValid() const { return 0 != id_ && is_linked_; }
 
+  void SetParameteri(uint32 name, int param) {
+    glProgramParameteri(this->id(), name, param);
+  }
+
   template<typename T>
   void SetVar(const char *name, T val) const {
     //// TODO: call SetScalarVar
