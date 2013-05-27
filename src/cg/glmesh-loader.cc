@@ -230,6 +230,7 @@ size_t ExpandMesh(const GLMmodel *model, Point **vertices, Normal **normals,
   return n_vertices;
 }
 
+// NOTE: Unsafe!!!
 ObjectPtr LoadGLMesh(Scene *s, const std::string &filename, Options opts) {
   GLMmodel *model = glmReadOBJ(filename.c_str());
   if (model == NULL) return ObjectPtr();

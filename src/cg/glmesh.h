@@ -1,10 +1,11 @@
 #ifndef AXLE_CG_OBJMESH_H
 #define AXLE_CG_OBJMESH_H
 
-#include "../cg/globject.h"
+#include "globject.h"
 #include <vector>
 #include "../model/triangle_mesh.h"
-#include "../cg/cg_fwd.h"
+#include "cg_fwd.h"
+#include "gl_buffer.h"
 
 namespace ax {
 class GLGroup : public Object {
@@ -25,7 +26,7 @@ private:
   GLGroup(int tri_start, int n_tris) : 
       tri_start_(tri_start), n_tris_(n_tris) { }
 private:
-  void Draw() const;
+  void Draw(Options opts) const;
 private:
   int tri_start_;
   int n_tris_;
@@ -50,29 +51,25 @@ public:
   void Add(GLGroupPtr g) { objs_.push_back(g); }
 
   ax::TriMeshPtr tri_mesh() const { return this->mesh_; }
-  uint32 vert_vbo() const { return vert_vbo_; }
+  uint32 vert_vbo() const { return this->vert_buffer_.id(); }
 private:
-  GLMesh(ax::TriMeshPtr mesh) : 
-      mesh_(mesh), idx_vbo_size_(0), vert_vbo_size_(0), 
-      idx_vbo_(0), vert_vbo_(0) { }  
+  GLMesh(ax::TriMeshPtr mesh) : mesh_(mesh), idx_buffer_(GL_ELEMENT_ARRAY_BUFFER), adj_idx_buffer_(GL_ELEMENT_ARRAY_BUFFER) { }
 
   void BeginDraw(Options opts) const;
   void EndDraw(Options opts) const;
-  bool AllocateIdxVBO(size_t size, const void *data);
-  bool AllocateVertVBO(size_t size);
   void LoadToVBO(Options opts);
   void ComputeAdjacency();
 private:
   typedef std::vector<GLGroupPtr> ObjectList;
 
   ObjectList objs_;
-  uint32 vert_vbo_;
-  uint32 idx_vbo_;
+  ax::ArrayBufferGL vert_buffer_;
+  ax::ArrayBufferGL idx_buffer_;
+  ax::ArrayBufferGL adj_idx_buffer_;
+
   int vertex_slot_;
   int normal_slot_;
   int tcoord_slot_;
-  size_t idx_vbo_size_;
-  size_t vert_vbo_size_;
 
   ax::TriMeshPtr mesh_;
 };

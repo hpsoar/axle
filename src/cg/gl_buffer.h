@@ -119,29 +119,47 @@ private:
   std::vector<int> widths_;
 };
 
-GLuint64 GetGPUPtr(uint32 id, uint32 access);
+GLuint64 GetGPUPtr(uint32 id, uint32 access, uint32 target=GL_ARRAY_BUFFER);
 
 class ArrayBufferGL {
 public:
-  static ax::ArrayBufferGLPtr Create(uint32 size, uint32 access, const void *data = NULL) {    
-    ax::ArrayBufferGLPtr ptr = ax::ArrayBufferGLPtr(new ArrayBufferGL());
-    if (ptr->Initialize(size, access, data)) return ptr;
-    return ax::ArrayBufferGLPtr();
+  static ax::ArrayBufferGLPtr Create(uint32 target, uint32 size, uint32 access,
+                                     const void *data) {
+    ax::ArrayBufferGLPtr ptr = ax::ArrayBufferGLPtr(new ArrayBufferGL(target));
+    if (!ptr->Resize(size, NULL)) return ax::ArrayBufferGLPtr();
+    ptr->BindGPUPtr(access);
+    return ptr;
   }
-  ArrayBufferGL() : id_(0), gpu_ptr_(0), size_(0) { }
-  ~ArrayBufferGL() { this->Release(); }    
-  bool Initialize(uint32 size, uint32 access, const void *data = NULL);
 
-  void SetData(int offset, int size, const void *data);
+  static ax::ArrayBufferGLPtr Create(uint32 size, uint32 access) {
+    return ax::ArrayBufferGL::Create(GL_ARRAY_BUFFER, size, access, NULL);
+  }
+
+  ArrayBufferGL(int target = GL_ARRAY_BUFFER) : target_(target), capacity_(0), id_(0), gpu_ptr_(0), size_(0) { }
+
+  ~ArrayBufferGL() { this->Release(); }
+
+  void Bind() const { glBindBuffer(this->target_, this->id_); }
+  void Unbind() const { glBindBuffer(this->target_, 0); }  
+  
+  bool Resize(uint32 size, const void *data=NULL, bool force_shrink=false);
+
+  uint32 SetData(int offset, int size, const void *data);
+
+  GLuint64 BindGPUPtr(uint32 access);
+
   GLuint id() const { return this->id_; }
   GLuint64EXT gpu_ptr() const { return this->gpu_ptr_; }
   uint32 size() const { return this->size_; }
+  
 private:
-  void Release();
+  void Release();  
 private:
   GLuint id_;
   GLuint64EXT gpu_ptr_;
   uint32 size_;
+  uint32 capacity_;
+  uint32 target_;
 };
 
 }

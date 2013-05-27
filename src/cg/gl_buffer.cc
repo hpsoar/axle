@@ -190,50 +190,63 @@ void MultiResolutionBuffer::RenderFullScreen(
 
 //// ArrayBufferGL
 
-GLuint64 GetGPUPtr(uint32 id, uint32 access) {
-  glBindBuffer(GL_ARRAY_BUFFER, id);
+GLuint64 GetGPUPtr(uint32 id, uint32 access, uint32 target) {
+  glBindBuffer(target, id);
 
   GLuint64 gpu_ptr = 0;
-  glMakeBufferResidentNV(GL_ARRAY_BUFFER, access);
-  glGetBufferParameterui64vNV(GL_ARRAY_BUFFER, GL_BUFFER_GPU_ADDRESS_NV,
-                              &gpu_ptr);
+  glMakeBufferResidentNV(target, access);
+  glGetBufferParameterui64vNV(target, GL_BUFFER_GPU_ADDRESS_NV, &gpu_ptr);
 
-  glBindBuffer(GL_ARRAY_BUFFER, 0); 
+  glBindBuffer(target, 0); 
 
   return gpu_ptr;
 }
 
-bool ArrayBufferGL::Initialize(uint32 size, uint32 access, const void *data) {
-  V_RET(size != 0);
-  if (this->size_ != size) {
-    this->Release();
+bool ArrayBufferGL::Resize(uint32 size, const void *data, bool force_shrink) {
+  V_RET(size > 0);
+  if (this->capacity_ < size || force_shrink) {
+    this->Release();    
     glGenBuffers(1, &this->id_);
-    glBindBuffer(GL_ARRAY_BUFFER, this->id_);
-
-    glBufferData(GL_ARRAY_BUFFER, size, data, GL_STREAM_DRAW);
-    V_RET(!ax::CheckErrorsGL("ArrayBufferGL::Initialize"));
-    this->size_ = size;
-    glMakeBufferResidentNV(GL_ARRAY_BUFFER, access);
-    glGetBufferParameterui64vNV(GL_ARRAY_BUFFER, GL_BUFFER_GPU_ADDRESS_NV,
-                                &this->gpu_ptr_);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-  }  
+    this->Bind();    
+    glBufferData(this->target_, size, data, GL_STREAM_DRAW); // TODO:    
+    this->Unbind();
+    if (ax::CheckErrorsGL("ArrayBufferGL::Resize")) {
+      ax::Logger::Log("ArrayBufferGL::Resize: old buffer is also unavailable");
+      return false;
+    }    
+    this->capacity_ = size;
+  }
+  this->size_ = size;
   return true;
+}
+
+GLuint64 ArrayBufferGL::BindGPUPtr(uint32 access) {
+  this->Bind();  
+  glMakeBufferResidentNV(this->target_, access);  
+  glGetBufferParameterui64vNV(this->target_, GL_BUFFER_GPU_ADDRESS_NV,
+                              &this->gpu_ptr_);  
+  this->Unbind();
+  ax::CheckErrorsGL("ArrayBufferGL::BindGPUPtr");
+  return this->gpu_ptr_;
 }
 
 void ArrayBufferGL::Release() {
   if (this->id_ > 0) {
     glDeleteBuffers(1, &this->id_);
-    id_ = 0;
-    gpu_ptr_ = 0;
-    size_ = 0;
+    this->id_ = 0;
+    this->gpu_ptr_ = 0;
+    this->size_ = 0;
+    this->capacity_ = 0;
   }
 }
 
-void ArrayBufferGL::SetData(int offset, int size, const void *data) {
-  glBindBuffer(GL_ARRAY_BUFFER, this->id_);
-  glBufferSubData(GL_ARRAY_BUFFER, offset, size, data);  
+uint32 ArrayBufferGL::SetData(int offset, int size, const void *data) {
+  this->Bind();
 
-  glBindBuffer(GL_ARRAY_BUFFER, 0);
+  glBufferSubData(this->target_, offset, size, data);  
+
+  this->Unbind();
+
+  return size;
 }
 }

@@ -1,62 +1,36 @@
-#include "../cg/glmesh.h"
-#include "../cg/utils.h"
+#include "glmesh.h"
+#include "utils.h"
+#include "gl_buffer.h"
 
 namespace ax {
 void GLGroup::Draw(ProgramGLSLPtr prog, Options opts) const {  
   this->material()->Enable(prog);
-  this->Draw();
+  this->Draw(opts);
   this->material()->Disable();
 }
 
 void GLGroup::Draw(const Scene *s, Options opts) const {  
   this->material()->Enable(s);
-  this->Draw();
+  this->Draw(opts);
   this->material()->Disable();
 }
 
-void GLGroup::Draw() const {
-  glDrawElements(GL_TRIANGLES, (n_tris_) * 3, GL_UNSIGNED_INT,
-                (GLvoid*)((tri_start_)* 3 * sizeof(int)));
+void GLGroup::Draw(Options opts) const {
+  // NOTE: hard coded
+  // TODO: solve relevant problems
+  if (opts.Contain(ax::kNeedAdjacency)) {
+    glDrawElements(GL_TRIANGLES_ADJACENCY_EXT,
+                   this->n_tris_ * 6, GL_UNSIGNED_INT, 
+                  (GLvoid*)((tri_start_)* 6 * sizeof(int)));
+  }
+  else {
+    glDrawElements(GL_TRIANGLES, (n_tris_) * 3, GL_UNSIGNED_INT,
+                  (GLvoid*)((tri_start_)* 3 * sizeof(int)));
+  }
   CheckErrorsGL("GLGroup::Draw");
 }
 
 GLMesh::~GLMesh() { }
-
-bool GLMesh::AllocateVertVBO(size_t size) {
-  if (size > this->vert_vbo_size_) {
-    glDeleteBuffers(1, &vert_vbo_);
-    glGenBuffers(1, &vert_vbo_);
-
-    glBindBuffer(GL_ARRAY_BUFFER, vert_vbo_);
-    glBufferData(GL_ARRAY_BUFFER, size, NULL, GL_STATIC_DRAW);
-
-    V_RET(!CheckErrorsGL("AllocateVertVBO"));
-    this->vert_vbo_size_ = size;
-  } else {
-    glBindBuffer(GL_ARRAY_BUFFER, vert_vbo_);
-  }
-
-  return true;
-}
-
-bool GLMesh::AllocateIdxVBO(size_t size, const void *data) {
-  if (size > this->idx_vbo_size_) {
-    glDeleteBuffers(1, &idx_vbo_);
-    glGenBuffers(1, &idx_vbo_);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idx_vbo_);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
-
-    V_RET(!CheckErrorsGL("GLMesh::AllocateIdxVBO"));
-    this->idx_vbo_size_ = size;
-  } else {
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idx_vbo_);
-    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, size, data);
-
-    V_RET(!CheckErrorsGL("GLMesh::AllocateIdxVBO"));    
-  }
-  return true;
-}
 
 void GLMesh::PreProcess(Options opts) {
   if (opts.Contain(kComputeBound)) bound_ = mesh_->Bound();
@@ -65,7 +39,11 @@ void GLMesh::PreProcess(Options opts) {
 }
 
 void GLMesh::ComputeAdjacency() {
-  ax::Logger::Log("TODO[GLMesh::ComputeAdjacency]: support object group");
+  if (this->objs_.size() > 1) {
+    ax::Logger::Log("[GLMesh::ComputeAdjacency]: object group not supported yet!");
+    return;
+  }
+  this->mesh_->GenAdjacencyIndices();
 }
 
 void GLMesh::LoadToVBO(Options opts) {
@@ -73,23 +51,23 @@ void GLMesh::LoadToVBO(Options opts) {
   if (mesh_->has_normal()) vert_buff_size += mesh_->normals_size();
   if (mesh_->has_tcoord()) vert_buff_size += mesh_->tcoords_size();
   
-  RET(this->AllocateVertVBO(vert_buff_size));
+  RET(this->vert_buffer_.Resize(vert_buff_size));
   
   int offset = 0;
-  glBufferSubData(GL_ARRAY_BUFFER, offset, mesh_->vertices_size(),
-                  mesh_->vertices());
-  offset += mesh_->vertices_size();
+  offset += this->vert_buffer_.SetData(offset, mesh_->vertices_size(), mesh_->vertices());  
   if (mesh_->has_normal()) {
-    glBufferSubData(GL_ARRAY_BUFFER, offset, mesh_->normals_size(), 
-                    mesh_->normals());
-    offset += mesh_->normals_size();
+    offset += this->vert_buffer_.SetData(offset, mesh_->normals_size(), mesh_->normals());    
   }
   if (mesh_->has_tcoord()) {
-    glBufferSubData(GL_ARRAY_BUFFER, offset, mesh_->tcoords_size(), 
-                    mesh_->tcoords());
+    offset += this->vert_buffer_.SetData(offset, mesh_->tcoords_size(), mesh_->tcoords());
   }
 
-  RET(this->AllocateIdxVBO(mesh_->indices_size(), mesh_->indices()));
+  RET(this->idx_buffer_.Resize(this->mesh_->indices_size(), this->mesh_->indices()));
+
+  if (opts.Contain(ax::kNeedAdjacency) && this->mesh_->adj_indices().size() > 0) {
+    RET(this->adj_idx_buffer_.Resize(this->mesh_->adj_indices().size() * sizeof(uint32),
+                                     &this->mesh_->adj_indices()[0]));
+  }
   
   vertex_slot_ = 0;
   normal_slot_ = 2;
@@ -119,7 +97,7 @@ void GLMesh::Draw(const Scene *s, Options opts) const {
 }
 
 void GLMesh::BeginDraw(Options opts) const {
-  glBindBuffer(GL_ARRAY_BUFFER, vert_vbo_);
+  this->vert_buffer_.Bind();
 
   int offset = 0;
   glEnableVertexAttribArray(vertex_slot_);  
@@ -127,7 +105,7 @@ void GLMesh::BeginDraw(Options opts) const {
                         (GLvoid*)offset);
   offset += mesh_->vertices_size();
 
-  if (mesh_->has_normal()) {
+  if (mesh_->has_normal() && opts.Contain(ax::kUseNormal)) {
     if (opts.Contain(kUseNormal)) {
       glEnableVertexAttribArray(normal_slot_);
       glVertexAttribPointer(normal_slot_, 3, GL_FLOAT, GL_FALSE, 0,
@@ -136,13 +114,16 @@ void GLMesh::BeginDraw(Options opts) const {
     offset += mesh_->normals_size();
   }
 
-  if (mesh_->has_tcoord() && opts.Contain(kUseTexture)) {
+  if (mesh_->has_tcoord() && opts.Contain(ax::kUseTexture)) {
     glEnableVertexAttribArray(tcoord_slot_);
     glVertexAttribPointer(tcoord_slot_, 2, GL_FLOAT, GL_FALSE, 0,
                           (GLvoid*)offset);
   }
 
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idx_vbo_);
+  this->vert_buffer_.Unbind();
+
+  if (opts.Contain(ax::kNeedAdjacency)) this->adj_idx_buffer_.Bind();
+  else this->idx_buffer_.Bind();
   
   CheckErrorsGL("GLMesh::BeginDraw");
 }
@@ -153,6 +134,9 @@ void GLMesh::EndDraw(Options opts) const {
   glDisableVertexAttribArray(normal_slot_);
   glDisableVertexAttribArray(tcoord_slot_);
 
+  this->idx_buffer_.Unbind();
+  this->adj_idx_buffer_.Unbind();
+  
   CheckErrorsGL("GLMesh::EndDraw");
 }
 

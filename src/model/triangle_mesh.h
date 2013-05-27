@@ -9,6 +9,21 @@ namespace ax {
 class TriangleMesh;
 typedef std::tr1::shared_ptr<TriangleMesh> TriMeshPtr;
 
+struct ITriangle {
+  ITriangle(const uint32 *vidxs) {
+    memcpy(this->vidxs, vidxs, 3 * sizeof(uint32));
+  }
+  uint32 vidx(uint32 i) const { 
+    return this->vidxs[i % 3];
+  }
+  union {
+    uint32 vidxs[3];
+    struct {
+      uint32 x, y, z;
+    };
+  };
+};
+
 class TriangleMesh {
  public:  
   static const size_t normal_size = sizeof(Normal);
@@ -17,6 +32,8 @@ class TriangleMesh {
   static const size_t idx_size = 3 * sizeof(uint32); // deprecated as it's misleading
   static const size_t tri_idx_size = 3 * sizeof(uint32);
  
+  typedef std::vector<uint32> Idxs;
+
   static TriMeshPtr Create(
       Point *vertices, Normal *normals, float *tcoords, uint32 *indices,
       size_t n_vertices, size_t n_triangles) {
@@ -53,6 +70,15 @@ class TriangleMesh {
 
   bool has_tcoord() const { return NULL != tcoords_; }
   bool has_normal() const { return NULL != normals_; }
+
+  ITriangle GetITraingle(uint32 ti) const {
+    assert(ti < this->n_triangles());
+    return ITriangle(this->indices_ + 3 * ti);
+  }
+
+  void GenAdjacencyIndices();
+
+  const Idxs &adj_indices() const { return this->adj_indices_; }
 private:
   TriangleMesh(Point *vertices, Normal *normals, float *tcoords, 
                uint32 *indices, size_t n_vertices, size_t n_triangles)
@@ -68,6 +94,9 @@ private:
   float *tcoords_;
   uint32 *indices_;
   size_t n_triangles_, n_vertices_;
+
+  std::vector<uint32> adj_indices_;
+
   mutable AABB bound_;
   mutable bool bound_need_update_;
 
