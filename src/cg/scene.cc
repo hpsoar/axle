@@ -9,10 +9,10 @@
 
 namespace ax {
 ScenePtr Scene::Create(const std::string &file, Options opts) {
-  ScenePtr ptr = ScenePtr(new Scene);
+  ScenePtr ptr = ScenePtr(new Scene(opts));
   bool ret = ptr->Load(file);
-  if (!ret) return ScenePtr();
-  ptr->PreProcess(opts);
+  if (!ret) return ScenePtr();  
+  ptr->PreProcess();
   return ptr;
 }
 
@@ -41,6 +41,9 @@ bool Scene::Load(const std::string &filename) {
     else if (token.Equals("object")) {
       ObjectPtr obj = this->LoadObject(ptr, fp);
       geometry_->Add(obj);
+    }
+    else if (token.Equals("options")) {
+
     }
     else {
       ax::UnknownKeyword(token.ptr(), "Scene");
@@ -86,17 +89,19 @@ ObjectPtr Scene::LoadObject(const char *buff, FILE *fp) {
   ObjectPtr obj;
   if (token.Equals("obj")) {   
     // ignore groups in wavefront obj file
-    obj = ax::ObjectFactory::LoadWavefront(fp, this, kIgnoreGroup);   
+    ax::Options opts = this->opts_;
+    opts.Add(ax::kIgnoreGroup);
+    obj = ax::ObjectFactory::LoadWavefront(fp, this, opts);
     //ptr = token.Extract(ptr); // remove object type: hem/obj/...
   }
   else if (token.Equals("obj_g")) {
-    obj = ax::ObjectFactory::LoadWavefront(fp, this, kNone);
+    obj = ax::ObjectFactory::LoadWavefront(fp, this, this->opts_);
   }
   else if (token.Equals("group") || token.Equals("instance")) {
     obj = ax::ObjectFactory::CreateGroup(fp, this);
   }
   else {
-    ax::Unsupported("object type", token.ptr());    
+    ax::Unsupported("object type", token.ptr());
     ax::EatToEndKeyword(fp, token);
   }
   ptr = token.Extract(ptr); // object name
@@ -133,9 +138,9 @@ void Scene::Draw(ProgramGLSLPtr prog, Options opts) const {
   geometry_->Draw(prog, opts);
 }
 
-void Scene::PreProcess(Options opts) {
-  geometry_->Transform();  
-  geometry_->PreProcess(opts);
+void Scene::PreProcess() {
+  geometry_->Transform();
+  geometry_->PreProcess(this->opts_);
   bound_ = geometry_->bound();
 }
 

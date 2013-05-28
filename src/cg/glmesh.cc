@@ -33,17 +33,8 @@ void GLGroup::Draw(Options opts) const {
 GLMesh::~GLMesh() { }
 
 void GLMesh::PreProcess(Options opts) {
-  if (opts.Contain(kComputeBound)) bound_ = mesh_->Bound();
-  if (opts.Contain(kNeedAdjacency)) this->ComputeAdjacency();
+  if (opts.Contain(kComputeBound)) bound_ = mesh_->Bound();  
   if (opts.Contain(kUseVBO)) this->LoadToVBO(opts);
-}
-
-void GLMesh::ComputeAdjacency() {
-  if (this->objs_.size() > 1) {
-    ax::Logger::Log("[GLMesh::ComputeAdjacency]: object group not supported yet!");
-    return;
-  }
-  this->mesh_->GenAdjacencyIndices();
 }
 
 void GLMesh::LoadToVBO(Options opts) {
@@ -54,9 +45,9 @@ void GLMesh::LoadToVBO(Options opts) {
   RET(this->vert_buffer_.Resize(vert_buff_size));
   
   int offset = 0;
-  offset += this->vert_buffer_.SetData(offset, mesh_->vertices_size(), mesh_->vertices());  
+  offset += this->vert_buffer_.SetData(offset, mesh_->vertices_size(), mesh_->vertices());
   if (mesh_->has_normal()) {
-    offset += this->vert_buffer_.SetData(offset, mesh_->normals_size(), mesh_->normals());    
+    offset += this->vert_buffer_.SetData(offset, mesh_->normals_size(), mesh_->normals());
   }
   if (mesh_->has_tcoord()) {
     offset += this->vert_buffer_.SetData(offset, mesh_->tcoords_size(), mesh_->tcoords());
@@ -64,9 +55,8 @@ void GLMesh::LoadToVBO(Options opts) {
 
   RET(this->idx_buffer_.Resize(this->mesh_->indices_size(), this->mesh_->indices()));
 
-  if (opts.Contain(ax::kNeedAdjacency) && this->mesh_->adj_indices().size() > 0) {
-    RET(this->adj_idx_buffer_.Resize(this->mesh_->adj_indices().size() * sizeof(uint32),
-                                     &this->mesh_->adj_indices()[0]));
+  if (opts.Contain(ax::kNeedAdjacency) && this->mesh_->has_adjacency()) {
+    RET(this->adj_idx_buffer_.Resize(this->mesh_->adjacency_indces_size(), this->mesh_->adj_indices()));
   }
   
   vertex_slot_ = 0;
@@ -77,7 +67,8 @@ void GLMesh::LoadToVBO(Options opts) {
 }
 
 void GLMesh::Draw(ProgramGLSLPtr prog, Options opts) const {
-  this->BeginDraw(opts);
+  RET(this->BeginDraw(opts));
+
   this->material()->Enable(prog);
   
   for (ObjectList::const_iterator it = objs_.begin(); it != objs_.end(); ++it)
@@ -88,7 +79,7 @@ void GLMesh::Draw(ProgramGLSLPtr prog, Options opts) const {
 }
 
 void GLMesh::Draw(const Scene *s, Options opts) const {
-  this->BeginDraw(opts);  
+  RET(this->BeginDraw(opts));
   this->material()->Enable(s);
   for (ObjectList::const_iterator it = objs_.begin(); it != objs_.end(); ++it)
     (*it)->Draw(s, opts);
@@ -96,7 +87,7 @@ void GLMesh::Draw(const Scene *s, Options opts) const {
   this->EndDraw(opts);
 }
 
-void GLMesh::BeginDraw(Options opts) const {
+bool GLMesh::BeginDraw(Options opts) const {
   this->vert_buffer_.Bind();
 
   int offset = 0;
@@ -122,10 +113,19 @@ void GLMesh::BeginDraw(Options opts) const {
 
   this->vert_buffer_.Unbind();
 
-  if (opts.Contain(ax::kNeedAdjacency)) this->adj_idx_buffer_.Bind();
+  if (opts.Contain(ax::kNeedAdjacency)) {
+    if (this->adj_idx_buffer_.size() > 0) {
+      this->adj_idx_buffer_.Bind();
+    }
+    else {
+      ax::Logger::Log("[GLMesh::BeginDraw]No adjacency triangles available");
+      ax::Logger::Log("[GLMesh::BeginDraw]Please make sure the model is loaded with appropriate flags");
+      return false;
+    }
+  }
   else this->idx_buffer_.Bind();
   
-  CheckErrorsGL("GLMesh::BeginDraw");
+  return !CheckErrorsGL("GLMesh::BeginDraw");
 }
 
 void GLMesh::EndDraw(Options opts) const {
@@ -143,7 +143,7 @@ void GLMesh::EndDraw(Options opts) const {
 ax::AABB GLMesh::ComputeBound(const ax::Matrix4x4 &m) const {
   ax::AABB box;
   for (size_t i = 0; i < mesh_->n_vertices(); ++i) {
-    ax::Vector4 p = m * ax::Vector4(mesh_->vertex(i), 1.f);
+    ax::Vector4 p = m * ax::Vector4(mesh_->Vertex(i), 1.f);
     p /= p.w;
     box.Union(ax::Point(p));
   }

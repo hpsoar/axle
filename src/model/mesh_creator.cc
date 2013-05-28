@@ -1,4 +1,4 @@
-#include "../model/triangle_mesh.h"
+#include "triangle_mesh.h"
 #include "../core/math.h"
 
 namespace ax {
@@ -70,7 +70,7 @@ TriMeshPtr CreateBoxMesh(const Point &pos1, const Point &pos2) {
   
   Normal *normals = new Normal[vn];
   FinalizeModel(points, vn, indices, &fn, normals);
-  return TriangleMesh::Create(points, normals, tcoords, indices, vn, fn);
+  return NULL;//TriangleMesh::Create(points, normals, tcoords, indices, vn, fn);
 }
 
 enum { kCacheSize = 240 };
@@ -177,8 +177,7 @@ TriMeshPtr CreateSphere(float radius, uint32 slices, uint32 stacks) {
   indices[idx++] = vert_idx;
   indices[idx++] = n_idx;
   indices[idx++] = n_idx - slices;
-  return TriangleMesh::Create(vertices, normals, NULL, indices,
-                              n_vertices, idx/3);
+  return NULL;//TriangleMesh::Create(vertices, normals, NULL, indices, n_vertices, idx/3);
 }
 
 TriMeshPtr CreateCylinder(float base_radius, float top_radius, 
@@ -257,8 +256,7 @@ TriMeshPtr CreateCylinder(float base_radius, float top_radius,
     ProcessQuad(slices, n_idx, vert_idx, indices, idx);
   }
 
-  return TriangleMesh::Create(vertices, normals, NULL, indices, 
-                              n_vertices, n_triangles);
+  return NULL;//TriangleMesh::Create(vertices, normals, NULL, indices, n_vertices, n_triangles);
 }
 
 

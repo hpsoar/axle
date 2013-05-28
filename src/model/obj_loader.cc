@@ -1,4 +1,4 @@
-#include "../model/triangle_mesh.h"
+#include "triangle_mesh.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,68 +14,69 @@ void FirstPass(FILE* fd, uint32 *vertex_count,  uint32 *normal_count,
 void ParseIndices(char *line, uint32 *vertex_idx,  
                   uint32 *texcoord_idx, uint32 *normal_idx);
 
-TriMeshPtr LoadObj(const char *filename) {
-  FILE *fd = fopen(filename, "rb");
-  if (NULL == fd) {
-    Logger::Log("Load, can't open '%s'", filename);
-    return TriMeshPtr();
-  }
-
-  uint32 nv, nn, nt, nf;
-  FirstPass(fd, &nv, &nn, &nt, &nf);
-
-  float* texcoords = NULL;
-  if (nt > 0) { texcoords = new float[nt * 2]; }
-
-  Point *points = new Point[nv];
-  Normal *normals = new Normal[nv];
-  uint32 *vertex_indices = new uint32[3 * nf];
-
-  /*float* normals = NULL;
-  if (nn > 0) { normals = new float[ 3 * nn ]; }*/
-
-  char line[kMaxLine];
-  int pi = 0, fi = 0, ti = 0, ni = 0;
-  while (fgets(line, kMaxLine, fd) != 0) {
-    if (line[0] == 'v') {
-      if (line[1] == 'n') {
-        /*float x, y, z;
-        sscanf(&line[2], "%f %f %f\n", &x, &y, &z);
-        normals[ni++] = Normal(x, y, z);*/
-      } else if (line[1] == 't') {       
-        float u, v;
-        sscanf(&line[2], "%f %f\n", &u, &v);
-        texcoords[ti++] = u;
-        texcoords[ti++] = v;
-      } else {
-        float x, y, z;
-        sscanf(&line[1], "%f %f %f\n", &x, &y, &z);
-        points[pi++] = Point(x, y, z);
-      }
-    } else if (line[0] == 'f') {
-      char s1[32], s2[32], s3[32];
-      sscanf(&line[1], "%s %s %s\n", s1, s2, s3);
-      
-      uint32 v1, t1, n1;					
-      ParseIndices(s1, &v1, &t1, &n1);
-
-      uint32 v2, t2, n2;
-      ParseIndices(s2, &v2, &t2, &n2);
-
-      uint32 v3, t3, n3;
-      ParseIndices(s3, &v3, &t3, &n3);
-
-      //indices start from 1 in obj files
-      v1 -= 1; v2 -= 1; v3 -= 1;
-      vertex_indices[fi++] = v1;
-      vertex_indices[fi++] = v2;
-      vertex_indices[fi++] = v3;      
-    }
-  }
-  if (ni == 0) FinalizeModel(points, nv, vertex_indices, &nf, normals);
-  return TriangleMesh::Create(points, normals, texcoords, vertex_indices,
-                              nv, nf);
-}
+//TriMeshPtr LoadObj(const char *filename) {
+//  FILE *fd = fopen(filename, "rb");
+//  if (NULL == fd) {
+//    Logger::Log("Load, can't open '%s'", filename);
+//    return TriMeshPtr();
+//  }
+//
+//  uint32 nv, nn, nt, nf;
+//  FirstPass(fd, &nv, &nn, &nt, &nf);
+//
+//  float* texcoords = NULL;
+//  if (nt > 0) { texcoords = new float[nt * 2]; }
+//
+//  Point *points = new Point[nv];
+//  Normal *normals = new Normal[nv];
+//  uint32 *vertex_indices = new uint32[3 * nf];
+//
+//  /*float* normals = NULL;
+//  if (nn > 0) { normals = new float[ 3 * nn ]; }*/
+//
+//  char line[kMaxLine];
+//  int pi = 0, fi = 0, ti = 0, ni = 0;
+//  while (fgets(line, kMaxLine, fd) != 0) {
+//    if (line[0] == 'v') {
+//      if (line[1] == 'n') {
+//        /*float x, y, z;
+//        sscanf(&line[2], "%f %f %f\n", &x, &y, &z);
+//        normals[ni++] = Normal(x, y, z);*/
+//      } else if (line[1] == 't') {       
+//        float u, v;
+//        sscanf(&line[2], "%f %f\n", &u, &v);
+//        texcoords[ti++] = u;
+//        texcoords[ti++] = v;
+//      } else {
+//        float x, y, z;
+//        sscanf(&line[1], "%f %f %f\n", &x, &y, &z);
+//        points[pi++] = Point(x, y, z);
+//      }
+//    } else if (line[0] == 'f') {
+//      char s1[32], s2[32], s3[32];
+//      sscanf(&line[1], "%s %s %s\n", s1, s2, s3);
+//      
+//      uint32 v1, t1, n1;					
+//      ParseIndices(s1, &v1, &t1, &n1);
+//
+//      uint32 v2, t2, n2;
+//      ParseIndices(s2, &v2, &t2, &n2);
+//
+//      uint32 v3, t3, n3;
+//      ParseIndices(s3, &v3, &t3, &n3);
+//
+//      //indices start from 1 in obj files
+//      v1 -= 1; v2 -= 1; v3 -= 1;
+//      vertex_indices[fi++] = v1;
+//      vertex_indices[fi++] = v2;
+//      vertex_indices[fi++] = v3;      
+//    }
+//  }
+//  if (ni == 0) FinalizeModel(points, nv, vertex_indices, &nf, normals);
+//
+//  return TriangleMesh::Create(points, normals, texcoords, vertex_indices,
+//                              nv, nf);
+//}
 
 void FirstPass(FILE* fd, uint32 *vertex_count, uint32 *normal_count, 
                uint32 *texcoord_count, uint32 *face_count) {

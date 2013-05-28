@@ -1,30 +1,9 @@
-#include "../model/triangle_mesh.h"
+#include "triangle_mesh.h"
 #include <map>
 
 namespace ax {
-struct Edge {
-  Edge(uint32 v0, uint32 v1) {
-    this->v0 = std::min(v0, v1);
-    this->v1 = std::max(v0, v1);
-  }
-  bool operator<(const Edge &rhs) const {
-    return v0 == rhs.v0 ? v1 < rhs.v1 : v0 < rhs.v0;
-  }
-  bool Contains(uint32 v) const {
-    return this->v0 == v || this->v1 == v;
-  }
-  union {
-    uint32 idx[2];
-    struct {
-      uint32 v0, v1;
-    };
-  };
-private:
-  Edge();
-};
-
-void TriangleMesh::GenAdjacencyIndices() {
-  if (this->adj_indices_.size() > 0) {
+//void TriangleMesh::GenAdjacencyIndices() {
+  /*if (this->adj_indices_.size() > 0) {
     ax::Logger::Log("TriangleMesh::GenAdjacencyIndices:adjacency indices already generated");
     return;
   }
@@ -67,21 +46,15 @@ void TriangleMesh::GenAdjacencyIndices() {
       this->adj_indices_.push_back(tri.vidx(i));
       this->adj_indices_.push_back(adj_vert);
     }
-  }
-}
+  }*/
+//}
 
-TriangleMesh::~TriangleMesh() {
-  delete[] vertices_;
-  delete[] normals_;
-  delete[] tcoords_;
-  delete[] indices_;
-  n_triangles_ = 0; 
-  n_vertices_ = 0;
+TriangleMesh::~TriangleMesh() {  
 }
 
 void TriangleMesh::ScaleUV(float uscale, float vscale) {
   RET(this->has_tcoord());
-  for (size_t i = 0; i < n_vertices_; ++i) {
+  for (size_t i = 0; i < this->n_vertices(); ++i) {
     tcoords_[i*2] *= uscale;
     tcoords_[i*2 + 1] *= vscale;
   }
@@ -89,17 +62,25 @@ void TriangleMesh::ScaleUV(float uscale, float vscale) {
 
 void TriangleMesh::ApplyTransform(const ax::Matrix4x4 &m) {
   Matrix3x3 normal_mat = NormalMatrix(m);
-  for (size_t i = 0; i < n_vertices_; ++i) {
-    this->set_vertex(i, m * this->vertex(i));
-    this->set_normal(i, Normalize(normal_mat * this->normal(i)));
+  for (size_t i = 0; i < this->n_vertices(); ++i) {    
+    float *vptr = this->vertex(i);
+    ax::Vector3 v(vptr[0], vptr[1], vptr[2]);
+    v = m * v;
+    vptr[0] = v.x; vptr[1] = v.y; vptr[2] = v.z;
+
+    float *nptr = this->normal(i);
+    ax::Normal n(nptr[0], nptr[1], nptr[2]);
+    n = ax::Normalize(normal_mat * n);
+    nptr[0] = n.x; nptr[1] = n.y; nptr[2] = n.z;   
   }
   bound_need_update_ = true;
 }
 
 void TriangleMesh::ComputeBound() const {
   bound_ = AABB();
-  for (size_t i = 0; i < n_vertices_; ++i) {
-    bound_.Union(vertices_[i]);
+  for (size_t i = 0; i < this->n_vertices(); ++i) {
+    const float *vptr = this->vertex(i);
+    bound_.Union(ax::Vector3(vptr[0], vptr[1], vptr[2]));
   }
   bound_need_update_ = false;
 }

@@ -55,10 +55,9 @@ public:
 private:
   GLMesh(ax::TriMeshPtr mesh) : mesh_(mesh), idx_buffer_(GL_ELEMENT_ARRAY_BUFFER), adj_idx_buffer_(GL_ELEMENT_ARRAY_BUFFER) { }
 
-  void BeginDraw(Options opts) const;
+  bool BeginDraw(Options opts) const;
   void EndDraw(Options opts) const;
-  void LoadToVBO(Options opts);
-  void ComputeAdjacency();
+  void LoadToVBO(Options opts);  
 private:
   typedef std::vector<GLGroupPtr> ObjectList;
 

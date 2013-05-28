@@ -1,6 +1,7 @@
-#include "../cg/glmesh.h"
+#include "glmesh.h"
+#include "trimesh_glmmodel.h"
 #include "../core/container.hpp"
-#include "../cg/scene.h"
+#include "scene.h"
 #include "glm_avl.h"
 
 namespace ax {
@@ -232,49 +233,12 @@ size_t ExpandMesh(const GLMmodel *model, Point **vertices, Normal **normals,
 
 // NOTE: Unsafe!!!
 ObjectPtr LoadGLMesh(Scene *s, const std::string &filename, Options opts) {
-  GLMmodel *model = glmReadOBJ(filename.c_str());
-  if (model == NULL) return ObjectPtr();
+  GLMmodelPtr model = GLMmodelPtr(glmReadOBJ(filename.c_str()), glmDelete);
+  if (model == NULL) return ObjectPtr();   
 
-  if (model->numnormals == 0 || opts.Contain(kGenNormal)) {
-    glmFacetNormals(model);
-    glmVertexNormals(model, 180);
-  }
-
-  Point *vertices = NULL;
-  Normal *normals = NULL;
-  float *tcoords = NULL;
-  uint32 *indices = NULL;
-
-  size_t n_vertices = model->numvertices;
-  bool expand_normal = model->numnormals > 0 && 
-                       model->numnormals != model->numvertices;
-  bool expand_tcoord = model->numtexcoords > 0 &&
-                       model->numtexcoords != model->numvertices;
-  bool expand_all = model->numnormals > 0 && model->numtexcoords > 0 &&
-                    (model->numvertices != model->numnormals || 
-                     model->numvertices != model->numtexcoords);
-  if (expand_all) {
-    n_vertices = ax::ExpandMesh(model, &vertices, &normals, &tcoords, &indices);    
-  }  
-  else if (expand_normal) {
-    n_vertices = ax::ExpandNormalAttrib(model, &vertices, &normals, &indices);    
-  }
-  else if (expand_tcoord) {
-    n_vertices = ax::ExpandTexcoordAttrib(model, &vertices, &tcoords, &indices);    
-  }
-  else {
-    // no expand needed
-    vertices = ax::CreateVertexArray(model);
-    indices = ax::CreateIndexArray(model);
-    if (model->numnormals > 0) normals = ax::CreateNormalArray(model);
-    if (model->numtexcoords > 0) tcoords = ax::CreateTexCoordArray(model);
-  }  
-
-  GLMeshPtr ptr = GLMesh::Create(ax::TriangleMesh::Create(
-      vertices, normals, tcoords, indices, n_vertices,
-      model->numtriangles));
+  GLMeshPtr ptr = GLMesh::Create(ax::TriMeshGLM::Create(model, opts));
   
-  if (opts.Contain(kIgnoreGroup)) {
+  if (opts.Contain(kIgnoreGroup) || opts.Contain(ax::kNeedAdjacency)) {    
     ptr->Add(GLGroup::Create(0, model->numtriangles));
   }
   else {
@@ -288,8 +252,7 @@ ObjectPtr LoadGLMesh(Scene *s, const std::string &filename, Options opts) {
       }
       g = g->next;
     }
-  }
-  glmDelete(model);
+  }  
 
   return ptr;
 }

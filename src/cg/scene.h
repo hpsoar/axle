@@ -48,9 +48,8 @@ public:
   Texture2DPtr texture(const std::string &name) { 
     return this->named_texs_[name]; 
   }
-private:
-  void PreProcess(Options ops);
 
+private:
   void Add(const std::string &name, ObjectPtr obj) {
     if (obj == NULL || name.empty()) return;
     this->named_objs_[name] = obj;
@@ -66,19 +65,26 @@ private:
     this->named_texs_[name] = tex;
   }
 
-  Scene() { }
+  Scene(ax::Options opts) : opts_(opts) { }
   bool Load(const std::string &filename);
   MaterialPtr LoadMaterial(const char *type, FILE *fp);
   ObjectPtr LoadObject(const char *type, FILE *fp);
   Texture2DPtr LoadTexture(const char *ptr);
- 
+
+  //NOTE: some operation must be processed after all scene data loaded, should rename it PostProcess
+  //      such as transform, a group can transform only after it's sub objects loaded
+  //      bound can be computed only when objects are loaded and transformed
+  //      only the transformed mesh can be loaded to vbo, otherwise the data is not correct
+  void PreProcess();
 private:
   ax::GroupPtr geometry_;
   AABB bound_;
 
   ObjectMap named_objs_;
   MaterialMap named_matls_;
-  TextureMap named_texs_; 
+  TextureMap named_texs_;
+
+  ax::Options opts_;
 
   DISABLE_COPY_AND_ASSIGN(Scene);
   friend class ObjectFactory;

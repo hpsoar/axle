@@ -2,8 +2,8 @@
 #define AXLE_CG_MATERIAL_H
 
 #include "../core.h"
-#include "../cg/color.h"
-#include "../cg/cg_fwd.h"
+#include "color.h"
+#include "cg_fwd.h"
 
 namespace ax {
 class Material {

@@ -3,8 +3,8 @@
 
 #include "../core.h"
 #include "../geom.h"
-#include "../cg/cg_fwd.h"
-#include "../cg/material.h"
+#include "cg_fwd.h"
+#include "material.h"
 
 namespace ax {
 // should be handled with pointer only, 
