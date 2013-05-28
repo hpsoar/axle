@@ -220,6 +220,14 @@ bool ArrayBufferGL::Resize(uint32 size, const void *data, bool force_shrink) {
   return true;
 }
 
+void *ArrayBufferGL::MapBuffer_(uint32 access) {
+  this->Bind();  
+  void *ptr = glMapBuffer(this->target_, access);
+  glUnmapBuffer(this->target_);
+  this->Unbind();
+  return ptr;
+}
+
 GLuint64 ArrayBufferGL::BindGPUPtr(uint32 access) {
   this->Bind();  
   glMakeBufferResidentNV(this->target_, access);  

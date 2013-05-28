@@ -5,6 +5,16 @@
 #include "../cg.h"
 #include "params.h"
 
+#define __HAS_CUDA__
+
+#ifdef __HAS_CUDA__
+#include <cuda_runtime.h>
+#include <cutil_inline.h>
+#include <cutil_gl_inline.h>
+#include <cuda_gl_interop.h>
+
+#endif
+
 namespace ax {
 struct FBParams {
   static const std::string kBufferName;
@@ -137,16 +147,21 @@ public:
 
   ArrayBufferGL(int target = GL_ARRAY_BUFFER) : target_(target), capacity_(0), id_(0), gpu_ptr_(0), size_(0) { }
 
-  ~ArrayBufferGL() { this->Release(); }
+  virtual ~ArrayBufferGL() { this->Release(); }
 
   void Bind() const { glBindBuffer(this->target_, this->id_); }
   void Unbind() const { glBindBuffer(this->target_, 0); }  
   
-  bool Resize(uint32 size, const void *data=NULL, bool force_shrink=false);
+  virtual bool Resize(uint32 size, const void *data=NULL, bool force_shrink=false);
 
   uint32 SetData(int offset, int size, const void *data);
 
-  GLuint64 BindGPUPtr(uint32 access);
+  GLuint64 BindGPUPtr(uint32 access = GL_READ_ONLY);  
+
+  template<typename T>
+  T *MapBuffer(uint32 access = GL_READ_ONLY) {
+    return (T*)this->MapBuffer_(access); 
+  }
 
   GLuint id() const { return this->id_; }
   GLuint64EXT gpu_ptr() const { return this->gpu_ptr_; }
@@ -154,6 +169,7 @@ public:
   
 private:
   void Release();  
+  void *MapBuffer_(uint32 access);
 private:
   GLuint id_;
   GLuint64EXT gpu_ptr_;
@@ -161,6 +177,58 @@ private:
   uint32 capacity_;
   uint32 target_;
 };
+
+#ifdef __HAS_CUDA__
+class CudaArrayBufferGL : public ax::ArrayBufferGL {
+public:
+  CudaArrayBufferGL() : registered_(false), mapped_(false) { }
+
+  void Register() {
+    if (this->id() > 0 && !this->registered_) {
+      cudaGLRegisterBufferObject(this->id());
+      this->registered_ = true;
+    }
+  }
+
+  ~CudaArrayBufferGL() { this->Unregister(); }
+
+  virtual bool Resize(uint32 size, const void *data=NULL, bool force_shrink=false) {
+    this->Unregister();
+    bool ret = ArrayBufferGL::Resize(size, data, force_shrink);
+    this->Register();
+    return ret;
+  }
+
+  template<typename T>
+  T *MapCudaPtr() {
+    if (this->registered_) {
+      T *ptr;
+      cudaGLMapBufferObject((void**)&ptr, this->id());
+      this->mapped_ = true;
+      return ptr;
+    }
+    return NULL;
+  }
+
+  void Unregister() {
+    this->UnmapCudaPtr();
+    if (this->registered_) {
+      cudaGLUnregisterBufferObject(this->id());
+      this->registered_ = false;
+    }
+  }
+
+  void UnmapCudaPtr() {
+    if (this->mapped_) {
+      cudaGLUnmapBufferObject(this->id());
+      this->mapped_ = false;
+    }
+  }  
+private:
+  bool registered_;
+  bool mapped_;
+};
+#endif
 
 }
 
