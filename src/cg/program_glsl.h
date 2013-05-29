@@ -21,13 +21,13 @@ public:
 
   virtual ~ProgramGLSL() { this->DeleteProgram(); }
 
-  void Begin() {
-    if (this->texture_slot_ >= 0) this->ResetTextureSlot();
-    if (this->image_slot_ >= 0) this->ResetImageSlot();
+  void Begin() {   
     glUseProgram(id_); 
   }
 
-  void End() {     
+  void End() {
+    if (this->texture_slot_ >= 0) this->ResetTextureSlot();
+    if (this->image_slot_ >= 0) this->ResetImageSlot();
     glUseProgram(0); 
   }
 
