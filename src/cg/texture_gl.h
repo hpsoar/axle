@@ -10,19 +10,18 @@
 #include "gl_object.h"
 
 namespace ax {
-class UnitIdManager {
-public:
-  int nextId() {
-    int id = this->next_id_++;
-    if (this->next_id_ > this->kMaxUnit) {
-      ax::Logger::Log("More than %d image units are used, you may need more efficient management", this->kMaxUnit);
-    }
-    return id;
-  }
-private:
-  static int next_id_;
-  static const int kMaxUnit = 16;
-};
+//class UnitIdManager {
+//public:
+//  int AllocUnit() {
+//    if (this->next_id_ < this->kMaxUnit) return this->next_id_++;
+//    return -1;
+//  }
+//  void FreeUnit(int id) {
+//  }
+//private:
+//  static int next_id_;
+//  static const int kMaxUnit;
+//};
 
 class TextureGL : public GLObject {
 public:
@@ -32,9 +31,10 @@ public:
     glGenTextures(1, &id_);
   }
 
-  virtual ~TextureGL() {
-    if (id_ > 0) glDeleteTextures(1, &id_);
-    printf("release: %s\n", this->name().c_str());
+  virtual ~TextureGL() {    
+    if (id_ > 0) {
+      glDeleteTextures(1, &id_);
+    }
   }
 
   void Enable() const { glEnable(this->target()); }
@@ -42,19 +42,28 @@ public:
   void Bind() const { glBindTexture(this->target(), this->id()); }
   void Unbind() const { glBindTexture(this->target(), 0); }
 
-  void BindImageTexture(uint32 unit, int32 level, 
-                        bool layered, int32 layer, 
-                        uint32 access, uint32 format) {
-    glBindImageTexture(unit, this->id(), level,
-                       layered, layer, access, format);
-    this->unit_id_ = unit;
-    this->CheckResult("TextureGL::BindImageTexture");
+  // NOTE: unchecked
+  void BindImageTexture(uint32 unit, int32 level, bool layered, int32 layer, uint32 access, uint32 format) {
+    glBindImageTexture(unit, this->id(), level, layered, layer, access, format);
+    this->unit_id_ = unit;    
   }
 
-  void BindImageTexture(int32 level, bool layered, int32 layer, uint32 access, uint32 format) {
-    this->BindImageTexture(this->unit_mgr_.nextId(), level, layered, layer, access, format);
+  // NOTE: the following is unsafe, may leads to problems, BIND & USE
+  //void BindImageTexture(int32 level, bool layered, int32 layer, uint32 access, uint32 format) {
+  //  if (this->id() > 0 && this->unit_id_ < 0) { // NOTE: don't waste unit
+  //    this->BindImageTexture(this->unit_mgr_.AllocUnit(), level, layered, layer, access, format);
+  //  }
+  //}
+
+  void BindImageTexture(uint32 unit, uint32 access) {
+    this->BindImageTexture(unit, 0, false, 0, access, this->iformat());
   }
 
+  /*void BindImageTexture(uint32 access) {
+    this->BindImageTexture(0, false, 0, access, this->iformat());
+  }  */
+
+  //NOTE: need to check unit validity
   int ImageUnit() const { 
     assert(this->unit_id_ >= 0);
     if (this->unit_id_ < 0) ax::Logger::Log("%s: call BindImageTexture first", this->name().c_str());
@@ -99,7 +108,7 @@ private:
 
   int unit_id_;
 
-  static ax::UnitIdManager unit_mgr_;
+  //static ax::UnitIdManager unit_mgr_;
 
   DISABLE_COPY_AND_ASSIGN(TextureGL);
 };

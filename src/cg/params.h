@@ -79,6 +79,12 @@ typedef std::string CGParamKeyType;
 
 typedef __ParamSet<CGParamKeyType> ParamSet;
 typedef __ParamSet2<CGParamKeyType> ParamSet2;
+
+#define DEF_PARAM_NAME(NS, NAME)          \
+  namespace NS {                          \
+    const std::string NAME = #NAME;       \
+  }                                       \
+
 }
 
 #endif // AX_CG_PARAMS_H

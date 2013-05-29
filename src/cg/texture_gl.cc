@@ -2,9 +2,10 @@
 #include "utils.h"
 
 namespace ax {
-int UnitIdManager::next_id_ = 0;
-
-UnitIdManager TextureGL::unit_mgr_;
+//int UnitIdManager::next_id_ = 0;
+//const int UnitIdManager::kMaxUnit = GLContext::MaxImageUnits();
+//
+//UnitIdManager TextureGL::unit_mgr_;
 
 void TextureGL::SetDefaultParameters() {
   this->Bind();

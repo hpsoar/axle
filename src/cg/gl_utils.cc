@@ -393,36 +393,20 @@ bool CheckErrorsGL(const char* location) {
   return error_occurred;
 }
 
-bool CheckGLInfo() {
-  GLenum err = glewInit();
-  if (GLEW_OK != err) {
-    Logger::Log("glewInit", glewGetErrorString(err));
-    return false;
-  }
-  
+bool GLContext::CheckGLInfo() {
+  if (!GLContext::Initialize()) return false;
+
   Logger::Log("VENDOR: %s", glGetString(GL_VENDOR));
   Logger::Log("RENDERER: %s", glGetString(GL_RENDERER));
   Logger::Log("VERSION: %s", glGetString(GL_VERSION));
-  Logger::Log("GLSL: %s\n", glGetString (GL_SHADING_LANGUAGE_VERSION));
+  Logger::Log("GLSL: %s\n", glGetString (GL_SHADING_LANGUAGE_VERSION));  
 
-  Logger::Log("");
-
-  GLint max_draw_buffers;
-  glGetIntegerv(GL_MAX_DRAW_BUFFERS, &max_draw_buffers);
   Logger::Log("Max Draw Buffers: %d", max_draw_buffers); 
-
-  GLint max_texture_coords;
-  glGetIntegerv(GL_MAX_TEXTURE_COORDS, &max_texture_coords);
   Logger::Log("Max Textures Coords: %d", max_texture_coords);
-
-  GLint max_textures;
-  glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS , &max_textures);
   Logger::Log("Max Textures: %d", max_textures);
-
-  GLint max_tex_size;
-  glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max_tex_size);
+  Logger::Log("Max Image Units: %d", max_image_units);
   Logger::Log("Max Texture Size: %d", max_tex_size);
-  
+
   if (!glewIsSupported("GL_EXT_gpu_shader4")) {
     Logger::Log("GL_EXT_gpu_shader4 unsupported");
   }
@@ -430,8 +414,40 @@ bool CheckGLInfo() {
     Logger::Log("GL_EXT_texture_integer unsupported");
   }
   if (!glewIsSupported("GL_ARB_color_buffer_float")) {
-    Logger::Log("GL_EXT_texture_integer unsupported"); 
+    Logger::Log("GL_EXT_texture_integer unsupported");
   }
+
+  return true;
+}
+
+bool GLContext::initialized = false;
+GLint GLContext::max_draw_buffers = 0;
+GLint GLContext::max_texture_coords = 0;
+GLint GLContext::max_textures = 0;
+GLint GLContext::max_image_units = 0;
+GLint GLContext::max_tex_size = 0;
+
+bool GLContext::Initialize() {
+  if (GLContext::initialized) return true;
+
+  GLenum err = glewInit();
+  if (GLEW_OK != err) {
+    Logger::Log("glewInit", glewGetErrorString(err));
+    return false;
+  }  
+ 
+  glGetIntegerv(GL_MAX_DRAW_BUFFERS, &max_draw_buffers);  
+  
+  glGetIntegerv(GL_MAX_TEXTURE_COORDS, &max_texture_coords);  
+  
+  glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS , &max_textures);  
+  
+  glGetIntegerv(GL_MAX_IMAGE_UNITS, &max_image_units);  
+
+  glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max_tex_size);  
+
+  GLContext::initialized = true;
+
   return true;
 }
 

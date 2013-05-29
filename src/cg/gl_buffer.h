@@ -16,15 +16,15 @@
 #endif
 
 namespace ax {
-struct FBParams {
-  static const std::string kBufferName;
-  static const std::string kTextureTarget;
-  static const std::string kColorBufferCount;
-  static const std::string kHasDepthBuffer;
-  static const std::string kHasStencilBuffer;
-  static const std::string kColorFormat;
-  static const std::string kDepthFormat;
-};
+
+// NOTE: we may be able to change the key type secretly thus improve performance if needed
+DEF_PARAM_NAME(FBParams, kBufferName)
+DEF_PARAM_NAME(FBParams, kTextureTarget)
+DEF_PARAM_NAME(FBParams, kColorBufferCount)
+DEF_PARAM_NAME(FBParams, kHasDepthBuffer)
+DEF_PARAM_NAME(FBParams, kHasStencilBuffer)
+DEF_PARAM_NAME(FBParams, kColorFormat)
+DEF_PARAM_NAME(FBParams, kDepthFormat)
 
 class FrameBuffer {
 public:
@@ -94,6 +94,8 @@ private:
   int n_color_buffers_;
   bool has_zbuffer_;
   bool has_stencil_buffer_;
+  bool bind_color_buffer_as_image_;
+  bool bind_depth_buffer_as_image_;
   int texture_target_;
   int color_format_;
   int depth_format_;

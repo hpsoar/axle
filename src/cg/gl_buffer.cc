@@ -1,14 +1,6 @@
 #include "gl_buffer.h"
 
 namespace ax {
-const std::string ax::FBParams::kBufferName = "frame buffer name";
-const std::string ax::FBParams::kTextureTarget = "frame buffer texture target";
-const std::string ax::FBParams::kColorBufferCount = "frame buffer color buffer count";
-const std::string ax::FBParams::kHasDepthBuffer = "frame buffer has depth buffer";
-const std::string ax::FBParams::kHasStencilBuffer = "frame buffer has stencil buffer";
-const std::string ax::FBParams::kColorFormat = "frame buffer color format";
-const std::string ax::FBParams::kDepthFormat = "frame buffer depth format";
-
 const std::string FrameBuffer::ParamNames::kBufferName = ax::FBParams::kBufferName;
 const std::string FrameBuffer::ParamNames::kTextureTarget = ax::FBParams::kTextureTarget;
 const std::string FrameBuffer::ParamNames::kColorBufferCount = ax::FBParams::kColorBufferCount;
@@ -64,7 +56,7 @@ bool FrameBuffer::Resize(int w, int h) {
       V_RET(this->color_buffers_[i] = ax::Texture2D::Create(
             this->texture_target_, this->name_));
       V_RET(this->color_buffers_[i]->Initialize(w, h, this->color_format_));
-      this->color_buffers_[i]->SetDefaultParameters();
+      this->color_buffers_[i]->SetDefaultParameters();      
     }
   }
 

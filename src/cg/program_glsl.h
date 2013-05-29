@@ -21,9 +21,13 @@ public:
 
   virtual ~ProgramGLSL() { this->DeleteProgram(); }
 
-  void Begin() { glUseProgram(id_); }
-  void End() {
-     if (this->texture_slot_ >= 0) this->ResetTextureSlot();
+  void Begin() {
+    if (this->texture_slot_ >= 0) this->ResetTextureSlot();
+    if (this->image_slot_ >= 0) this->ResetImageSlot();
+    glUseProgram(id_); 
+  }
+
+  void End() {     
     glUseProgram(0); 
   }
 
@@ -162,13 +166,15 @@ public:
     this->SetVar(name, slot);
   }
 
+  void SetImageVar(const char *name, ax::Texture2DPtr tex, uint32 access);
+
   void SetSubroutineVar(const std::string &var_name, 
                         const std::string &routine_name,
                         int shader_type);
 
 private:
   ProgramGLSL(const std::string &name) : 
-       GLObject(name), is_linked_(false), texture_slot_(-1) {
+       GLObject(name), is_linked_(false), texture_slot_(-1), image_slot_(0) {
     id_ = glCreateProgram();
     if (0 == id_) this->CheckResult("ProgramGLSL::ProgramGLSL");
   }
@@ -212,13 +218,16 @@ private:
     this->texture_slot_ = -1;
     glActiveTexture(GL_TEXTURE0);
   }
-  int NextTextureSlot() {
-    return ++this->texture_slot_;
-  }
+
+  int NextTextureSlot() { return ++this->texture_slot_; }
+
+  void ResetImageSlot() { this->image_slot_ = -1; }
+  int NextImageSlot() { return ++this->image_slot_; }
 
  private:  
   bool is_linked_;
   int texture_slot_;
+  int image_slot_;
 };
 
 inline bool InvalidVar(const int var) { return var < 0; }

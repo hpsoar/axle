@@ -16,6 +16,27 @@
 #pragma message("WARNING: SLOVE SHADER DEPENDENCY! DO LAZY INITIALIZATION!")
 
 namespace ax {
+class GLContext {
+public:
+  static bool CheckGLInfo();
+
+  static int MaxImageUnits() { 
+    GLContext::Initialize();
+    return max_image_units;
+  }
+private:
+  static bool Initialize();
+
+private:
+  static bool initialized;
+  
+  static GLint max_draw_buffers;
+  static GLint max_texture_coords;
+  static GLint max_textures;
+  static GLint max_image_units;
+  static GLint max_tex_size;
+};
+
 class GPUTimer;
 typedef std::tr1::shared_ptr<GPUTimer> GPUTimerPtr;
 
@@ -186,7 +207,7 @@ void SaveFrameBuffer(const char *filename);
  */
 bool CheckErrorsGL(const char *location);
 
-bool CheckGLInfo();
+inline bool CheckGLInfo() { return GLContext::CheckGLInfo(); }
 
 template<typename T>
 void EmitVertex(const T &p) { glVertex3f(p.x, p.y, p.z); }
