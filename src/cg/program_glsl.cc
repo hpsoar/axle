@@ -97,10 +97,10 @@ void ProgramGLSL::SetTextureVar(const char *name, const Texture2DPtr *texs,
   this->Set1DVar(name, &vals[0], n);
 }
 
-void ProgramGLSL::SetImageVar(const char *name, ax::Texture2DPtr tex, uint32 access) {
+void ProgramGLSL::SetImageVar(const char *name, ax::Texture2DPtr tex, uint32 access) {  
   int slot = this->NextImageSlot();
-  tex->BindImageTexture(slot, access);
-  this->SetVar(name, slot);
+  tex->BindImageTexture(slot, access);  
+  this->SetVar(name, tex->ImageUnit());
 }
 
 void ProgramGLSL::SetSubroutineVar(const std::string &var_name, 

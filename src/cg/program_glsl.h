@@ -174,7 +174,7 @@ public:
 
 private:
   ProgramGLSL(const std::string &name) : 
-       GLObject(name), is_linked_(false), texture_slot_(-1), image_slot_(0) {
+       GLObject(name), is_linked_(false), texture_slot_(-1), image_slot_(-1) {
     id_ = glCreateProgram();
     if (0 == id_) this->CheckResult("ProgramGLSL::ProgramGLSL");
   }

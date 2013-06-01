@@ -64,8 +64,7 @@ public:
   }  */
 
   //NOTE: need to check unit validity
-  int ImageUnit() const { 
-    assert(this->unit_id_ >= 0);
+  int ImageUnit() const {     
     if (this->unit_id_ < 0) ax::Logger::Log("%s: call BindImageTexture first", this->name().c_str());
     return this->unit_id_; 
   }

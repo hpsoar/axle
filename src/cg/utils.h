@@ -16,6 +16,9 @@
 #pragma message("WARNING: SLOVE SHADER DEPENDENCY! DO LAZY INITIALIZATION!")
 
 namespace ax {
+#ifndef GL_SHADER_GLOBAL_ACCESS_BARRIER_BIT_NV
+#define GL_SHADER_GLOBAL_ACCESS_BARRIER_BIT_NV             0x00000010
+#endif
 class GLContext {
 public:
   static bool CheckGLInfo();
