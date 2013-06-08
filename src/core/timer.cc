@@ -41,7 +41,7 @@ void SeqTimer::Begin(const std::string& info) {
   s_time_stack.push(GetTime());
 }
 
-void SeqTimer::End() {
+double SeqTimer::End() {
   const double end_time = GetTime();
   const double start_time = s_time_stack.top();
   double elapsed = end_time - start_time;
@@ -50,7 +50,8 @@ void SeqTimer::End() {
   s_time_stack.pop();
   for (size_t i = 0; i < s_time_stack.size(); ++i)
     printf("  ");
-  printf("cost: %f (s)\n", elapsed);  
+  printf("cost: %f (s)\n", elapsed);
+  return elapsed;
 }
 
 std::stack<std::string> SeqTimer::s_info_stack;

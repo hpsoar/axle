@@ -14,7 +14,7 @@ namespace ax {
 class SeqTimer {
 public:
 	static void Begin(const std::string& info);
-	static void End();	
+	static double End();	
 private:
 	static std::stack<double> s_time_stack;
 	static std::stack<std::string> s_info_stack;

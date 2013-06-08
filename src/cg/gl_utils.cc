@@ -182,16 +182,18 @@ int TextureUtil::CreateCustomMipmap(ax::ProgramGLSLPtr shader, ax::Texture2DPtr 
 
   while (width >= min_res) {
     TextureUtil::device_->SetRenderTarget(texture, level);
-    TextureUtil::device_->AdjustViewport(width, width);
+    TextureUtil::device_->AdjustViewport(width, width);   
     glClear(GL_COLOR_BUFFER_BIT);
+    ax::CheckErrorsGL("xxx");
 
     texture->SetParameter(GL_TEXTURE_BASE_LEVEL, level - 1);
     texture->SetParameter(GL_TEXTURE_MAX_LEVEL, level - 1);
     texture->SetParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    texture->SetParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);    
+    texture->SetParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     shader->SetVar("g_offset", step / texture->width());
 
+    ax::CheckErrorsGL("hello");
     TextureUtil::quad_->Draw();
 
     ++level;
