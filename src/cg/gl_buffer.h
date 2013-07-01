@@ -194,11 +194,15 @@ public:
 
   ~CudaArrayBufferGL() { this->Unregister(); }
 
-  virtual bool Resize(uint32 size, const void *data=NULL, bool force_shrink=false) {
-    this->Unregister();
-    bool ret = ArrayBufferGL::Resize(size, data, force_shrink);
-    this->Register();
-    return ret;
+  virtual bool Resize(uint32 size, const void *data=NULL, bool force_shrink=false) {    
+    bool need_allocation = this->size() < size || (this->size() > size && force_shrink);
+    if (need_allocation) {
+      this->Unregister();
+      bool ret = ArrayBufferGL::Resize(size, data, force_shrink);
+      this->Register();
+      return ret;
+    }
+    return true;
   }
 
   template<typename T>

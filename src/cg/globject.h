@@ -5,10 +5,22 @@
 #include "../geom.h"
 #include "cg_fwd.h"
 #include "material.h"
+#include <vector>
 
 namespace ax {
 // should be handled with pointer only, 
 // because idx_vbo_ may be deleted across copies
+
+template<typename T>
+struct AttribSet {
+  AttribSet(T *a, uint32 n) : attribs(a), n_attribs(n) { }
+
+  T *attribs;
+  uint32 n_attribs;
+};
+
+typedef std::vector<AttribSet<const float> > ConstVertexSet;
+typedef std::vector<AttribSet<const uint32> > ConstIndexSet;
 
 class Object {
 public:    
@@ -40,7 +52,14 @@ public:
   virtual void Draw(const Scene *s, Options opts) const = 0;
   virtual void Draw(ProgramGLSLPtr prog, Options opts) const = 0;
 
-  virtual ax::AABB ComputeBound(const ax::Matrix4x4 &m) const = 0;  
+  virtual ax::AABB ComputeBound(const ax::Matrix4x4 &m) const = 0;
+
+  virtual uint32 n_primitives() const = 0;
+
+  virtual uint32 n_vertices() const = 0;  
+
+  virtual void GetVertices(ConstVertexSet &vertexet) const { }
+  virtual void GetIndices(ConstIndexSet &indexset) const { }
 protected:
   Object() : transform_applied_(false), matl_(Material::kNullMatl) { }
   virtual void ApplyTransform(const ax::Matrix4x4 &m) = 0;

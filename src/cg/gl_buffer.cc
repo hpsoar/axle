@@ -200,7 +200,7 @@ bool ArrayBufferGL::Resize(uint32 size, const void *data, bool force_shrink) {
     this->Release();    
     glGenBuffers(1, &this->id_);
     this->Bind();    
-    glBufferData(this->target_, size, data, GL_STREAM_DRAW); // TODO:    
+    glBufferData(this->target_, size, data, GL_STATIC_DRAW); // TODO:    
     this->Unbind();
     if (ax::CheckErrorsGL("ArrayBufferGL::Resize")) {
       ax::Logger::Log("ArrayBufferGL::Resize: old buffer is also unavailable");

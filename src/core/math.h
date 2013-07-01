@@ -36,7 +36,6 @@ inline T max(T a, T2 b) { return a > b ? a : b; }
 inline bool IsPowOf2(int i) { return ((i - 1) & i) == 0; }
 
 inline int Log2(int n) {
-  assert(n > 0);
   int i = 0;
   while (n > 1) {
     ++i;

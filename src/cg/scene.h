@@ -49,6 +49,17 @@ public:
     return this->named_texs_[name]; 
   }
 
+  uint32 n_primitives() const { return this->geometry_->n_primitives(); }
+
+  uint32 n_vertices() const { return this->geometry_->n_vertices(); }
+
+  void GetVertices(ConstVertexSet &vertexet) const { 
+    this->geometry_->GetVertices(vertexet); 
+  }
+
+  void GetIndices(ConstIndexSet &indexset) const { 
+    this->geometry_->GetIndices(indexset);  
+  }
 private:
   void Add(const std::string &name, ObjectPtr obj) {
     if (obj == NULL || name.empty()) return;

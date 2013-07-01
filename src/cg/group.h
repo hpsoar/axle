@@ -18,6 +18,27 @@ public:
   virtual void PreProcess(Options opts);
 
   ObjectPtr object(int i) const { return this->objs_[i]; }
+
+  uint32 n_objects() const { return this->objs_.size(); }
+
+  uint32 n_primitives() const {
+    uint32 n = 0;
+    for (uint32 i = 0; i < this->n_objects(); ++i) n += this->object(i)->n_primitives();
+    return n;
+  }
+
+  uint32 n_vertices() const {
+    uint32 n = 0;
+    for (uint32 i = 0; i < this->n_objects(); ++i) n += this->object(i)->n_vertices();
+    return n;
+  }
+  
+  virtual void GetVertices(ConstVertexSet &vertexet) const {
+    for (uint32 i = 0; i < this->n_objects(); ++i) this->object(i)->GetVertices(vertexet);
+  }
+  virtual void GetIndices(ConstIndexSet &indexset) const {
+    for (uint32 i = 0; i < this->n_objects(); ++i) this->object(i)->GetIndices(indexset);
+  }
 protected:
   Group() { }
 

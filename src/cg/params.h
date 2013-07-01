@@ -85,6 +85,9 @@ typedef __ParamSet2<CGParamKeyType> ParamSet2;
     const std::string NAME = #NAME;       \
   }                                       \
 
+#define GDEF_PARAM_NAME(NAME)       \
+  const std::string NAME = #NAME;   \
+
 }
 
 #endif // AX_CG_PARAMS_H

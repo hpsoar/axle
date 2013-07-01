@@ -25,6 +25,9 @@ private:
 
   GLGroup(int tri_start, int n_tris) : 
       tri_start_(tri_start), n_tris_(n_tris) { }
+
+  uint32 n_primitives() const { return this->n_tris_; }
+  uint32 n_vertices() const { return 0; }
 private:
   void Draw(Options opts) const;
 private:
@@ -52,6 +55,18 @@ public:
 
   ax::TriMeshPtr tri_mesh() const { return this->mesh_; }
   uint32 vert_vbo() const { return this->vert_buffer_.id(); }
+
+  uint32 n_primitives() const { return this->mesh_->n_triangles(); }
+
+  uint32 n_vertices() const { return this->mesh_->n_vertices(); }
+
+  virtual void GetVertices(ConstVertexSet &vertexet) const { 
+    vertexet.push_back(ConstVertexSet::value_type(this->mesh_->vertices(), this->mesh_->n_vertices() * 3));
+  }
+
+  virtual void GetIndices(ConstIndexSet &indexset) const {
+    indexset.push_back(ConstIndexSet::value_type(this->mesh_->indices(), this->mesh_->n_triangles() * 3));
+  }
 private:
   GLMesh(ax::TriMeshPtr mesh) : mesh_(mesh), idx_buffer_(GL_ELEMENT_ARRAY_BUFFER), adj_idx_buffer_(GL_ELEMENT_ARRAY_BUFFER) { }
 

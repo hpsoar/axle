@@ -135,7 +135,10 @@ public:
   RenderAppI(const std::string &name) : name_(name), width_(0), height_(0) { }
   virtual ~RenderAppI() { }  
   virtual void Resize(int w, int h) { this->width_ = w, this->height_ = h; }
-  virtual void Render(const ax::ScenePtr scene, const ax::ParamSet2 &params) = 0;  
+  virtual void Render(const ax::ScenePtr scene, const ax::ParamSet2 &params) = 0;
+
+  virtual std::string description() const { return this->name(); }
+
   const std::string &name() const { return name_; }
   int width() const { return this->width_; }
   int height() const { return this->height_; }  
@@ -288,6 +291,11 @@ void VisualizeViewSpace(const C &camera, float alpha = 0.5f) {
   glEnd();
 
   glPopAttrib();
+}
+
+inline void SetFrameBufferMask(GLboolean enable_color = GL_TRUE, GLboolean enable_depth = GL_TRUE) {
+  glColorMask(enable_color, enable_color, enable_color, enable_color);
+  glDepthMask(enable_depth);
 }
 } // ax
 

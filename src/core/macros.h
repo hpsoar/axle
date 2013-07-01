@@ -42,7 +42,7 @@ inline bool Failed(T ptr)  {
 {                                 \
   bool failed = Failed(arg);      \
   assert(!failed);                \
-  if (Failed(arg)) return;        \
+  if (failed) return;             \
 } 
 
 #endif // AXLE_CORE_MICROS_H
