@@ -2,6 +2,7 @@
 
 #include "shader_object.h"
 #include "texture_gl.h"
+#include "utils.h"
 #include <GL/glew.h>
 
 namespace ax {
@@ -105,10 +106,10 @@ void ProgramGLSL::SetImageVar(const char *name, ax::Texture2DPtr tex, uint32 acc
 
 void ProgramGLSL::SetSubroutineVar(const std::string &var_name, 
                                    const std::string &routine_name, 
-                                   int shader_type) {
+                                   int shader_type) {  
   GLuint ads = glGetSubroutineIndex(this->id(), shader_type, 
-                                    routine_name.c_str());
-  glUniformSubroutinesuiv(shader_type, 1, &ads);
+                                    routine_name.c_str());  
+  glUniformSubroutinesuiv(shader_type, 1, &ads);  
 }
 
 } // ax

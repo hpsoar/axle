@@ -18,4 +18,8 @@ void Print(const Matrix3x3 &m, const char *name) {
     printf("%f %f %f\n", m[i][0], m[i][1], m[i][2]);
   }
 }
+
+void Print(const glm::vec2 &p) {
+  printf("glm::vec2(%f, %f)\n", p.x, p.y);
+}
 } // ax

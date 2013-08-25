@@ -276,16 +276,18 @@ public:
     for (int i = 0; i < 80; ++i) printf("-");
     printf("\n");
 
-    for (auto it : am_) {
-      printf("[%c]\t%s\n", it.first, it.second.GetDescription().c_str());
+    for (ActionMap::const_iterator it = this->am_.begin(); 
+        it != this->am_.end(); ++it) {
+      printf("[%c]\t%s\n", it->first, it->second.GetDescription().c_str());
     }
   }
 
   void PrintState() const {
     for (int i = 0; i < 80; ++i) printf("-");
     printf("\n");
-    for (auto it : am_) {
-      printf("%s\n", it.second.GetVarDescription().c_str());
+    for (ActionMap::const_iterator it = this->am_.begin(); 
+        it != this->am_.end(); ++it) {
+      printf("%s\n", it->second.GetVarDescription().c_str());
     }
   }
 private:

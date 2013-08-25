@@ -151,9 +151,11 @@ private:
   DISABLE_COPY_AND_ASSIGN(RenderAppI);
 };
 
-const std::string kLightPositionParam = "light position";
-const std::string kMVPMatrixParam = "mvp matrix";
-const std::string kSceneOptionParam = "scene option";
+GDEF_PARAM_NAME(kLightPositionParam);
+GDEF_PARAM_NAME(kMVPMatrixParam);
+GDEF_PARAM_NAME(kMVMatrixParam);
+GDEF_PARAM_NAME(kSceneOptionParam);
+GDEF_PARAM_NAME(kStatisticsOptionParam);
 
 class TextureUtil {
 public:
@@ -249,8 +251,8 @@ void VisualizeViewSpace(const C &camera, float alpha = 0.5f) {
                camera.position().y,
                camera.position().z);
   ax::Vector3 look = camera.look();
-  float z_angle = ax::rad2deg(acos(double(look.z) / glm::length(look)));
-  float x_angle = ax::rad2deg(atan2(double(look.y), look.x));  
+  float z_angle = ax::rad2deg(acos((look.z) / glm::length(look)));
+  float x_angle = ax::rad2deg(atan2((look.y), look.x));  
   glRotated(x_angle, 0, 0, 1);
   glRotated(z_angle, 0, 1, 0);
   

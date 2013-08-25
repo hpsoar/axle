@@ -39,6 +39,7 @@ return Matrix3x3(Transpose(Invert(mat)));
 void Print(const Point &p, const char *name = "");
 void Print(const Matrix4x4 &m, const char *name = "");
 void Print(const Matrix3x3 &m, const char *name = "");
+void Print(const glm::vec2 &p);
 
 inline ax::Vector3 RandVec3(float scale) {
   return ax::Vector3(ax::Rand(scale), ax::Rand(scale), ax::Rand(scale));

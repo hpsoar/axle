@@ -173,6 +173,12 @@ private:
   int depth_;  
 };
 
+inline void SetTexMagMin(ax::Texture2DPtr tex, int val) {
+  tex->Bind();
+  tex->SetParameter(GL_TEXTURE_MAG_FILTER, val);
+  tex->SetParameter(GL_TEXTURE_MIN_FILTER, val);
+}
+
 } // ax
 
 #endif // AXLE_CG_TEXTURE_GL_H

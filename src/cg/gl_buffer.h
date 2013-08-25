@@ -9,8 +9,6 @@
 
 #ifdef __HAS_CUDA__
 #include <cuda_runtime.h>
-#include <cutil_inline.h>
-#include <cutil_gl_inline.h>
 #include <cuda_gl_interop.h>
 
 #endif
@@ -151,6 +149,12 @@ public:
 
   virtual ~ArrayBufferGL() { this->Release(); }
 
+  bool Initialize(uint32 size, uint32 access) {
+    V_RET(this->Resize(size));
+    this->BindGPUPtr();
+    return true;
+  }
+
   void Bind() const { glBindBuffer(this->target_, this->id_); }
   void Unbind() const { glBindBuffer(this->target_, 0); }  
   
@@ -234,6 +238,45 @@ private:
   bool registered_;
   bool mapped_;
 };
+
+class CudaTexture {
+public:
+  CudaTexture() : mapped_(false) { }
+  
+  ~CudaTexture() { 
+    this->Unmap(); 
+  }
+
+  cudaArray *Map(ax::Texture2DPtr tex) {
+    this->Unmap();
+
+    if (tex != this->tex_) {
+      this->tex_ = tex;
+      (cudaGraphicsGLRegisterImage(&this->tex_resource_, tex->id(), tex->target(), cudaGraphicsMapFlagsReadOnly));           
+    }
+    (cudaGraphicsMapResources(1, &this->tex_resource_, 0));
+    (cudaGraphicsSubResourceGetMappedArray(&this->tex_array_, this->tex_resource_, 0, 0));
+
+    this->mapped_ = true;
+    return this->tex_array_;
+  }
+
+  void Unmap() {
+    if (this->mapped_) {
+      (cudaGraphicsUnmapResources(1, &this->tex_resource_));
+      this->mapped_ = false;
+    }
+  }    
+
+private:
+  cudaGraphicsResource *tex_resource_;
+  cudaArray *tex_array_;
+
+  ax::Texture2DPtr tex_;
+
+  bool mapped_;
+};
+
 #endif
 
 }
