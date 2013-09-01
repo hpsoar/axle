@@ -161,7 +161,7 @@ class TextureUtil {
 public:
   TextureUtil() { }
 
-  //bool Initialize();
+  bool Initialize();
   // TODO: move out
   void CreateMaxDepthDerivativeTexture(ax::Texture2DPtr position_tex,
                                        ax::Texture2DPtr texture);

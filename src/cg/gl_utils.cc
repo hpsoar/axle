@@ -107,7 +107,7 @@ void TextureCopier::CopyTexture2D(ax::Texture2DPtr texture) {
 void TextureCopier::CopyTextureRect(ax::Texture2DPtr texture) {
   static ax::ProgramGLSLPtr prog = NULL;
   if (prog == NULL) {
-    RET(prog = ax::ProgramGLSL::Create(quad_src, copy_tex_rect_src, "copy_tex_2d program"));
+    RET(prog = ax::ProgramGLSL::CreateFromCode(quad_src, copy_tex_rect_src, "copy_tex_2d program"));
     if (!prog->Link()) prog = NULL;
   }
   RET(prog);
@@ -125,28 +125,28 @@ void TextureCopier::DrawFullScreenQuad(ax::ProgramGLSLPtr prog) {
   quad->Draw(prog);
 }
 
-//// TextureUtil
+// TextureUtil
 
 // need corresponding shaders under shaders directory, TODO: solve this dependency
-//bool TextureUtil::Initialize() {
-//  V_RET(this->device_ = ax::RenderDeviceFBO::Create());
-//  V_RET(this->quad_ = ax::ScreenQuad::Create());
-//
-//  V_RET(this->max_depth_derivative_prog_ = ax::ProgramGLSL::Create(
-//      "shaders/quad.vp", "shaders/max_depth_derivative.fp", 
-//      "max depth derivative"));
-//  V_RET(this->max_depth_derivative_prog_->Link());
-//
-//  V_RET(this->min_max_normal_prog_ = ax::ProgramGLSL::Create(
-//      "shaders/quad.vp", "shaders/min_max_normal.fp", "min max normal"));
-//  V_RET(this->min_max_normal_prog_->Link());
-//
-//  V_RET(this->reduction_prog_ = ax::ProgramGLSL::Create(
-//      "shaders/quad.vp", "shaders/min_max_depth_mipmap.fp", "depth mipmap"));
-//  V_RET(this->reduction_prog_->Link());
-//
-//  return true;
-//}
+bool TextureUtil::Initialize() {
+  V_RET(this->device_ = ax::RenderDeviceFBO::Create());
+  V_RET(this->quad_ = ax::ScreenQuad::Create());
+
+  V_RET(this->max_depth_derivative_prog_ = ax::ProgramGLSL::Create(
+      "shaders/quad.vp", "shaders/max_depth_derivative.fp", 
+      "max depth derivative"));
+  V_RET(this->max_depth_derivative_prog_->Link());
+
+  V_RET(this->min_max_normal_prog_ = ax::ProgramGLSL::Create(
+      "shaders/quad.vp", "shaders/min_max_normal.fp", "min max normal"));
+  V_RET(this->min_max_normal_prog_->Link());
+
+ /* V_RET(this->reduction_prog_ = ax::ProgramGLSL::Create(
+      "shaders/quad.vp", "shaders/min_max_depth_mipmap.fp", "depth mipmap"));
+  V_RET(this->reduction_prog_->Link());*/
+
+  return true;
+}
 
 ax::ScreenQuadPtr ax::TextureUtil::quad_;
 ax::FBODevicePtr ax::TextureUtil::device_;
@@ -229,7 +229,7 @@ void TextureUtil::CreateMaxDepthDerivativeTexture(
 
   this->max_depth_derivative_prog_->Begin();
 
-  this->max_depth_derivative_prog_->Set4DMatVar("mvp_mat", this->quad_->mvp());
+  this->max_depth_derivative_prog_->Set4DMatVar("g_mvp_mat", this->quad_->mvp());
   this->max_depth_derivative_prog_->SetTextureVar(
       "g_position_buffer", position_tex);
   
