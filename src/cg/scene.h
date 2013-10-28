@@ -27,6 +27,7 @@ typedef std::map<std::string, ax::Texture2DPtr> TextureMap;
 class Scene {
 public:
   static ScenePtr Create(const std::string &file, Options opts);
+  static ScenePtr Create(Options opts);
 
   ~Scene();  
 
@@ -60,6 +61,14 @@ public:
   void GetIndices(ConstIndexSet &indexset) const { 
     this->geometry_->GetIndices(indexset);  
   }
+
+  int id() const { return this->id_; }
+
+  //NOTE: some operation must be processed after all scene data loaded, should rename it PostProcess
+  //      such as transform, a group can transform only after it's sub objects loaded
+  //      bound can be computed only when objects are loaded and transformed
+  //      only the transformed mesh can be loaded to vbo, otherwise the data is not correct
+  void PreProcess();
 private:
   void Add(const std::string &name, ObjectPtr obj) {
     if (obj == NULL || name.empty()) return;
@@ -76,18 +85,18 @@ private:
     this->named_texs_[name] = tex;
   }
 
-  Scene(ax::Options opts) : opts_(opts) { }
+  Scene(ax::Options opts) : opts_(opts), id_(Scene::GenId()) { }
   bool Load(const std::string &filename);
   MaterialPtr LoadMaterial(const char *type, FILE *fp);
   ObjectPtr LoadObject(const char *type, FILE *fp);
   Texture2DPtr LoadTexture(const char *ptr);
-
-  //NOTE: some operation must be processed after all scene data loaded, should rename it PostProcess
-  //      such as transform, a group can transform only after it's sub objects loaded
-  //      bound can be computed only when objects are loaded and transformed
-  //      only the transformed mesh can be loaded to vbo, otherwise the data is not correct
-  void PreProcess();
+  
 private:
+  static int GenId() {
+    static int id = -1;
+    return ++id;
+  }
+
   ax::GroupPtr geometry_;
   AABB bound_;
 
@@ -96,6 +105,8 @@ private:
   TextureMap named_texs_;
 
   ax::Options opts_;
+
+  int id_;
 
   DISABLE_COPY_AND_ASSIGN(Scene);
   friend class ObjectFactory;

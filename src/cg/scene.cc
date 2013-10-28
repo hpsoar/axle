@@ -16,6 +16,10 @@ ScenePtr Scene::Create(const std::string &file, Options opts) {
   return ptr;
 }
 
+ScenePtr Scene::Create(Options opts) {
+  return ScenePtr(new Scene(opts));
+}
+
 Scene::~Scene() { }
 
 bool Scene::Load(const std::string &filename) {

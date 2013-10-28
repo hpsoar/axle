@@ -89,6 +89,7 @@ private:
 };
 
 ObjectPtr LoadGLMesh(Scene *s, const std::string &filename, Options opts);
+ObjectPtr LoadGLMesh(const std::string &filename, Options opts);
 
 } // ax
 

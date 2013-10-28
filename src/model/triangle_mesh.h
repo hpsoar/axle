@@ -189,6 +189,8 @@ class SphereTriMesh;
 //TriMeshPtr CreateBoxMesh(const Point &pos1, const Point &pos2);
 //DEPRECATED(TriMeshPtr LoadObj(const char *filename));
 
+TriMeshPtr LoadObj(const std::string &filename);
+
 void FinalizeModel(const Point *vertices, uint32 n_vertices, 
                    uint32 *indices, uint32 *face_count, 
                    Normal *normals);

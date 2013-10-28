@@ -37,9 +37,9 @@ bool FrameBuffer::Initialize(const ax::ParamSet &params) {
   return true;
 }
 
-bool FrameBuffer::Resize(int w, int h) { 
+bool FrameBuffer::Resize(int w, int h, bool force) { 
   V_RET(w > 0 && h > 0);
-  if (this->width() == w && this->height() == h) return true;
+  if (!force && (this->width() == w && this->height() == h)) return true;
 
   if (this->included_buffers_ == 0) {
     ax::Logger::Log("FrameBuffer::Resize: no buffer is included");

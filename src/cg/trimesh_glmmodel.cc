@@ -110,4 +110,11 @@ void TriMeshGLM::GenAdjacency(GLMmodelPtr model) {
     }
   }
 }
+
+TriMeshPtr LoadObj(const std::string &filename) {  
+  GLMmodelPtr model = GLMmodelPtr(glmReadOBJ(filename.c_str()), glmDelete);
+  if (model == NULL) TriMeshPtr();
+
+  return ax::TriMeshGLM::Create(model, ax::kNone);
+}
 }

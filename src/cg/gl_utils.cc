@@ -164,22 +164,24 @@ bool TextureUtil::Initiaialze() {
 int TextureUtil::CreateCustomMipmap(ax::ProgramGLSLPtr shader, ax::Texture2DPtr texture, int min_res) {
   if (!TextureUtil::Initiaialze()) return 0;
 
-  glPushAttrib(GL_ENABLE_BIT);
-  glDisable(GL_DEPTH_TEST);
-
+  printf("hello\n");printf("fuck2\n");
+  //glPushAttrib(GL_ENABLE_BIT);
+  glDisable(GL_DEPTH_TEST);printf("fuck\n");
+  
   TextureUtil::device_->Activate();
   TextureUtil::device_->SaveMVP();
-
+  
   shader->Begin();
   shader->Set4DMatVar("g_mvp_mat", TextureUtil::quad_->mvp());
   shader->SetTextureVar("g_input_tex", texture);
-  
+  printf("world\n");
   float step = 1.0f;
   int width = texture->width() / 2;
   int level = 1;
   
   texture->Bind();  
 
+  printf("asfsadf\n");
   while (width >= min_res) {
     TextureUtil::device_->SetRenderTarget(texture, level);
     TextureUtil::device_->AdjustViewport(width, width);   
@@ -190,7 +192,7 @@ int TextureUtil::CreateCustomMipmap(ax::ProgramGLSLPtr shader, ax::Texture2DPtr 
     texture->SetParameter(GL_TEXTURE_MAX_LEVEL, level - 1);
     texture->SetParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     texture->SetParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
+    printf("asfsadf222\n");
     shader->SetVar("g_offset", step / texture->width());
 
     ax::CheckErrorsGL("hello");
@@ -209,7 +211,7 @@ int TextureUtil::CreateCustomMipmap(ax::ProgramGLSLPtr shader, ax::Texture2DPtr 
   TextureUtil::device_->RestoreMVP();
   TextureUtil::device_->Deactivate();
 
-  glPopAttrib();
+  //glPopAttrib();
 
   if (ax::CheckErrorsGL("TextureUtil::CreateCustomMipmap")) return 0;
 

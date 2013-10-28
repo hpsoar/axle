@@ -238,7 +238,7 @@ ObjectPtr LoadGLMesh(Scene *s, const std::string &filename, Options opts) {
 
   GLMeshPtr ptr = GLMesh::Create(ax::TriMeshGLM::Create(model, opts));
   
-  if (opts.Contain(kIgnoreGroup) || opts.Contain(ax::kNeedAdjacency)) {    
+  if (opts.Contain(kIgnoreGroup)) {// || opts.Contain(ax::kNeedAdjacency)) {    
     ptr->Add(GLGroup::Create(0, model->numtriangles));
   }
   else {
@@ -256,4 +256,31 @@ ObjectPtr LoadGLMesh(Scene *s, const std::string &filename, Options opts) {
 
   return ptr;
 }
+
+// NOTE: Unsafe!!!
+ObjectPtr LoadGLMesh(const std::string &filename, Options opts) {
+  GLMmodelPtr model = GLMmodelPtr(glmReadOBJ(filename.c_str()), glmDelete);
+  if (model == NULL) return ObjectPtr();   
+
+  GLMeshPtr ptr = GLMesh::Create(ax::TriMeshGLM::Create(model, opts));
+  
+  if (opts.Contain(kIgnoreGroup)) {// || opts.Contain(ax::kNeedAdjacency)) {    
+    ptr->Add(GLGroup::Create(0, model->numtriangles));
+  }
+  else {
+   // assert(s != NULL);
+    GLMgroup *g = model->groups;
+    while (g != NULL) {
+      if (g->numtriangles > 0) {
+        GLGroupPtr obj(GLGroup::Create(g->triangles[0], g->numtriangles));
+     //   obj->set_material(s->material(model->materials[g->material].name));
+        ptr->Add(obj);
+      }
+      g = g->next;
+    }
+  }  
+
+  return ptr;
+}
+
 } // ax

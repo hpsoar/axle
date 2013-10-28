@@ -41,7 +41,7 @@ public:
   bool Initialize(const ax::ParamSet &params);
 
   // @param w > 0, h > 0, reallocate only when size changed
-  bool Resize(int w, int h);
+  bool Resize(int w, int h, bool force = false);
 
   // !!! unsafe
   void ClearBuffers() { glClear(included_buffers_); }
